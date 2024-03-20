@@ -111,6 +111,12 @@ public class ParserUtil {
         return new Tag(trimmedTag);
     }
 
+    /**
+     * Parses a {@code String type} into a {@code Type}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code type} is invalid.
+     */
     public static Type parseType(String email) throws ParseException {
         requireNonNull(email);
         String trimmedType = email.trim();
