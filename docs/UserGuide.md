@@ -121,7 +121,7 @@ Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [t/TAG]…​ [d/DETAI
 Notes: `TYPE` can be either 'client' or 'housekeeper'<br>
    `DETAILS` is optional and refers to the last time of housekeeping and preferred interval between housekeeping.<br>
     The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last <br>
-    housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***<u>'days', 'weeks', 'months' or 'years'.<u/>***
+    housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
@@ -142,6 +142,16 @@ Notes: `TYPE` can only be either 'client' or 'housekeeper'
 Example:
 * `list client`
 * `list housekeeper`
+
+### Getting client call list: `leads`
+Sorts the clients based on the last time of housekeeping and preferred interval between housekeeping to generate sales
+leads based on predicted next time of housekeeping.
+
+Format: `leads`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The leads are sorted with the client with the earliest next housekeeping date at the top. Housekeeping details are optional so clients without housekeeping details will not be included in the leads.
+</div>
 
 ### Deleting a person : `delete`
 
