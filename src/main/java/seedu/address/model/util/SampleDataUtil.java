@@ -1,6 +1,7 @@
 package seedu.address.model.util;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,23 +19,23 @@ public class SampleDataUtil {
         return new Client[] {
                 new Client(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                         new Address("Blk 30 Geylang Street 29, #06-40"), getTagSet("friends"),
-                        new Type("client"), getHousekeepingDetails("2024-01-30 2 months")),
+                        new Type("client"), getHousekeepingDetails(Optional.of("2024-01-30 2 months"))),
                 new Client(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                         new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
                         getTagSet("colleagues", "friends"), new Type("client"),
-                        getHousekeepingDetails("2024-02-28 2 weeks")),
+                        getHousekeepingDetails(Optional.of("2024-02-28 2 weeks"))),
                 new Client(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                         new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), getTagSet("neighbours"),
-                        new Type("client"), getHousekeepingDetails("2024-03-03 1 years")),
+                        new Type("client"), getHousekeepingDetails(Optional.of("2024-03-03 1 years"))),
                 new Client(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                        getTagSet("family"), new Type("client"), getHousekeepingDetails("2024-03-11 39 days")),
+                        new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), getTagSet("family"),
+                        new Type("client"), getHousekeepingDetails(Optional.of("2024-03-11 39 days"))),
                 new Client(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                         new Address("Blk 47 Tampines Street 20, #17-35"), getTagSet("classmates"),
-                        new Type("client"), getHousekeepingDetails("2024-04-01 6 months")),
+                        new Type("client"), getHousekeepingDetails(Optional.of("2024-04-01 6 months"))),
                 new Client(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                         new Address("Blk 45 Aljunied Street 85, #11-31"), getTagSet("colleagues"),
-                        new Type("client"), getHousekeepingDetails("2024-01-05 3 weeks"))
+                        new Type("client"), getHousekeepingDetails(Optional.empty()))
         };
     }
 
@@ -81,7 +82,7 @@ public class SampleDataUtil {
                 .collect(Collectors.toSet());
     }
 
-    public static HousekeepingDetails getHousekeepingDetails(String details) {
+    public static HousekeepingDetails getHousekeepingDetails(Optional<String> details) {
         try {
             return ParserUtil.parseHousekeepingDetails(details);
         } catch (Exception e) {

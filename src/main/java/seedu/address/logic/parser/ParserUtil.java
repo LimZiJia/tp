@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
@@ -136,11 +137,11 @@ public class ParserUtil {
         return tagSet;
     }
 
-    public static HousekeepingDetails parseHousekeepingDetails(String details) throws ParseException {
-        if (details == null) {
+    public static HousekeepingDetails parseHousekeepingDetails(Optional<String> details) throws ParseException {
+        if (details.isEmpty()) {
             return null;
         }
-        String trimmedDetails = details.trim();
+        String trimmedDetails = details.get().trim();
         if (!HousekeepingDetails.isValidHousekeepingDetailsUser(trimmedDetails)) {
             throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
         }

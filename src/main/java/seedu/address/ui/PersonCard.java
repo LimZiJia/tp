@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Person;
 
 /**
@@ -61,7 +62,12 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (person.isClient()) {
             type.setText("client");
-            details.setText(person.getDetails().toString());
+            HousekeepingDetails housekeepingDetails = person.getDetails();
+            if (housekeepingDetails == null) {
+                details.setText(HousekeepingDetails.NO_DETAILS_PROVIDED);
+            } else {
+                details.setText(HousekeepingDetails.makeStoredDetailsFormatReadable(housekeepingDetails.toString()));
+            }
         } else {
             type.setText("housekeeper");
         }

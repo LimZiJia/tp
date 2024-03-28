@@ -43,7 +43,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS).get());
+        HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
 
         Person person;
         switch (type.toString()) {
