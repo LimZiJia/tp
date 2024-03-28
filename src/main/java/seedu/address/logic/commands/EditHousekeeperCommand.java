@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
 
 import java.util.List;
@@ -12,7 +11,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Client;
+import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Name;
@@ -61,7 +60,9 @@ public class EditHousekeeperCommand extends EditCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
+        Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
 
-        return new Housekeeper(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType);
+        return new Housekeeper(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType
+                , updatedArea);
     }
 }

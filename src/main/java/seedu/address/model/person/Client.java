@@ -20,8 +20,8 @@ public class Client extends Person {
      * @param address
      * @param tags
      */
-    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type) {
-        super(name, phone, email, address, tags, type);
+    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type, Area area) {
+        super(name, phone, email, address, tags, type, area);
     }
 
     /**
@@ -45,6 +45,7 @@ public class Client extends Person {
                 && this.getEmail().equals(otherPerson.getEmail())
                 && this.getAddress().equals(otherPerson.getAddress())
                 && this.getTags().equals(otherPerson.getTags())
+                && this.getArea().equals(otherPerson.getArea())
                 && this.getType().equals(otherPerson.getType());
     }
 
