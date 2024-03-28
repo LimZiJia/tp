@@ -116,9 +116,12 @@ Format: `help`
 
 Adds a client or housekeeper to the address book.
 
-Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [t/TAG]…​`
+Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [t/TAG]…​ [d/DETAILS]`
 
-Notes: `TYPE` can be either 'client' or 'housekeeper'
+Notes: `TYPE` can be either 'client' or 'housekeeper'<br>
+   `DETAILS` is optional and refers to the last time of housekeeping and preferred interval between housekeeping.<br>
+    The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last <br>
+    housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***<u>'days', 'weeks', 'months' or 'years'.<u/>***
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
