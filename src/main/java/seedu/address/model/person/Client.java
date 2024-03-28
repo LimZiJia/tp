@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import java.util.Comparator;
 import java.util.Set;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 
@@ -29,8 +30,19 @@ public class Client extends Person implements Comparable<Client> {
         this.housekeepingDetails = housekeepingDetails;
     }
 
+    /**
+     * Returns true if a client has housekeeping details.
+     */
     public boolean hasHousekeepingDetails() {
         return housekeepingDetails != null;
+    }
+
+    /**
+     * Returns the housekeeping details of the client.
+     */
+    @Override
+    public HousekeepingDetails getDetails() {
+        return this.housekeepingDetails;
     }
 
     /**
@@ -73,5 +85,18 @@ public class Client extends Person implements Comparable<Client> {
         } else {
             return 0; // neither client has housekeeping details, so they are considered equal
         }
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("name", this.getName())
+                .add("phone", this.getPhone())
+                .add("email", this.getEmail())
+                .add("address", this.getAddress())
+                .add("tags", this.getTags())
+                .add("type", this.getType())
+                .add("housekeepingDetails", this.housekeepingDetails)
+                .toString();
     }
 }

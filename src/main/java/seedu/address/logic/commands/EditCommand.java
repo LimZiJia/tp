@@ -21,14 +21,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Client;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Housekeeper;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Type;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -111,6 +104,7 @@ abstract public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Type type;
+        private HousekeepingDetails details;
 
         public EditPersonDescriptor() {}
 
@@ -125,6 +119,7 @@ abstract public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setType(toCopy.type);
+            setDetails(toCopy.details);
         }
 
         /**
@@ -189,6 +184,14 @@ abstract public class EditCommand extends Command {
 
         public Optional<Type> getType() {
             return Optional.ofNullable(type);
+        }
+
+        public void setDetails(HousekeepingDetails details) {
+            this.details = details;
+        }
+
+        public Optional<HousekeepingDetails> getHousekeepingDetails() {
+            return Optional.ofNullable(details);
         }
 
 
