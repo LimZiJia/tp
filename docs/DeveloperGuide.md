@@ -244,10 +244,17 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
+### \[Proposed\] Sorting cleints by predicted next cleaning date
 
-_{Explain here how the data archiving feature will be implemented}_
+#### Proposed Implementation
+We assume clients who do not have `HousekeepingDetails` do not want to be disturbed by the housekeeping company.
+Therefore, the client list should be first filtered by `Client.hasHousekeepingDetais()` then sorted by `HousekeepingDetails`.
 
+To do the sorting, the `Client` class now implements `Comparable<Client>` interface, and the `compareTo()` method is 
+overridden to compare the `HousekeepingDetails` of two clients.
+The `compareTo()` method calls the `HousekeepingDetails`'s `compareTo()` method to if both clients have `HousekeepingDetails`.
+The `compareTo()` method in `HousekeepingDetails` uses the `getNextHousekeepingDate()` method which is calculated by 
+`lastHousekeepingDate.plus(preferredInterval)`. 
 
 --------------------------------------------------------------------------------------------------------------------
 
