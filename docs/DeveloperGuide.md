@@ -255,6 +255,7 @@ overridden to compare the `HousekeepingDetails` of two clients.
 The `compareTo()` method calls the `HousekeepingDetails`'s `compareTo()` method to if both clients have `HousekeepingDetails`.
 The `compareTo()` method in `HousekeepingDetails` uses the `getNextHousekeepingDate()` method which is calculated by 
 `lastHousekeepingDate.plus(preferredInterval)`. 
+
 ### \[Completed\] Find using multiple attributes
 
 The Find feature has already been developed in AB3. However, it only searches the keywords given in the Name attribute.
