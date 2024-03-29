@@ -1,0 +1,21 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes delete command (eg. delete client 1);
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+fork
+    :Check Type specified;
+    if () then ([client])
+        :Return DeleteClientCommand;
+    else ([housekeeper])
+        :Return DeleteHousekeeperCommand;
+    endif
+end fork
+:Delete person from the corresponding list;
+stop
+@enduml

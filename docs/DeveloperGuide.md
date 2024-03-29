@@ -293,6 +293,64 @@ handle one attribute at the same time as each FindCommand can only use one predi
 multiple attributes at the same time using chain test on multiple predicate. However, it is ineffective as it needs to
 check multiple situation (use 1 attribute, 2 attributes, or 3 attributes).
 
+### \[Completed\] Separate client and housekeeper list
+In the previous iteration, both clients and housekeepers were consolidated into a single list, presenting them together.
+However, this amalgamation didn't offer enhanced visualization or convenience for our intended users. Hence, we opted to 
+segregate the client and housekeeper lists. This adjustment aims to streamline efficiency for our target users, 
+specifically housekeeping company administrators, enabling easier access to clients and assignment of housekeepers.
+
+#### How the feature is implemented
+The `UniquePersonList` class has been transformed into a generic class. Within the `AddressBook` class, two distinct 
+lists have been instantiated: one for clients and another for housekeepers. These lists store the respective entities, 
+ensuring separation of concerns. Both the saving and loading functionalities now operate independently on these 
+segregated lists.
+
+#### Why is it implemented this way
+This approach offers improvements in both efficiency and performance. By separating clients and housekeepers into 
+distinct lists, interactions between these entities are minimized. This segregation enhances organization and simplifies
+maintenance of the system, as each list can be managed independently without impacting the other.
+
+#### Alternatives considered
+
+##### Alternative 1
+Store clients and housekeepers together in a single list on the hard disk, they are separated upon application startup. 
+Although this method is functional, it introduces overhead by requiring filtering of the single list to achieve 
+eparation, potentially impacting performance negatively. Furthermore, the code complexity increases as it must handle 
+the filtering process, making maintenance more challenging.
+
+### \[Completed\] Delete feature with Type
+
+In the previous iteration, both clients and housekeepers were contained within a singular list, limiting the delete 
+functionality to operate solely within this unified list. In the current iteration, we've segregated these entities into 
+distinct lists—one for clients and another for housekeepers. Consequently, we've introduced an updated Delete feature 
+capable of removing entries from either of these individual lists.
+
+#### How the feature is implemented
+
+Two subclasses, namely `DeleteClientCommand` and `DeleteHousekeeperCommand`, have been developed as subclasses of the 
+abstract class `DeleteCommand`. Each subclass is designed to operate on its respective list. During parsing, the system 
+now evaluates the type specified within the Delete command entered by the user. If the type is identified as "client", 
+the parser returns a `DeleteClientCommand`, enabling deletion of the client identified by the index within the client 
+list. Conversely, if the type is recognized as "housekeeper", a `DeleteHousekeeperCommand` is utilized to remove the 
+housekeeper at the specified index within the housekeeper list.
+
+Here is how the activity diagram looks like: <br>
+![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
+
+#### Why is it implemented this way
+The existing implementation now employs two distinct subclasses: `DeleteClientCommand` and `DeleteHousekeeperCommand`, 
+each tailored for deleting entries from their respective lists. By segregating these functionalities into separate 
+classes, the code adheres more closely to object-oriented programming (OOP) principles, enhancing clarity and 
+maintainability. This approach ensures that each command operates distinctly on its designated list, promoting a more 
+organized and modular codebase.
+
+#### Alternatives considered
+
+##### Alternative 1
+Introducing a new attribute, "Type", within the `DeleteCommand` class may effectively accomplish the task at hand; 
+however, it also brings the drawback of potentially increasing the number of conditional statements, which could degrade 
+readability and maintainability. Moreover, the internal nature of the "Type" attribute might obscure its purpose to 
+developers, leading to confusion.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
