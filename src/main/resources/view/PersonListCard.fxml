@@ -33,7 +33,7 @@
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" style="-fx-text-fill: black"/>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" style="-fx-text-fill: black"/>
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" style="-fx-text-fill: black"/>
-      <Label fx:id="details" styleClass="cell_small_label" text="\$email" style="-fx-text-fill: black"/>
+      <Label fx:id="details" styleClass="cell_small_label" style="-fx-text-fill: black"/>
     </VBox>
   </GridPane>
 </HBox>
