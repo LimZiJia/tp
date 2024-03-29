@@ -248,6 +248,42 @@ _{more aspects and alternatives to be added}_
 
 _{Explain here how the data archiving feature will be implemented}_
 
+### \[Completed\] Find using multiple attributes
+
+The Find feature has already been developed in AB3. However, it only searches the keywords given in the Name attribute.
+To increase the functionality of the feature, we plan to make it accept keywords for multiple attributes (address and
+area). This changes will also be used to fulfil one of our user stories (As an Operator, I can retrieve details from 
+specified contacts by their name or other criteria. So that I can save a lot of time to find specific clients and 
+housekeepers.) which is to increase the efficiency in finding specific Person. 
+
+#### How the feature is implemented
+
+The previous Find feature implementation use a predicate specifically for Name attribute 
+(NameContainsKeywordsPredicate). To make it able use multiple attributes, we create a new predicate that can be used for 
+Name, Address, and Area attributes (ContainsKeywordsPredicate). The new predicate can be used either with keywords for 
+one attribute or multiple attributes. It first checks, what attribute keywords are provided by the user. The attributes 
+that doesn't have keywords will automatically true. The attributes that have keywords will be checked using the give 
+keywords.
+
+Here is how the activity diagram looks like:
+![FindActivityDiagram](images/FindActivityDiagram.png)
+
+#### Why is it implemented this way
+
+The current implementation was chosen because it can handle multiple attributes at the same time. The other alternatives
+we considered can only handle one attribute at the same time or ineffective to makes it able to handle multiple
+attributes at the same time (needs multiple predicate and if-else statement consist of 9 conditions). Therefore, we 
+chose the current implementation as it more effective than the other alternatives.
+
+#### Alternatives considered
+
+##### Alternative 1
+
+Using multiple predicate for each attribute. This way, the Find feature can handle all the attributes. So, to use the
+Find feature, the user needs to give the attribute type of which the keywords will be checked. However, it can only 
+handle one attribute at the same time as each FindCommand can only use one predicate. It can be implemented to handle
+multiple attributes at the same time using chain test on multiple predicate. However, it is ineffective as it needs to
+check multiple situation (use 1 attribute, 2 attributes, or 3 attributes).
 
 --------------------------------------------------------------------------------------------------------------------
 

@@ -1,0 +1,32 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User executes command;
+
+'Since the beta syntax does not support placing the condition outside the
+'diamond we place it as the true branch instead.
+
+fork
+    :Check Name keywords;
+    if () then ([keywords available])
+        :Check using the keywords given;
+    else ([keywords unavailable])
+    endif
+fork again
+    :Check Area keywords;
+    if () then ([keywords available])
+        :Check using the keywords given;
+    else ([keywords unavailable])
+    endif
+fork again
+    :Check Address keywords;
+    if () then ([keywords available])
+        :Check using the keywords given;
+    else ([keywords unavailable])
+    endif
+end fork
+:Check the results from all attributes;
+stop
+@enduml
