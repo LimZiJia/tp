@@ -8,6 +8,7 @@ Package Model as ModelPackage <<Rectangle>>{
 Class "<<interface>>\nReadOnlyAddressBook" as ReadOnlyAddressBook
 Class "<<interface>>\nReadOnlyUserPrefs" as ReadOnlyUserPrefs
 Class "<<interface>>\nModel" as Model
+Class "<<interface>>\nComparable" as Comparable
 Class AddressBook
 Class ModelManager
 Class UserPrefs
@@ -22,6 +23,8 @@ Class Name
 Class Phone
 Class Tag
 Class Type
+Class HousekeepingDetails
+Class Area
 
 Class I #FFFFFF
 }
@@ -46,16 +49,17 @@ Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
 Person *-right-> Type
+Person *--> Area
+Client *--> "0..1" HousekeepingDetails
+Client .up.|> Comparable
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
 
-Name -[hidden]right-> Phone
-Phone -[hidden]right-> Address
-Address -[hidden]right-> Email
 
 ModelManager --> "~* filtered" Person
 
 Client -up-|> Person
 Housekeeper -up-|> Person
+Address -[hidden]left-> Housekeeper
 @enduml
