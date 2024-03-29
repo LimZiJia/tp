@@ -136,8 +136,8 @@ public class ParserUtil {
     public static Area parseArea(String area) throws ParseException {
         requireNonNull(area);
         String trimmedArea = area.trim();
-        if (!Address.isValidAddress(trimmedArea)) {
-            throw new ParseException(Address.MESSAGE_CONSTRAINTS);
+        if (!Area.isValidArea(trimmedArea)) {
+            throw new ParseException(Area.MESSAGE_CONSTRAINTS);
         }
         return new Area(trimmedArea);
     }
