@@ -244,17 +244,36 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Sorting cleints by predicted next cleaning date
+### \[Proposed\] Generating leads for housekeeping services
 
 #### Proposed Implementation
 We assume clients who do not have `HousekeepingDetails` do not want to be disturbed by the housekeeping company.
 Therefore, the client list should be first filtered by `Client.hasHousekeepingDetais()` then sorted by `HousekeepingDetails`.
+We will also not show clients who have their predicted next housekeeping date that is after the current date.
 
 To do the sorting, the `Client` class now implements `Comparable<Client>` interface, and the `compareTo()` method is 
 overridden to compare the `HousekeepingDetails` of two clients.
 The `compareTo()` method calls the `HousekeepingDetails`'s `compareTo()` method to if both clients have `HousekeepingDetails`.
 The `compareTo()` method in `HousekeepingDetails` uses the `getNextHousekeepingDate()` method which is calculated by 
-`lastHousekeepingDate.plus(preferredInterval)`. 
+`lastHousekeepingDate.plus(preferredInterval)`.
+
+We will also store `bookingDate` if the `Client` already made a booking. This is convenient for the admin to know and prevent
+calling the client when it is not needed. Furthermore, `deferment` is also stored to know if the client wants to defer the
+reminder to a later date.
+
+Here is how `HousekeepingDetails` class looks like:
+![HousekeepingDetailsClassDiagram](images/HousekeepingDetailsClassDiagram.png)
+
+#### Why is it implemented this way
+There are many considerations in the workflow of generating leads for housekeeping services. The proposed implementation
+is chosen because it is able to handle a wide range of scenarios that we have considered. For example, `lastHousekeepingDate`
+and `preferredInterval` are used to calculate the `nextHousekeepingDate`. This is for the convenience of the client as they
+will only need to state their preference only once (when booking their first service).
+`preferredInterval` is a natural aspect of housekeeping services and the client should know this at the top of their head
+instead of concrete dates.
+
+Having a `deferment` attribute is also important as it allows the client to defer the reminder to a later date. This is for
+client satisfaction as it might not be a good time for housekeeping services when we call to remind them.
 
 ### \[Completed\] Find using multiple attributes
 
