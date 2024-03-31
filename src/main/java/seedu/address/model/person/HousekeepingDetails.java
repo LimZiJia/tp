@@ -34,10 +34,11 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     }
 
     /** String can be stored as "null" or "yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?" */
-    public static boolean isValidHouseKeppingDetailsStorage(String test) {
+    public static boolean isValidHousekeepingDetailsStorage(String test) {
         String[] s = test.split(" ");
         return test.equals("null")
-                || (s[0].matches("\\d{4}-\\d{2}-\\d{2}")
+                || s.length == 4
+                && (s[0].matches("\\d{4}-\\d{2}-\\d{2}")
                 && s[1].matches("P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?")
                 && s[2].equals("null")) || (s[2].matches("\\d{4}-\\d{2}-\\d{2}"))
                 && s[3].matches("P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?");
@@ -53,12 +54,13 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         if (details.equals("null")) {
             return NO_DETAILS_PROVIDED;
         }
-        else if (!isValidHouseKeppingDetailsStorage(details)) {
+        else if (!isValidHousekeepingDetailsStorage(details)) {
             return "Invalid housekeeping details format";
         }
 
         // Converting Period of preferred interval to a readable format
-        String[] s = details.split(" ");
+        String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
+                                               // s[2] = bookingDate, s[3] = deferment
         String num = s[1].substring(1, s[1].length() - 1);
         String unit = s[1].substring(s[1].length() - 1);
         String unitString;
@@ -150,6 +152,9 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     }
 
     public LocalDate getNextHousekeepingDate() {
+        if (lastHousekeepingDate == null || preferredInterval == null || deferment == null) {
+            return LocalDate.MAX; // If not enough details available, the client will not be called
+        }
         return lastHousekeepingDate.plus(preferredInterval).plus(deferment);
     }
 
@@ -167,16 +172,23 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
             return false;
         }
         HousekeepingDetails otherDetails = (HousekeepingDetails) other;
-        return lastHousekeepingDate.equals(otherDetails.lastHousekeepingDate)
-                && preferredInterval.equals(otherDetails.preferredInterval)
-                && bookingDate.equals(otherDetails.bookingDate)
-                && deferment.equals(otherDetails.deferment);
-    }
+
+        // First predicate of each && is for null values, second predicate is for non-null values
+        return ((lastHousekeepingDate == otherDetails.lastHousekeepingDate
+                || lastHousekeepingDate.equals(otherDetails.lastHousekeepingDate))
+                && (preferredInterval == otherDetails.preferredInterval
+                ||preferredInterval.equals(otherDetails.preferredInterval))
+                && (bookingDate == otherDetails.bookingDate
+                || bookingDate.equals(otherDetails.bookingDate))
+                && (deferment == otherDetails.deferment
+                || deferment.equals(otherDetails.deferment)));
+        }
 
     @Override
     public String toString() {
-        return this.isEmpty()
-                ? "null"
-                : String.format("%s %s %s %s", lastHousekeepingDate, preferredInterval, bookingDate, deferment);
+        if (this.equals(empty)) {
+            return "null";
+        }
+        return lastHousekeepingDate + " " + preferredInterval + " " + bookingDate + " " + deferment;
     }
-}
+ }

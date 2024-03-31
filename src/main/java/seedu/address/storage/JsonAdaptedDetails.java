@@ -34,7 +34,7 @@ public class JsonAdaptedDetails {
     }
 
     public HousekeepingDetails toModelType() throws IllegalValueException {
-        if (!HousekeepingDetails.isValidHouseKeppingDetailsStorage(details)) {
+        if (!HousekeepingDetails.isValidHousekeepingDetailsStorage(details)) {
             throw new IllegalValueException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
         }
         return new HousekeepingDetails(details);

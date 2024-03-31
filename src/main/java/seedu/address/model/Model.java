@@ -106,6 +106,12 @@ public interface Model {
     void updateFilteredClientList(Predicate<Client> predicate);
 
     /**
+     * Updates and sorts the filter of the filtered client list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateAndSortFilteredClientList(Predicate<Client> predicate);
+
+    /**
      * Updates the filter of the filtered housekeeper list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */

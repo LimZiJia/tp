@@ -1,5 +1,6 @@
 package seedu.address.model.person;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -43,6 +44,14 @@ public class Client extends Person implements Comparable<Client> {
     @Override
     public HousekeepingDetails getDetails() {
         return this.housekeepingDetails;
+    }
+
+    public LocalDate getNextHousekeepingDate() {
+        return this.housekeepingDetails.getNextHousekeepingDate();
+    }
+
+    public boolean hasBooking() {
+        return this.housekeepingDetails.hasBooking();
     }
 
     /**
