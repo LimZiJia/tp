@@ -41,7 +41,7 @@ public class Messages {
         if (housekeepingDetails == null) {
             details = HousekeepingDetails.NO_DETAILS_PROVIDED;
         } else {
-            details = HousekeepingDetails.makeStoredDetailsFormatReadable(housekeepingDetails.toString());
+            details = HousekeepingDetails.makeStoredDetailsReadable(housekeepingDetails.toString());
         }
 
         final StringBuilder builder = new StringBuilder();

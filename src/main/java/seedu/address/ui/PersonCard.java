@@ -66,7 +66,7 @@ public class PersonCard extends UiPart<Region> {
             if (housekeepingDetails == null) {
                 details.setText(HousekeepingDetails.NO_DETAILS_PROVIDED);
             } else {
-                details.setText(HousekeepingDetails.makeStoredDetailsFormatReadable(housekeepingDetails.toString()));
+                details.setText(HousekeepingDetails.makeStoredDetailsReadable(housekeepingDetails.toString()));
             }
         } else {
             type.setText("housekeeper");

@@ -34,7 +34,7 @@ public class Client extends Person implements Comparable<Client> {
      * Returns true if a client has housekeeping details.
      */
     public boolean hasHousekeepingDetails() {
-        return housekeepingDetails != null;
+        return housekeepingDetails.isEmpty();
     }
 
     /**

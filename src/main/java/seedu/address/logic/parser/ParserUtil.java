@@ -139,7 +139,7 @@ public class ParserUtil {
 
     public static HousekeepingDetails parseHousekeepingDetails(Optional<String> details) throws ParseException {
         if (details.isEmpty()) {
-            return null;
+            return HousekeepingDetails.empty;
         }
         String trimmedDetails = details.get().trim();
         if (!HousekeepingDetails.isValidHousekeepingDetailsUser(trimmedDetails)) {
