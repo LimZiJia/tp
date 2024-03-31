@@ -11,12 +11,13 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
             "Housekeeping details should be in the format: yyyy-mm-dd n (days|weeks|months|years) "
                     + "where n is an integer quantity of days, weeks, months or years.";
     public static final String MESSAGE_CONSTRAINTS_STORAGE =
-            "Housekeeping details should be in the format: yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?"
+            "Housekeeping details should be in the format: 'yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?' or 'null'"
                     + "where P is the period designator, Y is years, M is months, W is weeks D is days. "
-                    + "YMWD must be in that order. All fields are optional.";
+                    + "YMWD must be in that order. All fields are optional."
+                    + "The second date is the booking date and it can be null";
     public static final String NO_DETAILS_PROVIDED = "No housekeeping details provided";
 
-    public static HousekeepingDetails empty = new HousekeepingDetails();
+    public static final HousekeepingDetails empty = new HousekeepingDetails();
 
     /** The last date the housekeeping was done. */
     private LocalDate lastHousekeepingDate;
@@ -26,6 +27,64 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     private LocalDate bookingDate;
     /** The period to delay calling the client */
     private Period deferment;
+
+    /** User must add as "yyyy-mm-dd n (days|weeks|months|years)" */
+    public static boolean isValidHousekeepingDetailsUser(String test) {
+        return test.matches("\\d{4}-\\d{2}-\\d{2} \\d+ (days|weeks|months|years)");
+    }
+
+    /** String can be stored as "null" or "yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?" */
+    public static boolean isValidHouseKeppingDetailsStorage(String test) {
+        String[] s = test.split(" ");
+        return test.equals("null")
+                || (s[0].matches("\\d{4}-\\d{2}-\\d{2}")
+                && s[1].matches("P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?")
+                && s[2].equals("null")) || (s[2].matches("\\d{4}-\\d{2}-\\d{2}"))
+                && s[3].matches("P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?");
+    }
+
+    /**
+     *  Converts the stored string representation of the housekeeping details to a readable format.
+     *
+     * @param details The stored string representation of the housekeeping details.
+     * @return        Readable string representation of the housekeeping details.
+     */
+    public static String makeStoredDetailsReadable(String details) {
+        if (details.equals("null")) {
+            return NO_DETAILS_PROVIDED;
+        }
+        else if (!isValidHouseKeppingDetailsStorage(details)) {
+            return "Invalid housekeeping details format";
+        }
+
+        // Converting Period of preferred interval to a readable format
+        String[] s = details.split(" ");
+        String num = s[1].substring(1, s[1].length() - 1);
+        String unit = s[1].substring(s[1].length() - 1);
+        String unitString;
+        switch (unit) {
+        case "Y":
+            unitString = "years";
+            break;
+        case "M":
+            unitString = "months";
+            break;
+        case "W":
+            unitString = "weeks";
+            break;
+        case "D":
+            unitString = "days";
+            break;
+        default:
+            unitString = "Invalid unit";
+        }
+
+        // Makes null booking readable
+        String booking = s[2].equals("null") ? "No booking" : s[2];
+
+        return String.format("Last housekeeping date: %s\nPreferred interval: %s %s\nBooking date: %s",
+                s[0], num, unitString, booking);
+    }
 
     /**
      * Creates a HousekeepingDetails object with no details provided.
@@ -69,70 +128,29 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         }
     }
 
-    /** Checks if the housekeeping details are empty */
+    /** Checks if the housekeeping details is empty */
     public boolean isEmpty() {
-        return lastHousekeepingDate == null && preferredInterval == null;
+        return this.equals(empty);
+    }
+
+    public boolean hasBooking() {
+        return bookingDate != null;
+    }
+
+    public void setBookingDate(LocalDate bookingDate) {
+        this.bookingDate = bookingDate;
+    }
+
+    public void deleteBookingDate() {
+        this.bookingDate = null;
+    }
+
+    public void addDeferment(Period deferment) {
+        this.deferment = this.deferment.plus(deferment);
     }
 
     public LocalDate getNextHousekeepingDate() {
-        return lastHousekeepingDate.plus(preferredInterval);
-    }
-
-    /** User must add as "yyyy-mm-dd n (days|weeks|months|years)" */
-    public static boolean isValidHousekeepingDetailsUser(String test) {
-        return test.matches("\\d{4}-\\d{2}-\\d{2} \\d+ (days|weeks|months|years)");
-    }
-
-    /** String can be stored as "null" or "yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?" */
-    public static boolean isValidHouseKeppingDetailsStorage(String test) {
-        String[] s = test.split(" ");
-        return test.equals("null")
-                || (s[0].matches("\\d{4}-\\d{2}-\\d{2}")
-                && s[1].matches("P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?")
-                && s[2].equals("null")) || (s[2].matches("\\d{4}-\\d{2}-\\d{2}"))
-                && s[3].matches("P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?");
-    }
-
-    /**
-     *  Converts the stored string representation of the housekeeping details to a readable format.
-     *
-     * @param details The stored string representation of the housekeeping details.
-     * @return        Readable string representation of the housekeeping details.
-     */
-    public static String makeStoredDetailsReadable(String details) {
-        if (details.equals("null")) {
-            return NO_DETAILS_PROVIDED;
-        }
-        else if (!isValidHouseKeppingDetailsStorage(details)) {
-            return "Invalid housekeeping details format";
-        }
-        // Converting Period of preferred interval to a readable format
-        String[] s = details.split(" ");
-        String num = s[1].substring(1, s[1].length() - 1);
-        String unit = s[1].substring(s[1].length() - 1);
-        String unitString;
-        switch (unit) {
-        case "Y":
-            unitString = "years";
-            break;
-        case "M":
-            unitString = "months";
-            break;
-        case "W":
-            unitString = "weeks";
-            break;
-        case "D":
-            unitString = "days";
-            break;
-        default:
-            unitString = "Invalid unit";
-        }
-
-        // Makes null booking readable
-        String booking = s[2].equals("null") ? "No booking" : s[2];
-
-        return String.format("Last housekeeping date: %s\nPreferred interval: %s %s\nBooking date: %s",
-                s[0], num, unitString, booking);
+        return lastHousekeepingDate.plus(preferredInterval).plus(deferment);
     }
 
     @Override
