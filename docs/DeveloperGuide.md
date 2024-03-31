@@ -275,6 +275,27 @@ instead of concrete dates.
 Having a `deferment` attribute is also important as it allows the client to defer the reminder to a later date. This is for
 client satisfaction as it might not be a good time for housekeeping services when we call to remind them.
 
+#### Alternatives considered
+
+##### Alternative 1
+Only store `nexthousekeepingDate` and only call to ask the client on the housekeeping date. `nextHousekeepingDate` is maintained by asking the client everytime they have done a housekeeping service.
+
+Pros: Very simple to implement.
+
+Cons: [1] It adds more work for the admin but more importantly the client. This is because an additional call is required after every service.
+[2] The client may not know an exact date far into the future. If the client is unsure and provide a general period, then we can save the work
+of calling everytime by using `preferredInterval` as in our proposed implementation. [3] If the admin is sick or busy on `nextHousekeepingDate`, 
+then the call will be missed altogether.
+
+##### Alternative 2
+Same as our original implementation but without `deferment`.
+
+Pros: Simpler implementation, less commands for admin to learn.
+
+Cons: [1] Less flexible for the client. The client may not be ready for housekeeping services when we call to remind them.
+[2] It is possible to deal with this as an admin, but it would be "hacky" as the admin would have to edit the `lastHousekeepingDate`.
+
+
 ### \[Completed\] Find using multiple attributes
 
 The Find feature has already been developed in AB3. However, it only searches the keywords given in the Name attribute.
@@ -296,6 +317,7 @@ Here is how the activity diagram looks like:
 ![FindActivityDiagram](images/FindActivityDiagram.png)
 
 #### Why is it implemented this way
+
 
 The current implementation was chosen because it can handle multiple attributes at the same time. The other alternatives
 we considered can only handle one attribute at the same time or ineffective to makes it able to handle multiple

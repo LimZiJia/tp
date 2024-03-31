@@ -4,9 +4,17 @@ skinparam arrowThickness 1.1
 skinparam arrowColor MODEL_COLOR
 skinparam classBackgroundColor MODEL_COLOR
 
+package "Details" {
+Class HousekeepingDetails
+Class Period
+Class LocalDate
+}
+
+Client *--> HousekeepingDetails
+
 HousekeepingDetails *---> "preferredInterval" Period
 HousekeepingDetails *---> "deferment" Period
-HousekeepingDetails *----> "lastHousekeepingDate" LocalDate
+HousekeepingDetails *---> "lastHousekeepingDate" LocalDate
 HousekeepingDetails *---> "bookingDate" LocalDate
 
 Period .[hidden].. HousekeepingDetails
