@@ -2,7 +2,7 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.logic.parser.CliSyntax.ALLOWED_PREAMBLES;
+import static seedu.address.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
 
 /**
  * Represents a Person's Type in the address book.
@@ -44,7 +44,7 @@ public class Type {
      * @return true if the preamble is allowed and no if it is not.
      */
     public static boolean preambleIsAllowed(String preamble) {
-        for (String s : ALLOWED_PREAMBLES) {
+        for (String s : ALLOWED_PREAMBLES_TYPE) {
             if (s.equals(preamble)) {
                 return true;
             }
