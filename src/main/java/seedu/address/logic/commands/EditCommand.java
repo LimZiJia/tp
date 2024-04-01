@@ -22,6 +22,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
@@ -111,6 +112,7 @@ abstract public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Type type;
+        private BookingList bookingList;
 
         public EditPersonDescriptor() {}
 
@@ -125,13 +127,14 @@ abstract public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setType(toCopy.type);
+            setBookingList(toCopy.bookingList);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type, bookingList);
         }
 
         public void setName(Name name) {
@@ -191,6 +194,14 @@ abstract public class EditCommand extends Command {
             return Optional.ofNullable(type);
         }
 
+        public void setBookingList(BookingList bookingList) {
+            this.bookingList = bookingList;
+        }
+
+        public Optional<BookingList> getBookingList() {
+            return Optional.ofNullable(bookingList);
+        }
+
 
         @Override
         public boolean equals(Object other) {
@@ -209,7 +220,8 @@ abstract public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(type, otherEditPersonDescriptor.type);
+                    && Objects.equals(type, otherEditPersonDescriptor.type)
+                    && Objects.equals(bookingList, otherEditPersonDescriptor.bookingList);
         }
 
         @Override
@@ -221,6 +233,7 @@ abstract public class EditCommand extends Command {
                     .add("address", address)
                     .add("tags", tags)
                     .add("type", type)
+                    .add("booking list", bookingList)
                     .toString();
         }
     }

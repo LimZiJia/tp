@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
@@ -47,22 +48,22 @@ public class SampleDataUtil {
         return new Housekeeper[] {
                 new Housekeeper(new Name("John Doe"), new Phone("12345678"), new Email("johndoe@example.com"),
                         new Address("Blk 123 Woodlands Street 45, #05-12"),
-                        getTagSet("cleaning"), new Type("housekeeper")),
+                        getTagSet("cleaning"), new Type("housekeeper"), new BookingList()),
                 new Housekeeper(new Name("Jane Smith"), new Phone("98765432"), new Email("janesmith@example.com"),
                         new Address("Blk 456 Jurong East Avenue 89, #08-15"),
-                        getTagSet("part-time"), new Type("housekeeper")),
+                        getTagSet("part-time"), new Type("housekeeper"), new BookingList()),
                 new Housekeeper(new Name("Michael Tan"), new Phone("87654321"), new Email("michaeltan@example.com"),
                         new Address("Blk 789 Bukit Timah Road, #02-34"),
-                        getTagSet("full-time"), new Type("housekeeper")),
+                        getTagSet("full-time"), new Type("housekeeper"), new BookingList()),
                 new Housekeeper(new Name("Emily Lee"), new Phone("98761234"), new Email("emilylee@example.com"),
                         new Address("Blk 234 Sengkang Street 12, #07-23"),
-                        getTagSet("pet-friendly"), new Type("housekeeper")),
+                        getTagSet("pet-friendly"), new Type("housekeeper"), new BookingList()),
                 new Housekeeper(new Name("Daniel Lim"), new Phone("87651234"), new Email("daniellim@example.com"),
                         new Address("Blk 345 Yishun Avenue 67, #10-45"),
-                        getTagSet("experienced"), new Type("housekeeper")),
+                        getTagSet("experienced"), new Type("housekeeper"), new BookingList()),
                 new Housekeeper(new Name("Samantha Tan"), new Phone("76543210"), new Email("samanthatan@example.com"),
                         new Address("Blk 678 Clementi Road, #03-21"),
-                        getTagSet("trustworthy"), new Type("housekeeper"))
+                        getTagSet("trustworthy"), new Type("housekeeper"), new BookingList())
         };
     }
 

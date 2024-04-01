@@ -10,6 +10,9 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Housekeeper extends Person {
+
+    private BookingList bookingList;
+
     /**
      * Every field must be present and not null.
      *
@@ -19,8 +22,34 @@ public class Housekeeper extends Person {
      * @param address
      * @param tags
      */
-    public Housekeeper(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type) {
+    public Housekeeper(
+            Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type, BookingList bookingList) {
         super(name, phone, email, address, tags, type);
+        this.bookingList = bookingList != null ? bookingList : new BookingList();
+    }
+
+    public boolean hasDuplicateBooking(String bookedDateAndTime) {
+        return bookingList.hasDuplicate(bookedDateAndTime);
+    }
+
+    public String addBooking(String bookedDateAndTime) {
+        return "[ " + this.getName() + " ]\n" + bookingList.addBooking(bookedDateAndTime);
+    }
+
+    public boolean isValidDeleteIndex(int index) {
+        return bookingList.isValidDeleteIndex(index);
+    }
+
+    public String deleteBooking(int index) {
+        return "[ " + this.getName() + " ]\n" + bookingList.deleteBooking(index);
+    }
+
+    public String listBooking() {
+        return "[ " + this.getName() + " ]\n" + bookingList.listBooking();
+    }
+
+    public BookingList getBookingList() {
+        return this.bookingList;
     }
 
     /**

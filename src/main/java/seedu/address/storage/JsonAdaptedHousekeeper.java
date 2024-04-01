@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Booking;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
@@ -20,14 +22,18 @@ import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
+    protected final ArrayList<JsonAdaptedBooking> bookingList;
+
     /**
      * Constructs a {@code JsonAdaptedHousekeeper} with the given housekeeper details.
      */
     @JsonCreator
     public JsonAdaptedHousekeeper(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type) {
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type,
+                             @JsonProperty("booking list") ArrayList<JsonAdaptedBooking> bookingList) {
         super(name, phone, email, address, tags, type);
+        this.bookingList = bookingList;
     }
 
     /**
@@ -35,6 +41,14 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
      */
     public JsonAdaptedHousekeeper(Housekeeper source) {
         super(source);
+        ArrayList<JsonAdaptedBooking> bookingList = new ArrayList<>();
+
+        for (Booking booking : source.getBookingList().getBookings()) {
+            JsonAdaptedBooking jsonAdaptedBooking = new JsonAdaptedBooking(booking);
+            bookingList.add(jsonAdaptedBooking);
+        }
+
+        this.bookingList = bookingList;
     }
 
     @Override
@@ -86,6 +100,13 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
         }
         final Type modelType = new Type(type);
 
-        return new Housekeeper(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelType);
+        final ArrayList<Booking> personBookings = new ArrayList<>();
+        for (JsonAdaptedBooking booking : bookingList) {
+            personBookings.add(booking.toModelType());
+        }
+
+        final BookingList modelBookingList = new BookingList(personBookings);
+
+        return new Housekeeper(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelType, modelBookingList);
     }
 }

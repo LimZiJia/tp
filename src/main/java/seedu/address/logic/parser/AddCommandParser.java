@@ -14,6 +14,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
@@ -48,6 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        BookingList bookingList = new BookingList();
 
         Person person;
         switch (type.toString()) {
@@ -55,7 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             person = new Client(name, phone, email, address, tagList, type);
             break;
         case "housekeeper":
-            person = new Housekeeper(name, phone, email, address, tagList, type);
+            person = new Housekeeper(name, phone, email, address, tagList, type, bookingList);
             break;
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
