@@ -69,9 +69,13 @@ dependencies {
     testRuntimeOnly group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: jUnitVersion
 }
 
+run {
+    enableAssertions = true
+}
+
 shadowJar {
     archiveBaseName = "HouseKeepingHub"
-    archiveVersion = "v1.2.1"
+    archiveVersion = "v1.3.0"
     archiveClassifier = null
 }
 

@@ -14,8 +14,8 @@ import seedu.address.model.person.Person;
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Client> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
-    Predicate<Housekeeper> PREDICATE_SHOW_ALL_HOUSEKEEPERS = unused -> true;
+    Predicate<Person> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
+    Predicate<Person> PREDICATE_SHOW_ALL_HOUSEKEEPERS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -103,7 +103,7 @@ public interface Model {
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredClientList(Predicate<Client> predicate);
+    void updateFilteredClientList(Predicate<Person> predicate);
 
     /**
      * Updates and sorts the filter of the filtered client list to filter by the given {@code predicate}.
@@ -115,5 +115,5 @@ public interface Model {
      * Updates the filter of the filtered housekeeper list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredHousekeeperList(Predicate<Housekeeper> predicate);
+    void updateFilteredHousekeeperList(Predicate<Person> predicate);
 }

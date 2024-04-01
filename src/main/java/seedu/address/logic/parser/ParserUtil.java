@@ -12,7 +12,13 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -123,6 +129,21 @@ public class ParserUtil {
             throw new ParseException(Type.MESSAGE_CONSTRAINTS);
         }
         return new Type(trimmedType);
+    }
+
+    /**
+     * Parses a {@code String area} into an {@code Area}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code area} is invalid.
+     */
+    public static Area parseArea(String area) throws ParseException {
+        requireNonNull(area);
+        String trimmedArea = area.trim();
+        if (!Area.isValidArea(trimmedArea)) {
+            throw new ParseException(Area.MESSAGE_CONSTRAINTS);
+        }
+        return new Area(trimmedArea);
     }
 
     /**

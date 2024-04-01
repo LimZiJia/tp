@@ -10,7 +10,15 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 public class EditClientCommand extends EditCommand {
@@ -53,10 +61,11 @@ public class EditClientCommand extends EditCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
+        Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
         HousekeepingDetails updatedDetails =
                 editPersonDescriptor.getHousekeepingDetails().orElse(personToEdit.getDetails());
 
         return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType,
-                updatedDetails);
+                updatedDetails, updatedArea);
     }
 }

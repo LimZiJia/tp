@@ -47,6 +47,8 @@ public class Messages {
         final StringBuilder builder = new StringBuilder();
         builder.append("\nName: ")
                 .append(person.getName())
+                .append("; Type: ")
+                .append(person.getType())
                 .append("; Phone: ")
                 .append(person.getPhone())
                 .append("; Email: ")
@@ -55,6 +57,8 @@ public class Messages {
                 .append(person.getAddress())
                 .append("; Details: ")
                 .append(details)
+                .append("; Area: ")
+                .append(person.getArea())
                 .append("; Tags: ");
         person.getTags().forEach(builder::append);
         return builder.toString();

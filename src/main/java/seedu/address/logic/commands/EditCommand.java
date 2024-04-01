@@ -6,11 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -21,7 +19,14 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -105,6 +110,7 @@ abstract public class EditCommand extends Command {
         private Set<Tag> tags;
         private Type type;
         private HousekeepingDetails details;
+        private Area area;
 
         public EditPersonDescriptor() {}
 
@@ -120,13 +126,14 @@ abstract public class EditCommand extends Command {
             setTags(toCopy.tags);
             setType(toCopy.type);
             setDetails(toCopy.details);
+            setArea(toCopy.area);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type, area);
         }
 
         public void setName(Name name) {
@@ -192,8 +199,14 @@ abstract public class EditCommand extends Command {
 
         public Optional<HousekeepingDetails> getHousekeepingDetails() {
             return Optional.ofNullable(details);
+
+        public void setArea(Area area) {
+            this.area = area;
         }
 
+        public Optional<Area> getArea() {
+            return Optional.ofNullable(area);
+        }
 
         @Override
         public boolean equals(Object other) {
@@ -211,6 +224,7 @@ abstract public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(area, otherEditPersonDescriptor.area)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
                     && Objects.equals(type, otherEditPersonDescriptor.type);
         }
@@ -224,6 +238,7 @@ abstract public class EditCommand extends Command {
                     .add("address", address)
                     .add("tags", tags)
                     .add("type", type)
+                    .add("area", area)
                     .toString();
         }
     }
