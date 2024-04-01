@@ -13,10 +13,10 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Booking;
 import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
+import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
@@ -30,9 +30,9 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedHousekeeper(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type, @JsonProperty("area") String area, 
                              @JsonProperty("booking list") ArrayList<JsonAdaptedBooking> bookingList) {
-        super(name, phone, email, address, tags, type);
+        super(name, phone, email, address, tags, type, area);
         this.bookingList = bookingList;
     }
 
@@ -99,6 +99,7 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
             throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
         }
         final Type modelType = new Type(type);
+        final Area modelArea = new Area(area);
 
         final ArrayList<Booking> personBookings = new ArrayList<>();
         for (JsonAdaptedBooking booking : bookingList) {
@@ -107,6 +108,6 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
 
         final BookingList modelBookingList = new BookingList(personBookings);
 
-        return new Housekeeper(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelType, modelBookingList);
+        return new Housekeeper(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelType, modelArea, modelBookingList);
     }
 }

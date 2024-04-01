@@ -11,6 +11,7 @@ import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Name;
@@ -61,10 +62,11 @@ public class EditHousekeeperCommand extends EditCommand {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
+        Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
         BookingList updatedBookingList = editPersonDescriptor.getBookingList()
                 .orElse(housekeeperToEdit.getBookingList());
 
         return new Housekeeper(
-                updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType, updatedBookingList);
+                updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType, updatedArea, updatedBookingList);
     }
 }

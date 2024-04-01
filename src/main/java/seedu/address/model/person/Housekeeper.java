@@ -23,8 +23,8 @@ public class Housekeeper extends Person {
      * @param tags
      */
     public Housekeeper(
-            Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type, BookingList bookingList) {
-        super(name, phone, email, address, tags, type);
+            Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type, Area area, BookingList bookingList) {
+        super(name, phone, email, address, tags, type, area);
         this.bookingList = bookingList != null ? bookingList : new BookingList();
     }
 
@@ -50,6 +50,7 @@ public class Housekeeper extends Person {
 
     public BookingList getBookingList() {
         return this.bookingList;
+
     }
 
     /**
@@ -73,11 +74,17 @@ public class Housekeeper extends Person {
                 && this.getEmail().equals(otherPerson.getEmail())
                 && this.getAddress().equals(otherPerson.getAddress())
                 && this.getTags().equals(otherPerson.getTags())
+                && this.getArea().equals(otherPerson.getArea())
                 && this.getType().equals(otherPerson.getType());
     }
 
     @Override
     public boolean isClient() {
         return false;
+    }
+
+    @Override
+    public HousekeepingDetails getDetails() {
+        return null;
     }
 }

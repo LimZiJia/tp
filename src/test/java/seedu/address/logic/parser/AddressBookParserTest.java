@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.parser.CliSyntax.ALLOWED_PREAMBLES;
+import static seedu.address.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
@@ -86,9 +86,9 @@ public class AddressBookParserTest {
     @Test
     public void parseCommand_list() throws Exception {
         assertTrue(parser.parseCommand(
-                ListCommand.COMMAND_WORD + " " + ALLOWED_PREAMBLES[0]) instanceof ListCommand);
+                ListCommand.COMMAND_WORD + " " + ALLOWED_PREAMBLES_TYPE[0]) instanceof ListCommand);
         assertTrue(parser.parseCommand(
-                ListCommand.COMMAND_WORD + " " + ALLOWED_PREAMBLES[1]) instanceof ListCommand);
+                ListCommand.COMMAND_WORD + " " + ALLOWED_PREAMBLES_TYPE[1]) instanceof ListCommand);
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " client") instanceof ListCommand);
     }
 

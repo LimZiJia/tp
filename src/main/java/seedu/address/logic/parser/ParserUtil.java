@@ -2,15 +2,20 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Type;
@@ -127,6 +132,21 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String area} into an {@code Area}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code area} is invalid.
+     */
+    public static Area parseArea(String area) throws ParseException {
+        requireNonNull(area);
+        String trimmedArea = area.trim();
+        if (!Area.isValidArea(trimmedArea)) {
+            throw new ParseException(Area.MESSAGE_CONSTRAINTS);
+        }
+        return new Area(trimmedArea);
+    }
+
+    /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws ParseException {
@@ -136,5 +156,39 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    public static HousekeepingDetails parseHousekeepingDetails(Optional<String> details) throws ParseException {
+        if (details.isEmpty()) {
+            return HousekeepingDetails.empty;
+        }
+        String trimmedDetails = details.get().trim();
+        if (!HousekeepingDetails.isValidHousekeepingDetailsUser(trimmedDetails)) {
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
+
+        String[] s = trimmedDetails.split(" ");
+        LocalDate date = LocalDate.parse(s[0]);
+        Period period;
+        int quantity = Integer.parseInt(s[1]);
+
+        switch (s[2]) {
+        case "days":
+            period = Period.ofDays(quantity);
+            break;
+        case "weeks":
+            period = Period.ofWeeks(quantity);
+            break;
+        case "months":
+            period = Period.ofMonths(quantity);
+            break;
+        case "years":
+            period = Period.ofYears(quantity);
+            break;
+        default:
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
+
+        return new HousekeepingDetails(date, period);
     }
 }
