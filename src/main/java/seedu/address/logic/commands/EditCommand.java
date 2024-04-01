@@ -137,7 +137,6 @@ abstract public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type, bookingList);
             return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type, area, bookingList);
         }
 
@@ -212,6 +211,7 @@ abstract public class EditCommand extends Command {
 
         public Optional<HousekeepingDetails> getHousekeepingDetails() {
             return Optional.ofNullable(details);
+        }
 
         public void setArea(Area area) {
             this.area = area;
