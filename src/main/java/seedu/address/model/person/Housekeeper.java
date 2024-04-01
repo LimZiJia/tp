@@ -52,4 +52,9 @@ public class Housekeeper extends Person {
     public boolean isClient() {
         return false;
     }
+
+    @Override
+    public HousekeepingDetails getDetails() {
+        return null;
+    }
 }

@@ -16,9 +16,13 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.Messages;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -105,6 +109,7 @@ abstract public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Type type;
+        private HousekeepingDetails details;
         private Area area;
 
         public EditPersonDescriptor() {}
@@ -120,6 +125,7 @@ abstract public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTags(toCopy.tags);
             setType(toCopy.type);
+            setDetails(toCopy.details);
             setArea(toCopy.area);
         }
 
@@ -187,6 +193,13 @@ abstract public class EditCommand extends Command {
             return Optional.ofNullable(type);
         }
 
+        public void setDetails(HousekeepingDetails details) {
+            this.details = details;
+        }
+
+        public Optional<HousekeepingDetails> getHousekeepingDetails() {
+            return Optional.ofNullable(details);
+
         public void setArea(Area area) {
             this.area = area;
         }
@@ -194,7 +207,6 @@ abstract public class EditCommand extends Command {
         public Optional<Area> getArea() {
             return Optional.ofNullable(area);
         }
-
 
         @Override
         public boolean equals(Object other) {

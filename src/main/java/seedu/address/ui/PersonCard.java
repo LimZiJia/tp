@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Person;
 
 /**
@@ -44,6 +45,8 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label type;
+    @FXML
+    private Label details;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -62,8 +65,15 @@ public class PersonCard extends UiPart<Region> {
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (person.isClient()) {
             type.setText("client");
+            HousekeepingDetails housekeepingDetails = person.getDetails();
+            if (housekeepingDetails == null) {
+                details.setText(HousekeepingDetails.NO_DETAILS_PROVIDED);
+            } else {
+                details.setText(HousekeepingDetails.makeStoredDetailsReadable(housekeepingDetails.toString()));
+            }
         } else {
             type.setText("housekeeper");
         }
+
     }
 }

@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_AREA;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
@@ -14,10 +15,12 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Area;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
@@ -36,8 +39,8 @@ public class AddCommandParser implements Parser<AddCommand> {
      */
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
-                        PREFIX_AREA);
+                ArgumentTokenizer.tokenize(args,
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_DETAILS, PREFIX_AREA);               
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_AREA)
                 || !preambleIsAllowed(argMultimap.getPreamble())) {
@@ -52,11 +55,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Area area = ParserUtil.parseArea(argMultimap.getValue(PREFIX_AREA).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
+        HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
 
         Person person;
         switch (type.toString()) {
         case "client":
-            person = new Client(name, phone, email, address, tagList, type, area);
+            person = new Client(name, phone, email, address, tagList, type, details, area);
             break;
         case "housekeeper":
             person = new Housekeeper(name, phone, email, address, tagList, type, area);

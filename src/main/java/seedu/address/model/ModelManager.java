@@ -142,6 +142,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateAndSortFilteredClientList(Predicate<Client> predicate) {
+        requireNonNull(predicate);
+        filteredClients.setPredicate(predicate);
+        filteredClients.sort(null); // Client is already comparable
+    }
+
+    @Override
     public void updateFilteredHousekeeperList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredHousekeepers.setPredicate(predicate);

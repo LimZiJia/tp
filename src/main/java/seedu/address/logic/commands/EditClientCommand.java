@@ -14,6 +14,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Area;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -61,8 +62,10 @@ public class EditClientCommand extends EditCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
+        HousekeepingDetails updatedDetails =
+                editPersonDescriptor.getHousekeepingDetails().orElse(personToEdit.getDetails());
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType
-                , updatedArea);
+        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType,
+                updatedDetails, updatedArea);
     }
 }
