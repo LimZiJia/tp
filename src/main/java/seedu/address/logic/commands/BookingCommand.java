@@ -89,69 +89,79 @@ public class BookingCommand extends Command {
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
+        requireNonNull(model);
         switch (actionWord) {
         case "add":
-            requireNonNull(model);
-            List<Housekeeper> lastShownListAdd = model.getFilteredHousekeeperList();
-
-            if (housekeeperIndex.getZeroBased() >= lastShownListAdd.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            try {
-                Housekeeper housekeeperToAddBooking = lastShownListAdd.get(housekeeperIndex.getZeroBased());
-                if (housekeeperToAddBooking.hasDuplicateBooking(bookedDateAndTime)) {
-                    throw new CommandException(housekeeperToAddBooking.getName() + " " + BookingList.MESSAGE_DUPLICATE);
-                }
-                String addResult = housekeeperToAddBooking.addBooking(bookedDateAndTime);
-
-                // edit housekeeper with updated booking list
-                EditCommand.EditPersonDescriptor editHousekeeperDescriptor = new EditCommand.EditPersonDescriptor();
-                editHousekeeperDescriptor.setBookingList(housekeeperToAddBooking.getBookingList());
-                EditHousekeeperCommand command = new EditHousekeeperCommand(housekeeperIndex, editHousekeeperDescriptor);
-                Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking, editHousekeeperDescriptor);
-
-                model.setPerson(housekeeperToAddBooking, editedHousekeeper);
-                model.updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
-
-                return new CommandResult(String.format(addResult, Messages.format(housekeeperToAddBooking)));
-            } catch (DateTimeParseException e) {
-                throw new CommandException(e.getMessage());
-            } catch (IllegalArgumentException e) {
-                throw new CommandException(e.getMessage());
-            }
+            return housekeeperAdd(model);
         case "delete":
-            requireNonNull(model);
-            List<Housekeeper> lastShownListDelete = model.getFilteredHousekeeperList();
-
-            if (housekeeperIndex.getZeroBased() >= lastShownListDelete.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            Housekeeper housekeeperToDeleteBooking = lastShownListDelete.get(housekeeperIndex.getZeroBased());
-            if (!housekeeperToDeleteBooking.isValidDeleteIndex(bookingToDeleteIndex)) {
-                throw new CommandException((BookingList.MESSAGE_INVALID_DELETE));
-            }
-
-            if (bookingToDeleteIndex == 0) {
-                throw new CommandException(BookingList.MESSAGE_INVALID_DELETE);
-            }
-
-            String deleteResult = housekeeperToDeleteBooking.deleteBooking(bookingToDeleteIndex);
-            return new CommandResult(deleteResult);
+            return housekeeperDelete(model);
         case "list":
-            requireNonNull(model);
-            List<Housekeeper> lastShownListList = model.getFilteredHousekeeperList();
-
-            if (housekeeperIndex.getZeroBased() >= lastShownListList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            Housekeeper housekeeperToListBooking = lastShownListList.get(housekeeperIndex.getZeroBased());
-            String listResult = housekeeperToListBooking.listBooking();
-            return new CommandResult(listResult);
+            return housekeeperList(model);
         default:
             throw new CommandException(MESSAGE_INVALID_ACTION);
+        }
+    }
+
+    private CommandResult housekeeperList(Model model) throws CommandException {
+        List<Housekeeper> lastShownListList = model.getFilteredHousekeeperList();
+
+        if (housekeeperIndex.getZeroBased() >= lastShownListList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Housekeeper housekeeperToListBooking = lastShownListList.get(housekeeperIndex.getZeroBased());
+        String listResult = housekeeperToListBooking.listBooking();
+        return new CommandResult(listResult);
+    }
+
+    private CommandResult housekeeperDelete(Model model) throws CommandException {
+        List<Housekeeper> lastShownListDelete = model.getFilteredHousekeeperList();
+
+        if (housekeeperIndex.getZeroBased() >= lastShownListDelete.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Housekeeper housekeeperToDeleteBooking = lastShownListDelete.get(housekeeperIndex.getZeroBased());
+        if (!housekeeperToDeleteBooking.isValidDeleteIndex(bookingToDeleteIndex)) {
+            throw new CommandException((BookingList.MESSAGE_INVALID_DELETE));
+        }
+
+        if (bookingToDeleteIndex == 0) {
+            throw new CommandException(BookingList.MESSAGE_INVALID_DELETE);
+        }
+
+        String deleteResult = housekeeperToDeleteBooking.deleteBooking(bookingToDeleteIndex);
+        return new CommandResult(deleteResult);
+    }
+
+    private CommandResult housekeeperAdd(Model model) throws CommandException {
+        List<Housekeeper> lastShownListAdd = model.getFilteredHousekeeperList();
+
+        if (housekeeperIndex.getZeroBased() >= lastShownListAdd.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        try {
+            Housekeeper housekeeperToAddBooking = lastShownListAdd.get(housekeeperIndex.getZeroBased());
+            if (housekeeperToAddBooking.hasDuplicateBooking(bookedDateAndTime)) {
+                throw new CommandException(housekeeperToAddBooking.getName() + " " + BookingList.MESSAGE_DUPLICATE);
+            }
+            String addResult = housekeeperToAddBooking.addBooking(bookedDateAndTime);
+
+            // edit housekeeper with updated booking list
+            EditCommand.EditPersonDescriptor editHousekeeperDescriptor = new EditCommand.EditPersonDescriptor();
+            editHousekeeperDescriptor.setBookingList(housekeeperToAddBooking.getBookingList());
+            EditHousekeeperCommand command = new EditHousekeeperCommand(housekeeperIndex, editHousekeeperDescriptor);
+            Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking, editHousekeeperDescriptor);
+
+            model.setPerson(housekeeperToAddBooking, editedHousekeeper);
+            model.updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
+
+            return new CommandResult(String.format(addResult, Messages.format(housekeeperToAddBooking)));
+        } catch (DateTimeParseException e) {
+            throw new CommandException(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new CommandException(e.getMessage());
         }
     }
 
