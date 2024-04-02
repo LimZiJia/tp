@@ -22,6 +22,9 @@ import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 public class EditClientCommand extends EditCommand {
+    public static final String MESSAGE_EDIT_CLIENT_SUCCESS = "Edited Client: %1$s";
+    public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the address book.";
+
     public EditClientCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         super(index, editPersonDescriptor);
     }
@@ -32,19 +35,19 @@ public class EditClientCommand extends EditCommand {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
         Client personToEdit = lastShownList.get(index.getZeroBased());
-        Client editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Client editedClient = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!personToEdit.isSamePerson(editedClient) && model.hasClient(editedClient)) {
+            throw new CommandException(MESSAGE_DUPLICATE_CLIENT);
         }
 
-        model.setPerson(personToEdit, editedPerson);
+        model.setClient(personToEdit, editedClient);
 
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient)));
     }
 
     /**

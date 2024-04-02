@@ -13,7 +13,9 @@ import static seedu.address.model.person.Type.preambleIsAllowed;
 import java.util.Set;
 import java.util.stream.Stream;
 
+import seedu.address.logic.commands.AddClientCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddHousekeeperCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import seedu.address.model.person.Address;
@@ -59,19 +61,16 @@ public class AddCommandParser implements Parser<AddCommand> {
         HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
         BookingList bookingList = new BookingList();
 
-        Person person;
         switch (type.toString()) {
         case "client":
-            person = new Client(name, phone, email, address, tagList, type, details, area);
-            break;
+            Client client = new Client(name, phone, email, address, tagList, type, details, area);
+            return new AddClientCommand(client);
         case "housekeeper":
-            person = new Housekeeper(name, phone, email, address, tagList, type, area, bookingList);
-            break;
+            Housekeeper housekeeper = new Housekeeper(name, phone, email, address, tagList, type, area, bookingList);
+            return new AddHousekeeperCommand(housekeeper);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
-
-        return new AddCommand(person);
     }
 
     /**

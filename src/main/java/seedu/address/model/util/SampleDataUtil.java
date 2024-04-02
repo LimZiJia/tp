@@ -74,10 +74,10 @@ public class SampleDataUtil {
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Client sampleClient : getSampleClients()) {
-            sampleAb.addPerson(sampleClient);
+            sampleAb.addClient(sampleClient);
         }
         for (Housekeeper sampleHousekeeper : getSampleHousekeepers()) {
-            sampleAb.addPerson(sampleHousekeeper);
+            sampleAb.addHousekeeper(sampleHousekeeper);
         }
         return sampleAb;
     }

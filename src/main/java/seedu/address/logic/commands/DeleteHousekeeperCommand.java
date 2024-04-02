@@ -12,6 +12,8 @@ import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
 
 public class DeleteHousekeeperCommand extends DeleteCommand {
+    public static final String MESSAGE_DELETE_HOUSEKEEPER_SUCCESS = "Deleted Housekeeper: %1$s";
+
     public DeleteHousekeeperCommand(Index targetIndex) {
         super(targetIndex);
     }
@@ -22,11 +24,12 @@ public class DeleteHousekeeperCommand extends DeleteCommand {
         List<Housekeeper> lastShownList = model.getFilteredHousekeeperList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
         }
 
         Housekeeper housekeeperToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(housekeeperToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(housekeeperToDelete)));
+        model.deleteHousekeeper(housekeeperToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_HOUSEKEEPER_SUCCESS,
+                Messages.formatHousekeeper(housekeeperToDelete)));
     }
 }
