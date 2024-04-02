@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.parser.Prefix;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Person;
 
@@ -16,11 +18,16 @@ public class Messages {
     public static final String MESSAGE_UNKNOWN_COMMAND = "Unknown command";
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
-    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
     public static final String MESSAGE_AVAILABLE_HOUSEKEEPERS_LISTED_OVERVIEW =
             "%1$d housekeepers available at [%2$s, %3$s] listed!";
     public static final String MESSAGE_NO_AVAILABLE_HOUSEKEEPERS_LISTED_OVERVIEW =
             "No housekeepers available at [%1$s, %2$s]!";
+    public static final String MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX = "The client index provided is invalid";
+    public static final String MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX =
+            "The housekeeper index provided is invalid";
+    public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d person(s) listed!";
+    public static final String MESSAGE_CLIENTS_LISTED_OVERVIEW = "%1$d client(s) listed!";
+    public static final String MESSAGE_HOUSEKEEPERS_LISTED_OVERVIEW = "%1$d housekeeper(s) listed!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 
@@ -37,10 +44,10 @@ public class Messages {
     }
 
     /**
-     * Formats the {@code person} for display to the user.
+     * Formats the {@code client} for display to the user.
      */
-    public static String format(Person person) {
-        final HousekeepingDetails housekeepingDetails = person.getDetails();
+    public static String formatClient(Client client) {
+        final HousekeepingDetails housekeepingDetails = client.getDetails();
         final String details;
         if (housekeepingDetails == null) {
             details = HousekeepingDetails.NO_DETAILS_PROVIDED;
@@ -50,22 +57,45 @@ public class Messages {
 
         final StringBuilder builder = new StringBuilder();
         builder.append("\nName: ")
-                .append(person.getName())
+                .append(client.getName())
                 .append("; Type: ")
-                .append(person.getType())
+                .append(client.getType())
                 .append("; Phone: ")
-                .append(person.getPhone())
+                .append(client.getPhone())
                 .append("; Email: ")
-                .append(person.getEmail())
+                .append(client.getEmail())
                 .append("; Address: ")
-                .append(person.getAddress())
+                .append(client.getAddress())
                 .append("; Details: ")
                 .append(details)
                 .append("; Area: ")
-                .append(person.getArea())
+                .append(client.getArea())
                 .append("; Tags: ");
-        person.getTags().forEach(builder::append);
+        client.getTags().forEach(builder::append);
         return builder.toString();
     }
 
+    /**
+     * Formats the {@code housekeeper} for display to the user.
+     */
+    public static String formatHousekeeper(Housekeeper housekeeper) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("\nName: ")
+                .append(housekeeper.getName())
+                .append("; Type: ")
+                .append(housekeeper.getType())
+                .append("; Phone: ")
+                .append(housekeeper.getPhone())
+                .append("; Email: ")
+                .append(housekeeper.getEmail())
+                .append("; Address: ")
+                .append(housekeeper.getAddress())
+                .append("; Booking List: ")
+                .append(housekeeper.getBookingList())
+                .append("; Area: ")
+                .append(housekeeper.getArea())
+                .append("; Tags: ");
+        housekeeper.getTags().forEach(builder::append);
+        return builder.toString();
+    }
 }

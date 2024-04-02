@@ -11,6 +11,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Client;
 
 public class DeleteClientCommand extends DeleteCommand {
+    public static final String MESSAGE_DELETE_CLIENT_SUCCESS = "Deleted Client: %1$s";
+
     public DeleteClientCommand(Index targetIndex) {
         super(targetIndex);
     }
@@ -21,11 +23,11 @@ public class DeleteClientCommand extends DeleteCommand {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
         Client clientToDelete = lastShownList.get(targetIndex.getZeroBased());
-        model.deletePerson(clientToDelete);
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(clientToDelete)));
+        model.deleteClient(clientToDelete);
+        return new CommandResult(String.format(MESSAGE_DELETE_CLIENT_SUCCESS, Messages.formatClient(clientToDelete)));
     }
 }

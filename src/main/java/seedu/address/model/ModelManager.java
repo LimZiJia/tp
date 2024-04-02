@@ -92,31 +92,51 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return addressBook.hasPerson(person);
+    public boolean hasClient(Client client) {
+        requireNonNull(client);
+        return addressBook.hasClient(client);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        addressBook.removePerson(target);
+    public boolean hasHousekeeper(Housekeeper housekeeper) {
+        requireNonNull(housekeeper);
+        return addressBook.hasHousekeeper(housekeeper);
     }
 
     @Override
-    public void addPerson(Person person) {
-        addressBook.addPerson(person);
-        if (person.isClient()) {
-            updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
-        } else {
-            updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
-        }
+    public void deleteClient(Client target) {
+        addressBook.removeClient(target);
     }
 
     @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void deleteHousekeeper(Housekeeper target) {
+        addressBook.removeHousekeeper(target);
+    }
 
-        addressBook.setPerson(target, editedPerson);
+    @Override
+    public void addClient(Client client) {
+        addressBook.addClient(client);
+        updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+    }
+
+    @Override
+    public void addHousekeeper(Housekeeper housekeeper) {
+        addressBook.addHousekeeper(housekeeper);
+        updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
+    }
+
+    @Override
+    public void setClient(Client target, Client editedClient) {
+        requireAllNonNull(target, editedClient);
+
+        addressBook.setClient(target, editedClient);
+    }
+
+    @Override
+    public void setHousekeeper(Housekeeper target, Housekeeper editedHousekeeper) {
+        requireAllNonNull(target, editedHousekeeper);
+
+        addressBook.setHousekeeper(target, editedHousekeeper);
     }
 
     //=========== Filtered Person List Accessors =============================================================
@@ -136,9 +156,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredClientList(Predicate<Person> predicate) {
+    public void updateFilteredClientList(Predicate<? extends Person> predicate) {
         requireNonNull(predicate);
-        filteredClients.setPredicate(predicate);
+        filteredClients.setPredicate((Predicate<? super Client>) predicate);
     }
 
     @Override

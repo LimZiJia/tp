@@ -13,9 +13,9 @@ import seedu.address.model.person.Person;
 /**
  * An UI component that displays information of a {@code Person}.
  */
-public class PersonCard extends UiPart<Region> {
+abstract public class PersonCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    //private static final String FXML = "PersonListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -43,15 +43,11 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
-    @FXML
-    private Label type;
-    @FXML
-    private Label details;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Person person, int displayedIndex, String FXML) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
@@ -63,17 +59,5 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        if (person.isClient()) {
-            type.setText("client");
-            HousekeepingDetails housekeepingDetails = person.getDetails();
-            if (housekeepingDetails == null) {
-                details.setText(HousekeepingDetails.NO_DETAILS_PROVIDED);
-            } else {
-                details.setText(HousekeepingDetails.makeStoredDetailsReadable(housekeepingDetails.toString()));
-            }
-        } else {
-            type.setText("housekeeper");
-        }
-
     }
 }

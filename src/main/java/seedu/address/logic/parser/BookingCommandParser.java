@@ -16,8 +16,9 @@ import seedu.address.model.person.HousekeepingDetails;
 public class BookingCommandParser implements Parser<BookingCommand> {
     private static final Pattern PATTERN_TYPE = Pattern.compile("^(client|housekeeper).*");
     private static final Pattern PATTERN_ADD = Pattern.compile(
-            ".*add\\s+(\\d+)\\s+(\\d{4}-\\d{2}-\\d{2})\\s+(\\w{2})");
-    private static final Pattern PATTERN_DELETE = Pattern.compile(".*delete\\s+(\\d+)\\s+(\\d+)");
+            ".*add\\s+(\\d+)\\s+(\\d{4}-\\d{2}-\\d{2}\\s+(am|pm))");
+    private static final Pattern PATTERN_DELETE_HOUSEKEEPER = Pattern.compile(".*delete\\s+(\\d+)\\s+(\\d+)");
+    private static final Pattern PATTERN_DELETE_CLIENT = Pattern.compile(".*delete\\s+(\\d+)");
     private static final Pattern PATTERN_LIST = Pattern.compile(".*list\\s+(\\d+)");
     private static final Pattern PATTERN_SEARCH = Pattern.compile(
             ".*search\\s+(\\w+)\\s+(\\d{4}-\\d{2}-\\d{2})\\s+(\\w{2})");
@@ -39,7 +40,8 @@ public class BookingCommandParser implements Parser<BookingCommand> {
     public BookingCommand parse(String args) throws ParseException {
         requireNonNull(args);
         Matcher addMatcher = PATTERN_ADD.matcher(args.trim());
-        Matcher deleteMatcher = PATTERN_DELETE.matcher(args.trim());
+        Matcher deleteHousekeeperMatcher = PATTERN_DELETE_HOUSEKEEPER.matcher(args.trim());
+        Matcher deleteClientMatcher = PATTERN_DELETE_CLIENT.matcher(args.trim());
         Matcher listMatcher = PATTERN_LIST.matcher(args.trim());
         Matcher searchMatcher = PATTERN_SEARCH.matcher(args.trim());
         Matcher typeMatcher = PATTERN_TYPE.matcher(args.trim());
@@ -48,9 +50,9 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         if (!typeMatcher.matches()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE));
         } else if (typeMatcher.group(1).equals("client")) {
-            return clientBookingCommandParser(addMatcher, deleteMatcher, listMatcher, setMatcher, removeMatcher);
+            return clientBookingCommandParser(addMatcher, deleteClientMatcher, listMatcher, setMatcher, removeMatcher);
         } else if (typeMatcher.group(1).equals("housekeeper")) {
-            return housekeeperBookingCommandParser(addMatcher, deleteMatcher, listMatcher, searchMatcher);
+            return housekeeperBookingCommandParser(addMatcher, deleteHousekeeperMatcher, listMatcher, searchMatcher);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE));
         }
@@ -68,7 +70,14 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         } else if (removeMatcher.matches()) {
             Index clientIndex = ParserUtil.parseIndex(removeMatcher.group(1));
             return new BookingCommand(CLIENT, REMOVE_HOUSEKEEPING_DETAILS_COMMAND, clientIndex);
-        }else {
+        } else if (addMatcher.matches()) {
+            Index clientIndex = ParserUtil.parseIndex(addMatcher.group(1));
+            String bookedDateAndTime = addMatcher.group(2);
+            return new BookingCommand(CLIENT, ADD_COMMAND, clientIndex, bookedDateAndTime);
+        } else if (deleteMatcher.matches()) {
+            Index clientIndex = ParserUtil.parseIndex(deleteMatcher.group(1));
+            return new BookingCommand(CLIENT, DELETE_COMMAND, clientIndex);
+        } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE));
         }
     }
@@ -78,7 +87,7 @@ public class BookingCommandParser implements Parser<BookingCommand> {
              Matcher searchMatcher) throws ParseException {
         if (addMatcher.matches()) {
             Index housekeeperIndex = ParserUtil.parseIndex(addMatcher.group(1));
-            String bookedDateAndTime = addMatcher.group(2) + " " + addMatcher.group(3);
+            String bookedDateAndTime = addMatcher.group(2);
             return new BookingCommand(HOUSEKEEPER, ADD_COMMAND, housekeeperIndex, bookedDateAndTime);
         } else if (deleteMatcher.matches()) {
             Index housekeeperIndex = ParserUtil.parseIndex(deleteMatcher.group(1));

@@ -9,6 +9,8 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.Pane?>
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>
@@ -26,14 +28,31 @@
           </minWidth>
         </Label>
         <Label fx:id="name" text="\$first" styleClass="cell_big_label" style="-fx-text-fill: black"/>
-        <Label fx:id="type" styleClass="cell_small_label" text="\$type"
-               style="-fx-background-color: #1679FE; -fx-text-fill: white; -fx-background-radius: 10; -fx-padding: 0 2 0 2"/>
       </HBox>
       <FlowPane fx:id="tags" />
       <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" style="-fx-text-fill: black"/>
       <Label fx:id="address" styleClass="cell_small_label" text="\$address" style="-fx-text-fill: black"/>
       <Label fx:id="area" styleClass="cell_small_label" text="\$email" style="-fx-text-fill: black"/>
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" style="-fx-text-fill: black"/>
+    </VBox>
+  </GridPane>
+  <Region prefWidth="50" prefHeight="100" style="-fx-background-color: #8A8A8A; -fx-max-width: 1; -fx-max-height: 90"/>
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+    </columnConstraints>
+    <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+      <padding>
+        <Insets top="5" right="5" bottom="5" left="10" />
+      </padding>
+      <HBox spacing="5" alignment="CENTER_LEFT">
+        <Label styleClass="cell_big_label" style="-fx-text-fill: black">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+      </HBox>
       <Label fx:id="details" styleClass="cell_small_label" style="-fx-text-fill: black"/>
     </VBox>
   </GridPane>

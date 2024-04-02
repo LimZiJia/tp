@@ -57,17 +57,17 @@ class JsonSerializableAddressBook {
         AddressBook addressBook = new AddressBook();
         for (JsonAdaptedClient jsonAdaptedClient: clients) {
             Client client = jsonAdaptedClient.toModelType();
-            if (addressBook.hasPerson(client)) {
+            if (addressBook.hasClient(client)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            addressBook.addPerson(client);
+            addressBook.addClient(client);
         }
         for (JsonAdaptedHousekeeper jsonAdaptedHousekeeper: housekeepers) {
             Housekeeper housekeeper = jsonAdaptedHousekeeper.toModelType();
-            if (addressBook.hasPerson(housekeeper)) {
+            if (addressBook.hasHousekeeper(housekeeper)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            addressBook.addPerson(housekeeper);
+            addressBook.addHousekeeper(housekeeper);
         }
         return addressBook;
     }
