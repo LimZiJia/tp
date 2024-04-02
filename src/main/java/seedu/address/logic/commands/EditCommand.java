@@ -16,12 +16,8 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.BookingList;
-import seedu.address.model.person.Client;
 import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.HousekeepingDetails;
@@ -209,7 +205,7 @@ abstract public class EditCommand extends Command {
             this.details = details;
         }
 
-        public Optional<HousekeepingDetails> getHousekeepingDetails() {
+        public Optional<HousekeepingDetails> getDetails() {
             return Optional.ofNullable(details);
         }
 

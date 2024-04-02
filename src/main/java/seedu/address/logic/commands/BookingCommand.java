@@ -1,18 +1,22 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
 
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.BookingList;
+import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
+import seedu.address.model.person.HousekeepingDetails;
 
 /**
  * Encapsulates booking actions (add, delete, list) for a housekeeper.
@@ -43,10 +47,11 @@ public class BookingCommand extends Command {
             + "Example: " + COMMAND_WORD + " " + ACTION_WORD_LIST + " 1\n";
 
     private String actionWord;
-    protected Index housekeeperIndex;
+    private Index index;
     private int bookingToDeleteIndex;
     private String bookedDateAndTime;
     private String type;
+    private HousekeepingDetails housekeepingDetails;
 
     /**
      * Constructs a BookingCommand for the "add" action.
@@ -59,7 +64,7 @@ public class BookingCommand extends Command {
         requireNonNull(index);
         this.type = type;
         this.actionWord = actionWord;
-        this.housekeeperIndex = index;
+        this.index = index;
         this.bookedDateAndTime = bookedDateAndTime;
     }
 
@@ -74,7 +79,7 @@ public class BookingCommand extends Command {
         requireNonNull(index);
         this.type = type;
         this.actionWord = actionWord;
-        this.housekeeperIndex = index;
+        this.index = index;
         this.bookingToDeleteIndex = bookingToDeleteIndex;
     }
 
@@ -88,14 +93,29 @@ public class BookingCommand extends Command {
         requireNonNull(index);
         this.type = type;
         this.actionWord = actionWord;
-        this.housekeeperIndex = index;
+        this.index = index;
+    }
+
+    public BookingCommand(String type, String actionWord, Index index, HousekeepingDetails housekeepingDetails) {
+        requireNonNull(index);
+        this.type = type;
+        this.actionWord = actionWord;
+        this.index = index;
+        this.housekeepingDetails = housekeepingDetails;
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
         if (type.equals("client")) {
-            throw new CommandException(MESSAGE_INVALID_ACTION); // Placeholder
+            switch (actionWord) {
+            case "set":
+                return clientSet(model);
+            case "remove":
+                return clientRemove(model);
+            default:
+                throw new CommandException(MESSAGE_INVALID_ACTION);
+            }
         } else if (type.equals("housekeeper")) {
             switch (actionWord) {
             case "add":
@@ -112,14 +132,43 @@ public class BookingCommand extends Command {
         }
     }
 
-    private CommandResult housekeeperList(Model model) throws CommandException {
-        List<Housekeeper> lastShownListList = model.getFilteredHousekeeperList();
+    private CommandResult clientSet(Model model) throws CommandException {
+        List<Client> lastShownList = model.getFilteredClientList();
 
-        if (housekeeperIndex.getZeroBased() >= lastShownListList.size()) {
+        if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Housekeeper housekeeperToListBooking = lastShownListList.get(housekeeperIndex.getZeroBased());
+        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+        editPersonDescriptor.setDetails(housekeepingDetails);
+
+
+        Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
+        return editClientCommand.execute(model);
+    }
+
+    private CommandResult clientRemove(Model model) throws CommandException {
+        List<Client> lastShownList = model.getFilteredClientList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+        editPersonDescriptor.setDetails(HousekeepingDetails.empty);
+
+        Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
+        return editClientCommand.execute(model);
+    }
+
+    private CommandResult housekeeperList(Model model) throws CommandException {
+        List<Housekeeper> lastShownListList = model.getFilteredHousekeeperList();
+
+        if (index.getZeroBased() >= lastShownListList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Housekeeper housekeeperToListBooking = lastShownListList.get(index.getZeroBased());
         String listResult = housekeeperToListBooking.listBooking();
         return new CommandResult(listResult);
     }
@@ -127,11 +176,11 @@ public class BookingCommand extends Command {
     private CommandResult housekeeperDelete(Model model) throws CommandException {
         List<Housekeeper> lastShownListDelete = model.getFilteredHousekeeperList();
 
-        if (housekeeperIndex.getZeroBased() >= lastShownListDelete.size()) {
+        if (index.getZeroBased() >= lastShownListDelete.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Housekeeper housekeeperToDeleteBooking = lastShownListDelete.get(housekeeperIndex.getZeroBased());
+        Housekeeper housekeeperToDeleteBooking = lastShownListDelete.get(index.getZeroBased());
         if (!housekeeperToDeleteBooking.isValidDeleteIndex(bookingToDeleteIndex)) {
             throw new CommandException((BookingList.MESSAGE_INVALID_DELETE));
         }
@@ -147,12 +196,12 @@ public class BookingCommand extends Command {
     private CommandResult housekeeperAdd(Model model) throws CommandException {
         List<Housekeeper> lastShownListAdd = model.getFilteredHousekeeperList();
 
-        if (housekeeperIndex.getZeroBased() >= lastShownListAdd.size()) {
+        if (index.getZeroBased() >= lastShownListAdd.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         try {
-            Housekeeper housekeeperToAddBooking = lastShownListAdd.get(housekeeperIndex.getZeroBased());
+            Housekeeper housekeeperToAddBooking = lastShownListAdd.get(index.getZeroBased());
             if (housekeeperToAddBooking.hasDuplicateBooking(bookedDateAndTime)) {
                 throw new CommandException(housekeeperToAddBooking.getName() + " " + BookingList.MESSAGE_DUPLICATE);
             }
@@ -161,7 +210,7 @@ public class BookingCommand extends Command {
             // edit housekeeper with updated booking list
             EditCommand.EditPersonDescriptor editHousekeeperDescriptor = new EditCommand.EditPersonDescriptor();
             editHousekeeperDescriptor.setBookingList(housekeeperToAddBooking.getBookingList());
-            EditHousekeeperCommand command = new EditHousekeeperCommand(housekeeperIndex, editHousekeeperDescriptor);
+            EditHousekeeperCommand command = new EditHousekeeperCommand(index, editHousekeeperDescriptor);
             Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking, editHousekeeperDescriptor);
 
             model.setPerson(housekeeperToAddBooking, editedHousekeeper);
@@ -188,7 +237,7 @@ public class BookingCommand extends Command {
 
         BookingCommand otherBookingCommand = (BookingCommand) other;
         return actionWord.equals(otherBookingCommand.actionWord)
-                && housekeeperIndex.equals(otherBookingCommand.housekeeperIndex)
+                && index.equals(otherBookingCommand.index)
                 && (bookingToDeleteIndex == otherBookingCommand.bookingToDeleteIndex)
                 && bookedDateAndTime.equals(otherBookingCommand.bookedDateAndTime);
     }
@@ -197,7 +246,7 @@ public class BookingCommand extends Command {
     public String toString() {
         return new ToStringBuilder(this)
                 .add("actionWord", actionWord)
-                .add("housekeeperIndex", housekeeperIndex)
+                .add("housekeeperIndex", index)
                 .add("bookingToDeleteIndex", bookingToDeleteIndex)
                 .add("bookedDateAndTime", bookedDateAndTime)
                 .toString();
