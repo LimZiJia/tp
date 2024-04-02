@@ -84,7 +84,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         // Makes null booking readable
         String booking = s[2].equals("null") ? "No booking" : s[2];
 
-        return String.format("Last housekeeping date: %s\nPreferred interval: %s %s\nBooking date: %s",
+        return String.format("Last housekeeping: %s\nPreferred interval: %s %s\nBooking date: %s",
                 s[0], num, unitString, booking);
     }
 
