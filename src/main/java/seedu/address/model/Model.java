@@ -80,9 +80,6 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    //ObservableList<Person> getFilteredPersonList();
-
     /**
      * Returns an unmodifiable view of the filtered client list
      */
@@ -94,16 +91,10 @@ public interface Model {
     ObservableList<Housekeeper> getFilteredHousekeeperList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    //void updateFilteredPersonList(Predicate<Person> predicate);
-
-    /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredClientList(Predicate<Person> predicate);
+    void updateFilteredClientList(Predicate<? extends Person> predicate);
 
     /**
      * Updates and sorts the filter of the filtered client list to filter by the given {@code predicate}.
