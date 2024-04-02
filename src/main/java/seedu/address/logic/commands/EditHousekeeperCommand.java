@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Type;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.tag.Tag;
 
 public class EditHousekeeperCommand extends EditCommand {
@@ -53,6 +54,7 @@ public class EditHousekeeperCommand extends EditCommand {
     @Override
     protected Housekeeper createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
+        Housekeeper housekeeperToEdit = (Housekeeper) personToEdit; // to use getBookingList()
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
@@ -61,8 +63,10 @@ public class EditHousekeeperCommand extends EditCommand {
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
+        BookingList updatedBookingList = editPersonDescriptor.getBookingList()
+                .orElse(housekeeperToEdit.getBookingList());
 
-        return new Housekeeper(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType
-                , updatedArea);
+        return new Housekeeper(
+                updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType, updatedArea, updatedBookingList);
     }
 }

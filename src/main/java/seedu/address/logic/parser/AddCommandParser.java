@@ -17,6 +17,7 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Area;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
@@ -56,6 +57,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Area area = ParserUtil.parseArea(argMultimap.getValue(PREFIX_AREA).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
+        BookingList bookingList = new BookingList();
 
         Person person;
         switch (type.toString()) {
@@ -63,7 +65,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             person = new Client(name, phone, email, address, tagList, type, details, area);
             break;
         case "housekeeper":
-            person = new Housekeeper(name, phone, email, address, tagList, type, area);
+            person = new Housekeeper(name, phone, email, address, tagList, type, area, bookingList);
             break;
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
