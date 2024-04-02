@@ -13,6 +13,7 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.Booking;
 import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
@@ -45,6 +46,9 @@ public class BookingCommand extends Command {
             + "by the index number used in the displayed housekeeper list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " " + ACTION_WORD_LIST + " 1\n";
+
+    public static final String ADD_MESSAGE_CONSTRAINT = "If client does not have housekeeping details, "
+            + "please set housekeeping details first using 'set'.";
 
     private String actionWord;
     private Index index;
@@ -109,6 +113,10 @@ public class BookingCommand extends Command {
         requireNonNull(model);
         if (type.equals("client")) {
             switch (actionWord) {
+            case "add":
+                return clientAdd(model);
+            case "delete":
+                return clientDelete(model);
             case "set":
                 return clientSet(model);
             case "remove":
@@ -130,6 +138,48 @@ public class BookingCommand extends Command {
         } else {
             throw new CommandException(MESSAGE_INVALID_ACTION);
         }
+    }
+
+    private CommandResult clientAdd(Model model) throws CommandException {
+        List<Client> lastShownList = model.getFilteredClientList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Booking booking = new Booking(bookedDateAndTime);
+
+        Client clientToEdit = lastShownList.get(index.getZeroBased());
+        if (clientToEdit.hasHousekeepingDetails()) {
+            HousekeepingDetails details = clientToEdit.getDetails();
+            details.setBooking(booking);
+
+            EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+            editPersonDescriptor.setDetails(details);
+
+            Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
+            return editClientCommand.execute(model);
+        } else {
+            throw new CommandException(ADD_MESSAGE_CONSTRAINT);
+        }
+    }
+
+    private CommandResult clientDelete(Model model) throws CommandException {
+        List<Client> lastShownList = model.getFilteredClientList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        Client clientToEdit = lastShownList.get(index.getZeroBased());
+        HousekeepingDetails details = clientToEdit.getDetails();
+        details.deleteBooking();
+
+        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+        editPersonDescriptor.setDetails(details);
+
+        Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
+        return editClientCommand.execute(model);
     }
 
     private CommandResult clientSet(Model model) throws CommandException {
