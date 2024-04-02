@@ -199,6 +199,7 @@ abstract public class EditCommand extends Command {
 
         public Optional<HousekeepingDetails> getHousekeepingDetails() {
             return Optional.ofNullable(details);
+        }
 
         public void setArea(Area area) {
             this.area = area;

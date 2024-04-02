@@ -94,7 +94,7 @@ public interface Model {
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredClientList(Predicate<Person> predicate);
+    void updateFilteredClientList(Predicate<? extends Person> predicate);
 
     /**
      * Updates and sorts the filter of the filtered client list to filter by the given {@code predicate}.
