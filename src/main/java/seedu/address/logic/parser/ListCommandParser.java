@@ -2,7 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import seedu.address.logic.commands.ListClientCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListHousekeeperCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.TypePredicate;
 
@@ -36,7 +38,12 @@ public class ListCommandParser implements Parser<ListCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
         }
 
-        return new ListCommand(new TypePredicate(trimmedArgs));
+        if (trimmedArgs.equals("client")) {
+            return new ListClientCommand(new TypePredicate("client"));
+        } else {
+            // As the type is either "client" or "housekeeper", we can safely assume that the type is "housekeeper"
+            return new ListHousekeeperCommand(new TypePredicate("housekeeper"));
+        }
     }
 
 }

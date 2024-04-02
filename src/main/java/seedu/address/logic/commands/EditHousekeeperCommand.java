@@ -22,6 +22,9 @@ import seedu.address.model.person.BookingList;
 import seedu.address.model.tag.Tag;
 
 public class EditHousekeeperCommand extends EditCommand {
+    public static final String MESSAGE_EDIT_HOUSEKEEPER_SUCCESS = "Edited Housekeeper: %1$s";
+    public static final String MESSAGE_DUPLICATE_HOUSEKEEPER = "This housekeeper already exists in the address book.";
+
     public EditHousekeeperCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         super(index, editPersonDescriptor);
     }
@@ -32,19 +35,20 @@ public class EditHousekeeperCommand extends EditCommand {
         List<Housekeeper> lastShownList = model.getFilteredHousekeeperList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
         }
 
         Housekeeper personToEdit = lastShownList.get(index.getZeroBased());
-        Housekeeper editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        Housekeeper editedHousekeeper = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        if (!personToEdit.isSamePerson(editedHousekeeper) && model.hasHousekeeper(editedHousekeeper)) {
+            throw new CommandException(MESSAGE_DUPLICATE_HOUSEKEEPER);
         }
 
-        model.setPerson(personToEdit, editedPerson);
+        model.setHousekeeper(personToEdit, editedHousekeeper);
         model.updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_HOUSEKEEPER_SUCCESS,
+                Messages.formatHousekeeper(editedHousekeeper)));
     }
 
     /**

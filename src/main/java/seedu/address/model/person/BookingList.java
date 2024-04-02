@@ -127,4 +127,12 @@ public class BookingList {
         }
         return bookings;
     }
+
+    @Override
+    public String toString() {
+        if (bookings.isEmpty()) {
+            return "No bookings available";
+        }
+        return bookings.toString();
+    }
 }

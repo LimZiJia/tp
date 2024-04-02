@@ -213,10 +213,11 @@ public class BookingCommand extends Command {
             EditHousekeeperCommand command = new EditHousekeeperCommand(index, editHousekeeperDescriptor);
             Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking, editHousekeeperDescriptor);
 
-            model.setPerson(housekeeperToAddBooking, editedHousekeeper);
+
+            model.setHousekeeper(housekeeperToAddBooking, editedHousekeeper);
             model.updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
 
-            return new CommandResult(String.format(addResult, Messages.format(housekeeperToAddBooking)));
+            return new CommandResult(String.format(addResult, Messages.formatHousekeeper(housekeeperToAddBooking)));
         } catch (DateTimeParseException e) {
             throw new CommandException(e.getMessage());
         } catch (IllegalArgumentException e) {

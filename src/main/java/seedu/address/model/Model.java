@@ -56,29 +56,52 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a client with the same identity as {@code client} exists in the address book.
      */
-    boolean hasPerson(Person person);
-
+    boolean hasClient(Client client);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Returns true if a housekeeper with the same identity as {@code housekeeper} exists in the address book.
      */
-    void deletePerson(Person target);
+    boolean hasHousekeeper(Housekeeper housekeeper);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Deletes the given client.
+     * The client must exist in the address book.
      */
-    void addPerson(Person person);
+    void deleteClient(Client target);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Deletes the given housekeeper.
+     * The housekeeper must exist in the address book.
+     */
+    void deleteHousekeeper(Housekeeper target);
+
+    /**
+     * Adds the given client.
+     * {@code client} must not already exist in the address book.
+     */
+    void addClient(Client client);
+
+    /**
+     * Adds the given housekeeper.
+     * {@code housekeeper} must not already exist in the address book.
+     */
+    void addHousekeeper(Housekeeper housekeeper);
+
+    /**
+     * Replaces the given client {@code target} with {@code editedClient}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The client identity of {@code editedClient} must not be the same as another existing client in the address book.
      */
-    void setPerson(Person target, Person editedPerson);
+    void setClient(Client target, Client editedClient);
+
+    /**
+     * Replaces the given housekeeper {@code target} with {@code editedHousekeeper}.
+     * {@code target} must exist in the address book.
+     * The housekeeper identity of {@code editedHousekeeper} must not be the same as another existing housekeeper in the address book.
+     */
+    void setHousekeeper(Housekeeper target, Housekeeper editedHousekeeper);
 
     /**
      * Returns an unmodifiable view of the filtered client list
