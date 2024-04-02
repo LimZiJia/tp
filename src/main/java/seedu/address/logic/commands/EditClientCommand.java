@@ -43,7 +43,7 @@ public class EditClientCommand extends EditCommand {
         }
 
         model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -63,7 +63,7 @@ public class EditClientCommand extends EditCommand {
         Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
         HousekeepingDetails updatedDetails =
-                editPersonDescriptor.getHousekeepingDetails().orElse(personToEdit.getDetails());
+                editPersonDescriptor.getDetails().orElse(personToEdit.getDetails());
 
         return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType,
                 updatedDetails, updatedArea);

@@ -38,12 +38,8 @@ public class Client extends Person implements Comparable<Client> {
         return housekeepingDetails.isEmpty();
     }
 
-    /**
-     * Returns the housekeeping details of the client.
-     */
-    @Override
-    public HousekeepingDetails getDetails() {
-        return this.housekeepingDetails;
+    public void setHousekeepingDetails(HousekeepingDetails housekeepingDetails) {
+        this.housekeepingDetails = housekeepingDetails;
     }
 
     public LocalDate getNextHousekeepingDate() {
@@ -52,6 +48,14 @@ public class Client extends Person implements Comparable<Client> {
 
     public boolean hasBooking() {
         return this.housekeepingDetails.hasBooking();
+    }
+
+    /**
+     * Returns the housekeeping details of the client.
+     */
+    @Override
+    public HousekeepingDetails getDetails() {
+        return this.housekeepingDetails;
     }
 
     /**
