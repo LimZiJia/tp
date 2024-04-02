@@ -116,4 +116,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredHousekeeperList(Predicate<Person> predicate);
+
+    /**
+     * Updates the filter of the filtered housekeeper list to filter by the given {@code housekeeperPredicate}.
+     * @throws NullPointerException if {@code housekeeperPredicate} is null.
+     */
+    void updateFilteredHousekeeperListWithHousekeeperPredicate(Predicate<Housekeeper> housekeeperPredicate);
 }

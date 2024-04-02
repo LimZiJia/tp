@@ -155,6 +155,12 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void updateFilteredHousekeeperListWithHousekeeperPredicate(Predicate<Housekeeper> housekeeperPredicate) {
+        requireNonNull(housekeeperPredicate);
+        filteredHousekeepers.setPredicate(housekeeperPredicate);
+    }
+
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;

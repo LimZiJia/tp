@@ -33,7 +33,7 @@ public class Housekeeper extends Person {
     }
 
     public String addBooking(String bookedDateAndTime) {
-        return "[ " + this.getName() + " ]\n" + bookingList.addBooking(bookedDateAndTime);
+        return "Housekeeper: [ " + this.getName() + " ]\n\n" + bookingList.addBooking(bookedDateAndTime);
     }
 
     public boolean isValidDeleteIndex(int index) {
@@ -41,11 +41,11 @@ public class Housekeeper extends Person {
     }
 
     public String deleteBooking(int index) {
-        return "[ " + this.getName() + " ]\n" + bookingList.deleteBooking(index);
+        return "Housekeeper: [ " + this.getName() + " ]\n\n" + bookingList.deleteBooking(index);
     }
 
     public String listBooking() {
-        return "[ " + this.getName() + " ]\n" + bookingList.listBooking();
+        return "Housekeeper: [ " + this.getName() + " ]\n\n" + bookingList.listBooking();
     }
 
     public BookingList getBookingList() {

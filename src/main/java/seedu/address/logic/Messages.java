@@ -17,6 +17,10 @@ public class Messages {
     public static final String MESSAGE_INVALID_COMMAND_FORMAT = "Invalid command format! \n%1$s";
     public static final String MESSAGE_INVALID_PERSON_DISPLAYED_INDEX = "The person index provided is invalid";
     public static final String MESSAGE_PERSONS_LISTED_OVERVIEW = "%1$d persons listed!";
+    public static final String MESSAGE_AVAILABLE_HOUSEKEEPERS_LISTED_OVERVIEW =
+            "%1$d housekeepers available at [%2$s, %3$s] listed!";
+    public static final String MESSAGE_NO_AVAILABLE_HOUSEKEEPERS_LISTED_OVERVIEW =
+            "No housekeepers available at [%1$s, %2$s]!";
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 

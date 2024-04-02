@@ -12,7 +12,7 @@ public class BookingList {
     public static final String MESSAGE_INVALID_DELETE = "The booking index provided is invalid.";
     private static final String MESSAGE_SUCCESS_ADD = "This booking has successfully been added: %1$s.";
     private static final String MESSAGE_SUCCESS_DELETE = "This booking has successfully been deleted: %1$s.";
-    private static final String MESSAGE_SUCCESS_LIST = "Bookings:\n%1$s";
+    private static final String MESSAGE_SUCCESS_LIST = "Bookings:%1$s";
 
     private ArrayList<Booking> bookings;
 

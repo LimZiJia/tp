@@ -29,7 +29,7 @@ public class Area {
     }
 
     /**
-     * Returns true if a given string is a valid email.
+     * Returns true if a given string is a valid area.
      */
     public static boolean isValidArea(String test) {
         return test.matches(VALIDATION_REGEX) && preambleIsAllowed(test);

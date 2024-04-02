@@ -25,7 +25,13 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredClientList(predicate);
+        model.updateFilteredHousekeeperList(Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS);
+        model.updateFilteredClientList(Model.PREDICATE_SHOW_ALL_CLIENTS);
+        if (predicate.getType() == "housekeeper") {
+            model.updateFilteredHousekeeperList(predicate);
+        } else {
+            model.updateFilteredClientList(predicate);
+        }
         return new CommandResult(MESSAGE_SUCCESS + "all " + predicate.getType() + "s");
     }
 
