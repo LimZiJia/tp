@@ -213,6 +213,7 @@ public class BookingCommand extends Command {
             EditHousekeeperCommand command = new EditHousekeeperCommand(index, editHousekeeperDescriptor);
             Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking, editHousekeeperDescriptor);
 
+
             model.setHousekeeper(housekeeperToAddBooking, editedHousekeeper);
             model.updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);
 
