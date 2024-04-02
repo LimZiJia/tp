@@ -46,6 +46,7 @@ public class BookingCommand extends Command {
     protected Index housekeeperIndex;
     private int bookingToDeleteIndex;
     private String bookedDateAndTime;
+    private String type;
 
     /**
      * Constructs a BookingCommand for the "add" action.
@@ -54,8 +55,9 @@ public class BookingCommand extends Command {
      * @param index of housekeeper to add booking to
      * @param bookedDateAndTime in the form of a string
      */
-    public BookingCommand(String actionWord, Index index, String bookedDateAndTime) {
+    public BookingCommand(String type, String actionWord, Index index, String bookedDateAndTime) {
         requireNonNull(index);
+        this.type = type;
         this.actionWord = actionWord;
         this.housekeeperIndex = index;
         this.bookedDateAndTime = bookedDateAndTime;
@@ -68,8 +70,9 @@ public class BookingCommand extends Command {
      * @param index of housekeeper to delete booking from
      * @param bookingToDeleteIndex of booking to delete
      */
-    public BookingCommand(String actionWord, Index index, int bookingToDeleteIndex) {
+    public BookingCommand(String type, String actionWord, Index index, int bookingToDeleteIndex) {
         requireNonNull(index);
+        this.type = type;
         this.actionWord = actionWord;
         this.housekeeperIndex = index;
         this.bookingToDeleteIndex = bookingToDeleteIndex;
@@ -81,8 +84,9 @@ public class BookingCommand extends Command {
      * @param actionWord "list"
      * @param index of housekeeper whose bookings to list
      */
-    public BookingCommand(String actionWord, Index index) {
+    public BookingCommand(String type, String actionWord, Index index) {
         requireNonNull(index);
+        this.type = type;
         this.actionWord = actionWord;
         this.housekeeperIndex = index;
     }
@@ -90,14 +94,20 @@ public class BookingCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        switch (actionWord) {
-        case "add":
-            return housekeeperAdd(model);
-        case "delete":
-            return housekeeperDelete(model);
-        case "list":
-            return housekeeperList(model);
-        default:
+        if (type.equals("client")) {
+            throw new CommandException(MESSAGE_INVALID_ACTION); // Placeholder
+        } else if (type.equals("housekeeper")) {
+            switch (actionWord) {
+            case "add":
+                return housekeeperAdd(model);
+            case "delete":
+                return housekeeperDelete(model);
+            case "list":
+                return housekeeperList(model);
+            default:
+                throw new CommandException(MESSAGE_INVALID_ACTION);
+            }
+        } else {
             throw new CommandException(MESSAGE_INVALID_ACTION);
         }
     }
