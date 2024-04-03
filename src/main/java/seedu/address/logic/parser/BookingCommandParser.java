@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BookingCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.person.BookingSearchPredicate;
 import seedu.address.model.person.HousekeepingDetails;
 
 public class BookingCommandParser implements Parser<BookingCommand> {
@@ -19,6 +20,8 @@ public class BookingCommandParser implements Parser<BookingCommand> {
     private static final Pattern PATTERN_DELETE_HOUSEKEEPER = Pattern.compile(".*delete\\s+(\\d+)\\s+(\\d+)");
     private static final Pattern PATTERN_DELETE_CLIENT = Pattern.compile(".*delete\\s+(\\d+)");
     private static final Pattern PATTERN_LIST = Pattern.compile(".*list\\s+(\\d+)");
+    private static final Pattern PATTERN_SEARCH = Pattern.compile(
+            ".*search\\s+(\\w+)\\s+(\\d{4}-\\d{2}-\\d{2})\\s+(\\w{2})");
     private static final Pattern PATTERN_SET = Pattern.compile(
             ".*set\\s+(\\d+)\\s+(\\d{4}-\\d{2}-\\d{2}\\s+\\d+\\s+(days|weeks|months|years))");
 
@@ -28,6 +31,7 @@ public class BookingCommandParser implements Parser<BookingCommand> {
     private static final String ADD_COMMAND = "add";
     private static final String DELETE_COMMAND = "delete";
     private static final String LIST_COMMAND = "list";
+    private static final String SEARCH_COMMAND = "search";
     private static final String EDIT_LAST_HOUSEKEEPING_DATE_COMMAND = "last";
     private static final String EDIT_PREFERRED_INTERVAL_COMMAND = "interval";
     private static final String SET_HOUSEKEEPING_DETAILS_COMMAND = "set";
@@ -39,6 +43,7 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         Matcher deleteHousekeeperMatcher = PATTERN_DELETE_HOUSEKEEPER.matcher(args.trim());
         Matcher deleteClientMatcher = PATTERN_DELETE_CLIENT.matcher(args.trim());
         Matcher listMatcher = PATTERN_LIST.matcher(args.trim());
+        Matcher searchMatcher = PATTERN_SEARCH.matcher(args.trim());
         Matcher typeMatcher = PATTERN_TYPE.matcher(args.trim());
         Matcher setMatcher = PATTERN_SET.matcher(args.trim());
         Matcher removeMatcher = PATTERN_REMOVE.matcher(args.trim());
@@ -47,7 +52,7 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         } else if (typeMatcher.group(1).equals("client")) {
             return clientBookingCommandParser(addMatcher, deleteClientMatcher, listMatcher, setMatcher, removeMatcher);
         } else if (typeMatcher.group(1).equals("housekeeper")) {
-            return housekeeperBookingCommandParser(addMatcher, deleteHousekeeperMatcher, listMatcher);
+            return housekeeperBookingCommandParser(addMatcher, deleteHousekeeperMatcher, listMatcher, searchMatcher);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE));
         }
@@ -77,9 +82,9 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         }
     }
 
-
     private static BookingCommand housekeeperBookingCommandParser
-            (Matcher addMatcher, Matcher deleteMatcher, Matcher listMatcher) throws ParseException {
+            (Matcher addMatcher, Matcher deleteMatcher, Matcher listMatcher,
+             Matcher searchMatcher) throws ParseException {
         if (addMatcher.matches()) {
             Index housekeeperIndex = ParserUtil.parseIndex(addMatcher.group(1));
             String bookedDateAndTime = addMatcher.group(2);
@@ -91,6 +96,11 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         } else if (listMatcher.matches()) {
             Index housekeeperIndex = ParserUtil.parseIndex(listMatcher.group(1));
             return new BookingCommand(HOUSEKEEPER, LIST_COMMAND, housekeeperIndex);
+        } else if (searchMatcher.matches()){
+            String area = searchMatcher.group(1);
+            String bookedDateAndTime = searchMatcher.group(2) + " " + searchMatcher.group(3);
+            BookingSearchPredicate bookingSearchPredicate = new BookingSearchPredicate(area, bookedDateAndTime);
+            return new BookingCommand(HOUSEKEEPER, SEARCH_COMMAND, bookingSearchPredicate);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE));
         }
