@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
 
+import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -27,9 +28,11 @@ public class BookingCommand extends Command {
     public static final String ACTION_WORD_ADD = "add";
     public static final String ACTION_WORD_DELETE = "delete";
     public static final String ACTION_WORD_LIST = "list";
+    public static final String MESSAGE_DEFER_PERSON_SUCCESS = "Deferment Success: Now the deferment value is %1$s";
     public static final String MESSAGE_INVALID_ACTION = "Invalid action. Action words include {add, delete, list}.";
 
-    public static final String MESSAGE_USAGE = "Please refer to the command formats:\n\n" + COMMAND_WORD + " " + ACTION_WORD_ADD
+    public static final String MESSAGE_USAGE = "Please refer to the command formats:\n\n" + COMMAND_WORD + " "
+            + ACTION_WORD_ADD
             + ": adds a booking for the housekeeper identified "
             + "by the index number used in the displayed housekeeper list.\n"
             + "Parameters: INDEX (must be a positive integer) "
@@ -52,6 +55,7 @@ public class BookingCommand extends Command {
     private String bookedDateAndTime;
     private String type;
     private HousekeepingDetails housekeepingDetails;
+    private Period defer;
 
     /**
      * Constructs a BookingCommand for the "add" action.
@@ -104,6 +108,20 @@ public class BookingCommand extends Command {
         this.housekeepingDetails = housekeepingDetails;
     }
 
+    public BookingCommand(String type, String actionWord, Index index, Period defer) {
+        requireNonNull(index);
+        requireNonNull(defer);
+        requireNonNull(actionWord);
+        requireNonNull(type);
+        this.type = type;
+        this.actionWord = actionWord;
+        this.index = index;
+        this.defer = defer;
+    }
+
+    public BookingCommand() {
+    }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -113,6 +131,8 @@ public class BookingCommand extends Command {
                 return clientSet(model);
             case "remove":
                 return clientRemove(model);
+            case "defer":
+                return clientDefer(model);
             default:
                 throw new CommandException(MESSAGE_INVALID_ACTION);
             }
@@ -145,6 +165,21 @@ public class BookingCommand extends Command {
 
         Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
         return editClientCommand.execute(model);
+    }
+
+    private CommandResult clientDefer(Model model) throws CommandException {
+        List<Client> lastShownList = model.getFilteredClientList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+        Client personToEdit = lastShownList.get(index.getZeroBased());
+
+        HousekeepingDetails detailsToEdit = personToEdit.getDetails();
+
+        detailsToEdit.addDeferment(defer);
+
+        return new CommandResult(String.format(MESSAGE_DEFER_PERSON_SUCCESS, detailsToEdit.getDefermentToString()));
     }
 
     private CommandResult clientRemove(Model model) throws CommandException {

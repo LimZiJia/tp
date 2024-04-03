@@ -73,9 +73,6 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case BookingCommand.COMMAND_WORD:
-            if (userInput.contains("edit")) {
-                return new EditHousekeepingDetailsParser().parse(arguments);
-            }
             return new BookingCommandParser().parse(arguments);
 
         default:

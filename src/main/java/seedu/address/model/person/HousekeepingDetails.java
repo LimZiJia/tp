@@ -165,6 +165,32 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     public Period getDeferment() {
         return deferment;
     }
+    public String getDefermentToString() {
+        String details = this.toString();
+        String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
+        // s[2] = bookingDate, s[3] = deferment
+        String num = s[3].substring(1, s[3].length() - 1);
+        String unit = s[3].substring(s[3].length() - 1);
+        String unitString;
+        switch (unit) {
+            case "Y":
+                unitString = "years";
+                break;
+            case "M":
+                unitString = "months";
+                break;
+            case "W":
+                unitString = "weeks";
+                break;
+            case "D":
+                unitString = "days";
+                break;
+            default:
+                unitString = "Invalid unit";
+        }
+
+        return num + " " + unitString;
+    }
 
     public Period getPreferredInterval() {
         return preferredInterval;
