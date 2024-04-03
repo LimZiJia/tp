@@ -8,7 +8,7 @@ import seedu.address.model.person.TypePredicate;
 /**
  * Lists all persons in the address book to the user.
  */
-public class ListCommand extends Command {
+abstract public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
@@ -17,15 +17,22 @@ public class ListCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Show list of the contacts with the given type.\n"
             + "Parameters: TYPE\n"
             + "Example: " + COMMAND_WORD + " housekeeper";
-    private final TypePredicate predicate;
+    protected final TypePredicate predicate;
 
     public ListCommand(TypePredicate predicate) {
         this.predicate = predicate;
     }
+
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateFilteredClientList(predicate);
+        model.updateFilteredHousekeeperList(Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS);
+        model.updateFilteredClientList(Model.PREDICATE_SHOW_ALL_CLIENTS);
+        if (predicate.getType() == "housekeeper") {
+            model.updateFilteredHousekeeperList(predicate);
+        } else {
+            model.updateFilteredClientList(predicate);
+        }
         return new CommandResult(MESSAGE_SUCCESS + "all " + predicate.getType() + "s");
     }
 

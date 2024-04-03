@@ -2,47 +2,47 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
+import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.ContainsKeywordsPredicate;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
+import seedu.address.model.person.Name;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Type;
+import seedu.address.model.tag.Tag;
 
 /**
  * Finds and lists all persons in address book whose name contains any of the argument keywords.
  * Keyword matching is case-insensitive.
  */
-public class FindCommand extends Command {
+abstract public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients or housekeepers whose names contain "
+            + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
+            + "Parameters: TYPE(client or housekeeper) KEYWORD [MORE_KEYWORDS]...\n"
+            + "Example: " + COMMAND_WORD + " client alice bob charlie";
 
-    private final ContainsKeywordsPredicate predicate;
+    public static final String MESSAGE_NOT_FOUND = "At least one field to find must be provided.";
 
-    private final String type;
+    protected final ContainsKeywordsPredicate predicate;
 
-    public FindCommand(String type, ContainsKeywordsPredicate predicate) {
-        this.type = type;
+    public FindCommand(ContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
-    }
-
-    @Override
-    public CommandResult execute(Model model) {
-        if (type.equals("client")) {
-            requireNonNull(model);
-            model.updateFilteredClientList(predicate);
-            return new CommandResult(
-                    String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
-        } else { // type is housekeeper
-            requireNonNull(model);
-            model.updateFilteredHousekeeperList(predicate);
-            return new CommandResult(
-                    String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredHousekeeperList().size()));
-        }
     }
 
     @Override
@@ -67,3 +67,4 @@ public class FindCommand extends Command {
                 .toString();
     }
 }
+

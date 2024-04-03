@@ -26,7 +26,7 @@ import seedu.address.model.tag.Tag;
  */
 public class EditHousekeepingDetailsCommand extends BookingCommand {
 
-    public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_WORD = "booking client edit";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the displayed person list. "
@@ -50,14 +50,15 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
 
     /**
      * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param editHousekeepingDetailsDescriptor details to edit the person with
      */
-    public EditHousekeepingDetailsCommand(Index index, EditHousekeepingDetailsDescriptor editPersonDescriptor) {
+    public EditHousekeepingDetailsCommand(Index index,
+                                          EditHousekeepingDetailsDescriptor editHousekeepingDetailsDescriptor) {
         requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+        requireNonNull(editHousekeepingDetailsDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditHousekeepingDetailsDescriptor(editPersonDescriptor);
+        this.editPersonDescriptor = new EditHousekeepingDetailsDescriptor(editHousekeepingDetailsDescriptor);
     }
 
     @Override
@@ -72,21 +73,22 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         Client personToEdit = lastShownList.get(index.getZeroBased());
         Client editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
-        if (!personToEdit.isSamePerson(editedPerson) && model.hasPerson(editedPerson)) {
+        if (!personToEdit.isSamePerson(editedPerson) && model.hasClient(editedPerson)) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         }
 
-        model.setPerson(personToEdit, editedPerson);
+        model.setClient(personToEdit, editedPerson);
 
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
+        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.formatClient(editedPerson)));
     }
 
     /**
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * edited with {@code editHousekeepingDetailsDescriptor}.
      */
     protected Client createEditedPerson
-    (Person personToEdit, EditHousekeepingDetailsCommand.EditHousekeepingDetailsDescriptor editPersonDescriptor) {
+    (Person personToEdit,
+     EditHousekeepingDetailsCommand.EditHousekeepingDetailsDescriptor editHousekeepingDetailsDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();
@@ -96,9 +98,9 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         Set<Tag> updatedTags = personToEdit.getTags();
         Type updatedType = personToEdit.getType();
         Area updatedArea = personToEdit.getArea();
-        LocalDate updatedLastHousekeepingDate = editPersonDescriptor.getLastHousekeepingDate()
+        LocalDate updatedLastHousekeepingDate = editHousekeepingDetailsDescriptor.getLastHousekeepingDate()
                 .orElse(personToEdit.getDetails().getLastHousekeepingDate());
-        Period updatedPreferredInterval = editPersonDescriptor.getPreferredInterval()
+        Period updatedPreferredInterval = editHousekeepingDetailsDescriptor.getPreferredInterval()
                 .orElse(personToEdit.getDetails().getPreferredInterval());
         HousekeepingDetails updatedDetails =
                 new HousekeepingDetails(updatedLastHousekeepingDate, updatedPreferredInterval);
@@ -133,7 +135,7 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
     }
 
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
+     * Stores the booking details to edit the person with. Each non-empty field value will replace the
      * corresponding field value of the person.
      */
     public static class EditHousekeepingDetailsDescriptor {
