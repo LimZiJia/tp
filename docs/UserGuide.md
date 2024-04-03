@@ -8,6 +8,8 @@ Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the co
 HouseKeeping Hub offers unparalleled speed and ease of use. Whether you're a typist or a clicker, 
 HouseKeeping Hub ensures swift completion of all your contact management tasks. 
 Bid farewell to the sluggishness of traditional GUI apps - with HouseKeeping Hub, managing your contacts has never been faster or simpler.
+
+## Table of Contents
 * Table of Contents
 {:toc}
 
@@ -20,7 +22,11 @@ you will find a quick start (guide to install and start using our product), a li
 a glossary to help you understand some jargon. This guide is designed to provide you with clear and concise instructions 
 and a reader-friendly format to enhance your experience in using our product.
 
-## How to use this guide
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## How to use this guide:question:
 
 Let's get started! Here's a rundown of every section in this guide:
 
@@ -40,13 +46,21 @@ Finally, we have the [glossary](#glossary) section to clarify any technical jarg
 Now you have successfully mastered how to use this guide! One last thing: learn how to **navigate the guide**
 in the section below.
 
-## Navigating our guide
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Navigating our guide :mag:
 
 Words highlighted in blue in our guide can direct you to a specific section in our guide ([FAQ](#faq)), 
-an external link ([download link](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases)), or to an explanation of
-a term in the glossary ([CLI](#cli)).
+an external link ([download link](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases)), or to an explanation of a term in the glossary ([CLI](#cli)).
+There will be [:arrow_up_small:](#table-of-contents) links, which you can click on to return to the table of contents.
 
-## Installation
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Installation :computer:
 <a id="installation"></a>
 
 1. Ensure you have Java `11` or above installed in your Computer.
@@ -61,6 +75,10 @@ a term in the glossary ([CLI](#cli)).
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](./images/Ui.png)
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
 
 ## Tutorial
 <a id="tutorial"></a>
@@ -79,6 +97,8 @@ a term in the glossary ([CLI](#cli)).
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
+
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -107,6 +127,8 @@ a term in the glossary ([CLI](#cli)).
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+[:arrow_up_small:](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ### Viewing help : `help`
@@ -116,6 +138,8 @@ Shows a message explaning how to access the help page.
 ![help message](./images/helpMessage.png)
 
 Format: `help`
+
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -145,6 +169,8 @@ Examples:
 * `add client n/Elon e/elon@gmail.com p/+6088888888 a/Elon Street, Block 123, 101010 Singapore`
 * `add housekeeper n/Betsy Crowe p/+441234567 e/betsycrowe@example.com a/Newgate Prison t/criminal t/famous`
 
+[:arrow_up_small:](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ### Listing all persons : `list`
@@ -159,6 +185,8 @@ Notes:
 Example:
 * `list client`
 * `list housekeeper`
+
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -180,6 +208,8 @@ Examples:
 * `list client` followed by `delete client 2` deletes the 2nd person in the client list.
 * `list housekeeper` followed by `delete housekeeper 1` deletes the 1st person in the housekeeper list.
 
+[:arrow_up_small:](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ### Getting client call list: `leads`
@@ -191,6 +221,8 @@ Format: `leads`
 The leads are sorted with the client with the earliest predicted next housekeeping date at the top. Housekeeping details are optional so clients without housekeeping details will not be included in the leads.
 </div>
 
+[:arrow_up_small:](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ### Booking commands: `booking`
@@ -199,11 +231,11 @@ We have booking functionality for both client and housekeepers. The booking comm
 General format: `booking TYPE ACTION INDEX [PARAMETERS]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-For the subcommands of booking below, here are some clarifications. 
-INDEX refers to the index of the observed client/housekeeper list.
-NUMBER refers to any integer. This could represent the quantity of INTERVAL(s).
-INTERVAL refers to a period, which can be 'days', 'weeks', 'months' or 'years'.
-AREA refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest'.
+For the subcommands of booking below, here are some clarifications.<br>
+`INDEX` refers to the index of the observed client/housekeeper list.<br>
+`NUMBER` refers to any integer. This could represent the quantity of `INTERVAL`(s).<br>
+`INTERVAL` refers to a period, which can be 'days', 'weeks', 'months' or 'years'.<br>
+`AREA` refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest'.
 </div>
 
 ##### Updating client's housekeeping details: `booking client`
@@ -239,10 +271,9 @@ Action | Format, Explainations, Examples
 `list` | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
 `search` | Search for housekeepers available on a specific area and date date with `search`<br>Format: `booking housekeeper search AREA yyyy-MM-dd (am\|pm)`<br>Example: `booking housekeeper search east 2024-04-05 pm`
 
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
-
-
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
@@ -272,6 +303,7 @@ If your changes to the data file makes its format invalid, HouseKeeping Hub will
 Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -281,6 +313,8 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HouseKeeping Hub home folder.
 
+[:arrow_up_small:](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -288,17 +322,19 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS …​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore`
-**Clear** | `clear`
-**Delete** | `delete [TYPE] INDEX`<br> e.g., `delete housekeeper 3`
-**List** | `list [TYPE]`<br> e.g., `list client`
-**Leads** | `leads`
-**Booking** | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
-**Exit** | `exit`
-**Help** | `help`                                                                                                                                                                                                                                 |
+[**Add**](#adding-a-person-add) | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [t/TAGS]…​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore d/2024-04-02 1 years t/VIP`
+[**Delete**](#deleting-a-person--delete) | `delete TYPE INDEX`<br> e.g., `delete housekeeper 3`
+[**List**](#listing-all-persons--list) | `list TYPE`<br> e.g., `list client`
+[**Leads**](#getting-client-call-list-leads) | `leads`
+[**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
+[**Clear**](#clearing-all-entries--clear) | `clear`
+[**Exit**](#exiting-the-program--exit) | `exit`
+[**Help**](#viewing-help--help) | `help`                                                                                                                                                                                                                                 |
+
+[:arrow_up_small:](#table-of-contents)
 
 ----------------------------------------------------------------------------------------------------------------------
-## Glossary
+## Glossary :book:
 <a id="glossary"></a>
 
 **JAR**
@@ -325,3 +361,5 @@ Popular terminals in mainstream operating systems include command prompt (CMD) f
 <img src="https://forums.macrumors.com/attachments/screen-shot-2020-12-09-at-4-50-12-pm-png.1690397/" alt="drawing" width="500"/>
 <br> **Terminal (Linux)** <br>
 <img src="https://static1.howtogeekimages.com/wordpress/wp-content/uploads/2013/03/linux-terminal-on-ubuntu.png" alt="drawing" width="500"/>
+
+[:arrow_up_small:](#table-of-contents)
