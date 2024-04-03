@@ -52,26 +52,27 @@
 
           <HBox VBox.vgrow="ALWAYS">
             <VBox fx:id="clientList" styleClass="stack-pane" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: #ECE9E9" alignment="CENTER" spacing="10">
+                  style="-fx-background-color: #ECE9E9" alignment="TOP_LEFT" spacing="10">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
               <Label styleClass="column-header" text="Client :"
                      style="-fx-text-fill: black; -fx-background-radius: 10; -fx-border-color: #BFBFBF; -fx-border-radius: 10;
-                     -fx-padding: 0 2 0 2; -fx-alignment: CENTER; -fx-font-weight: bold; -fx-font-size: large" prefWidth="150"
+                     -fx-padding: 0 2 0 8; -fx-alignment: CENTER_LEFT; -fx-font-weight: bold; -fx-font-size: large;
+                     -fx-background-color: #0095FF" prefWidth="65"
               />
               <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS" prefWidth="320"/>
             </VBox>
 
             <VBox fx:id="housekeeperList" styleClass="stack-pane" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: #ECE9E9" alignment="CENTER" spacing="10">
+                  style="-fx-background-color: #ECE9E9" alignment="TOP_LEFT" spacing="10">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
               <Label styleClass="column-header" text="Housekeeper :"
                      style="-fx-text-fill: black; -fx-background-radius: 10; -fx-border-color: #BFBFBF;
-                     -fx-border-radius: 10; -fx-padding: 0 2 0 2; -fx-alignment: CENTER; -fx-font-weight: bold;
-                     -fx-font-size: large" prefWidth="150"
+                     -fx-border-radius: 10; -fx-padding: 0 2 0 8; -fx-alignment: CENTRE_LEFT; -fx-font-weight: bold;
+                     -fx-font-size: large; -fx-background-color: #FF6A00" prefWidth="115"
               />
               <StackPane fx:id="housekeeperListPanelPlaceholder" VBox.vgrow="ALWAYS" prefWidth="180"/>
             </VBox>
