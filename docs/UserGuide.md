@@ -199,11 +199,11 @@ We have booking functionality for both client and housekeepers. The booking comm
 General format: `booking TYPE ACTION INDEX [PARAMETERS]`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-For the subcommands of booking below, here are some clarifications. 
-INDEX refers to the index of the observed client/housekeeper list.
-NUMBER refers to any integer. This could represent the quantity of INTERVAL(s).
-INTERVAL refers to a period, which can be 'days', 'weeks', 'months' or 'years'.
-AREA refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest'.
+For the subcommands of booking below, here are some clarifications.<br>
+`INDEX` refers to the index of the observed client/housekeeper list.<br>
+`NUMBER` refers to any integer. This could represent the quantity of `INTERVAL`(s).<br>
+`INTERVAL` refers to a period, which can be 'days', 'weeks', 'months' or 'years'.<br>
+`AREA` refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest'.
 </div>
 
 ##### Updating client's housekeeping details: `booking client`
@@ -288,14 +288,14 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS …​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore`
-**Clear** | `clear`
-**Delete** | `delete [TYPE] INDEX`<br> e.g., `delete housekeeper 3`
-**List** | `list [TYPE]`<br> e.g., `list client`
-**Leads** | `leads`
-**Booking** | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
-**Exit** | `exit`
-**Help** | `help`                                                                                                                                                                                                                                 |
+[**Add**](#adding-a-person-add) | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [t/TAGS]…​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore d/2024-04-02 1 years t/VIP`
+[**Delete**](#deleting-a-person--delete) | `delete TYPE INDEX`<br> e.g., `delete housekeeper 3`
+[**List**](#listing-all-persons--list) | `list TYPE`<br> e.g., `list client`
+[**Leads**](#getting-client-call-list-leads) | `leads`
+[**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
+[**Clear**](#clearing-all-entries--clear) | `clear`
+[**Exit**](#exiting-the-program--exit) | `exit`
+[**Help**](#viewing-help--help) | `help`                                                                                                                                                                                                                                 |
 
 ----------------------------------------------------------------------------------------------------------------------
 ## Glossary
