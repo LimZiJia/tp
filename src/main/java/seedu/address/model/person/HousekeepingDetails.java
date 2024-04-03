@@ -158,6 +158,18 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         return lastHousekeepingDate.plus(preferredInterval).plus(deferment);
     }
 
+    public LocalDate getLastHousekeepingDate() {
+        return lastHousekeepingDate;
+    }
+
+    public Period getDeferment() {
+        return deferment;
+    }
+
+    public Period getPreferredInterval() {
+        return preferredInterval;
+    }
+
     @Override
     public int compareTo(HousekeepingDetails other) {
         return this.getNextHousekeepingDate().compareTo(other.getNextHousekeepingDate());

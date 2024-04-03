@@ -158,6 +158,36 @@ public class ParserUtil {
         return tagSet;
     }
 
+    public static LocalDate parseLastHousekeepingDate(String lHD) throws ParseException {
+        requireNonNull(lHD);
+        return LocalDate.parse(lHD);
+    }
+
+    public static Period parsePreferredInterval(String pI) throws ParseException {
+        requireNonNull(pI);
+        String trimmedPI = pI.trim();
+        String[] splitPI = trimmedPI.split("\\s+");
+        Period period;
+        int quantity = Integer.parseInt(splitPI[0]);
+        switch (splitPI[1]) {
+            case "days":
+                period = Period.ofDays(quantity);
+                break;
+            case "weeks":
+                period = Period.ofWeeks(quantity);
+                break;
+            case "months":
+                period = Period.ofMonths(quantity);
+                break;
+            case "years":
+                period = Period.ofYears(quantity);
+                break;
+            default:
+                throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
+        return period;
+    }
+
     public static HousekeepingDetails parseHousekeepingDetails(Optional<String> details) throws ParseException {
         if (details.isEmpty()) {
             return HousekeepingDetails.empty;
