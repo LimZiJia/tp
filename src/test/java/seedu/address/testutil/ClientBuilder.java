@@ -112,6 +112,14 @@ public class ClientBuilder {
     }
 
     /**
+     * Sets the {@code HousekeepingDetails} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withHousekeepingDetails(LocalDate lastCleaningDate, Period preferredInterval) {
+        this.housekeepingDetails = new HousekeepingDetails(lastCleaningDate, preferredInterval);
+        return this;
+    }
+
+    /**
      * Returns client with the given data.
      */
     public Client build() {

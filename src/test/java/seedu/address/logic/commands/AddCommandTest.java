@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.BOB;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -27,7 +28,6 @@ import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Person;
 import seedu.address.testutil.ClientBuilder;
 import seedu.address.testutil.HousekeeperBuilder;
-import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
 
@@ -124,8 +124,12 @@ public class AddCommandTest {
     @Test
     public void toStringMethod() {
         AddClientCommand addClientCommand = new AddClientCommand(ALICE);
-        String expected = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addClientCommand.toString());
+        String expectedOne = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        assertEquals(expectedOne, addClientCommand.toString());
+
+        AddHousekeeperCommand addHousekeeperCommand = new AddHousekeeperCommand(BOB);
+        String expectedTwo = AddHousekeeperCommand.class.getCanonicalName() + "{toAdd=" + BOB + "}";
+        assertEquals(expectedTwo, addHousekeeperCommand.toString());
     }
 
     /**
@@ -223,13 +227,21 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateFilteredClientList(Predicate<Client> predicate) {
+        public void updateFilteredClientList(Predicate<? extends Person> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updateFilteredHousekeeperList(Predicate<Housekeeper> predicate) {
+        public void updateFilteredHousekeeperList(Predicate<? extends Person> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateAndSortFilteredClientList(Predicate<Client> predicate) {
+        }
+
+        @Override
+        public void updateFilteredHousekeeperListWithHousekeeperPredicate(Predicate<Housekeeper> predicate) {
         }
     }
 

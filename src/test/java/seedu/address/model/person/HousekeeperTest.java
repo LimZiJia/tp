@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_AREA_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_BOOKING_LIST_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
@@ -13,8 +15,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.AMY;
 import static seedu.address.testutil.TypicalPersons.BOB;
@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.testutil.PersonBuilder;
 
 public class HousekeeperTest {
     private static Housekeeper copyBob;
@@ -47,7 +46,8 @@ public class HousekeeperTest {
                     ParserUtil.parseEmail(VALID_EMAIL_BOB),
                     ParserUtil.parseAddress(VALID_ADDRESS_BOB),
                     ParserUtil.parseTags(bobTags),
-                    ParserUtil.parseType(VALID_TYPE_BOB));
+                    ParserUtil.parseArea(VALID_AREA_BOB),
+                    VALID_BOOKING_LIST_BOB);
 
             //Assert that created Housekeeper object is not null
             assertNotNull(copyBob);
@@ -93,9 +93,6 @@ public class HousekeeperTest {
         editedCopyBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(copyBob.equals(editedCopyBob));
 
-        // different type -> returns false
-        editedCopyBob = new PersonBuilder(BOB).withType(VALID_TYPE_AMY).build();
-        assertFalse(copyBob.equals(editedCopyBob));
     }
 
     @Test
