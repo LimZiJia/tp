@@ -1,7 +1,6 @@
 package seedu.address.model.person;
 
 import org.junit.jupiter.api.Test;
-import seedu.address.testutil.PersonBuilder;
 
 import java.time.LocalDate;
 import java.time.Period;

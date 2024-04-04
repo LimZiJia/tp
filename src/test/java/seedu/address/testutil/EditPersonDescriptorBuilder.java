@@ -6,7 +6,12 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.BookingList;
+import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Housekeeper;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -37,6 +42,14 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setArea(person.getArea());
+        if (person.isClient()) {
+            Client client = (Client) person;
+            descriptor.setDetails(client.getDetails());
+        } else {
+            Housekeeper housekeeper = (Housekeeper) person;
+            descriptor.setBookingList(housekeeper.getBookingList());
+        }
     }
 
     /**
@@ -78,6 +91,21 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    public EditPersonDescriptorBuilder withArea(String area) {
+        descriptor.setArea(new Area(area));
+        return this;
+    }
+
+    public EditPersonDescriptorBuilder withBookingList(BookingList bookingList) {
+        descriptor.setBookingList(bookingList);
+        return this;
+    }
+
+    public EditPersonDescriptorBuilder withDetails(HousekeepingDetails details) {
+        descriptor.setDetails(details);
         return this;
     }
 

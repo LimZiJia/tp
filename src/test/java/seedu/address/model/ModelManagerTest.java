@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.testutil.Assert.assertThrows;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.testutil.TypicalPersons.BOB;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -73,45 +74,50 @@ public class ModelManagerTest {
     }
 
     @Test
-    public void hasPerson_nullClient_throwsNullPointerException() {
+    public void hasClient_nullClient_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasClient(null));
     }
 
     @Test
-    public void hasPerson_nullHousekeeper_throwsNullPointerException() {
+    public void hasHousekeeper_nullHousekeeper_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> modelManager.hasHousekeeper(null));
     }
 
     @Test
-    public void hasPerson_clientNotInAddressBook_returnsFalse() {
+    public void hasClient_clientNotInAddressBook_returnsFalse() {
         assertFalse(modelManager.hasClient(ALICE));
     }
 
     @Test
-    public void hasPerson_housekeeperNotInAddressBook_returnsFalse() {
-        assertFalse(modelManager.hasHousekeeper(BENSON));
+    public void hasHousekeeper_housekeeperNotInAddressBook_returnsFalse() {
+        assertFalse(modelManager.hasHousekeeper(BOB));
     }
 
     @Test
-    public void hasPerson_clientInAddressBook_returnsTrue() {
+    public void hasClient_clientInAddressBook_returnsTrue() {
         modelManager.addClient(ALICE);
         assertTrue(modelManager.hasClient(ALICE));
     }
 
     @Test
-    public void hasPerson_housekeeperInAddressBook_returnsTrue() {
-        modelManager.addHousekeeper(BENSON);
-        assertTrue(modelManager.hasHousekeeper(BENSON));
+    public void hasHousekeeper_housekeeperInAddressBook_returnsTrue() {
+        modelManager.addHousekeeper(BOB);
+        assertTrue(modelManager.hasHousekeeper(BOB));
     }
 
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void getFilteredClientList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredClientList().remove(0));
     }
 
     @Test
+    public void getFilteredHousekeeperList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredHousekeeperList().remove(0));
+    }
+
+    @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
+        AddressBook addressBook = new AddressBookBuilder().withClient(ALICE).withClient(BENSON).build();
         AddressBook differentAddressBook = new AddressBook();
         UserPrefs userPrefs = new UserPrefs();
 
