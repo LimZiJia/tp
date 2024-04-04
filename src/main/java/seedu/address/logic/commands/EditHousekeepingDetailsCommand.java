@@ -1,12 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LHD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PI;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -18,7 +14,16 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.Booking;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,18 +33,15 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
 
     public static final String COMMAND_WORD = "booking client edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the booking details of the person identified "
             + "by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_PI + "PREFERRED INTERVAL] "
+            + "[" + PREFIX_LHD + "LAST HOUSEKEEPING DATE] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_PI + "1 months "
+            + PREFIX_LHD + "2024-01-02";
 
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
@@ -101,9 +103,14 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
                 .orElse(personToEdit.getDetails().getLastHousekeepingDate());
         Period updatedPreferredInterval = editHousekeepingDetailsDescriptor.getPreferredInterval()
                 .orElse(personToEdit.getDetails().getPreferredInterval());
+        Period updatedDeferment = editHousekeepingDetailsDescriptor.getDeferment()
+                .orElse(personToEdit.getDetails().getDeferment());
+        Booking updatedBooking = editHousekeepingDetailsDescriptor.getBooking()
+                .orElse(personToEdit.getDetails().getBooking());
         HousekeepingDetails updatedDetails =
                 new HousekeepingDetails(updatedLastHousekeepingDate, updatedPreferredInterval);
-        updatedDetails.addDeferment(personToEdit.getDetails().getDeferment());
+        updatedDetails.addDeferment(updatedDeferment);
+        updatedDetails.setBooking(updatedBooking);
 
         return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 updatedDetails, updatedArea);
@@ -140,6 +147,9 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
     public static class EditHousekeepingDetailsDescriptor {
         private LocalDate lastHousekeepingDate;
         private Period preferredInterval;
+        private Period deferment;
+
+        private Booking booking;
         public EditHousekeepingDetailsDescriptor() {}
 
         /**
@@ -149,14 +159,15 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         public EditHousekeepingDetailsDescriptor(EditHousekeepingDetailsDescriptor toCopy) {
             setLastHousekeepingDate(toCopy.lastHousekeepingDate);
             setPreferredInterval(toCopy.preferredInterval);
-
+            setDeferment(toCopy.deferment);
+            setBooking(toCopy.booking);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(lastHousekeepingDate, preferredInterval);
+            return CollectionUtil.isAnyNonNull(lastHousekeepingDate, preferredInterval, booking, deferment);
         }
 
         public void setLastHousekeepingDate(LocalDate lHD) {
@@ -175,6 +186,21 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
             return Optional.ofNullable(preferredInterval);
         }
 
+        public void setDeferment(Period deferment) {
+            this.deferment = deferment;
+        }
+
+        public Optional<Period> getDeferment() {
+            return Optional.ofNullable(deferment);
+        }
+        public void setBooking(Booking booking) {
+            this.booking = booking;
+        }
+
+        public Optional<Booking> getBooking() {
+            return Optional.ofNullable(booking);
+        }
+
 
         @Override
         public boolean equals(Object other) {
@@ -189,6 +215,8 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
 
             EditHousekeepingDetailsDescriptor otherEditPersonDescriptor = (EditHousekeepingDetailsDescriptor) other;
             return Objects.equals(lastHousekeepingDate, otherEditPersonDescriptor.lastHousekeepingDate)
+                    && Objects.equals(deferment, otherEditPersonDescriptor.deferment)
+                    && Objects.equals(booking, otherEditPersonDescriptor.booking)
                     && Objects.equals(preferredInterval, otherEditPersonDescriptor.preferredInterval);
         }
 
@@ -197,6 +225,8 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
             return new ToStringBuilder(this)
                     .add("last housekeeping date", lastHousekeepingDate)
                     .add("preferred interval", preferredInterval)
+                    .add("booking date", booking)
+                    .add("deferment", deferment)
                     .toString();
         }
     }

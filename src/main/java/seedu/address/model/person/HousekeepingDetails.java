@@ -48,47 +48,6 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         return storageMatcher.matches();
     }
 
-    /**
-     * Converts the stored string representation of the housekeeping details to a readable format horizontally.
-     * @param details The stored string representation of the housekeeping details.
-     * @return Readable string representation of the housekeeping details.
-     */
-    public static String makeStoredDetailsReadableHorizontally(String details) {
-        if (details.equals("null")) {
-            return NO_DETAILS_PROVIDED;
-        }
-        else if (!isValidHousekeepingDetailsStorage(details)) {
-            return "Invalid housekeeping details format";
-        }
-
-        // Converting Period of preferred interval to a readable format
-        String[] s = details.split(" ");
-        String num = s[1].substring(1, s[1].length() - 1);
-        String unit = s[1].substring(s[1].length() - 1);
-        String unitString;
-        switch (unit) {
-        case "Y":
-            unitString = "years";
-            break;
-        case "M":
-            unitString = "months";
-            break;
-        case "W":
-            unitString = "weeks";
-            break;
-        case "D":
-            unitString = "days";
-            break;
-        default:
-            unitString = "Invalid unit";
-        }
-
-        // Makes null booking readable
-        String booking = s[2].equals("null") ? "No booking" : s[2];
-
-        return String.format("Last housekeeping: %s, Preferred interval: %s %s, Booking date: %s",
-                s[0], num, unitString, booking);
-    }
 
     /**
      *  Converts the stored string representation of the housekeeping details to a readable format.
@@ -132,6 +91,69 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
 
         return String.format("Last housekeeping: %s\nPreferred interval: %s %s\nBooking date: %s",
                 s[0], num, unitString, booking);
+    }
+
+    /**
+     *  Converts the stored string representation of the housekeeping details with deferment to a readable format.
+     *
+     * @param details The stored string representation of the housekeeping details.
+     * @return        Readable string representation of the housekeeping details.
+     */
+    public static String makeStoredDetailsReadableWithDeferment(String details) {
+        if (details.equals("null")) {
+            return NO_DETAILS_PROVIDED;
+        }
+        else if (!isValidHousekeepingDetailsStorage(details)) {
+            return "Invalid housekeeping details format";
+        }
+
+        // Converting Period of preferred interval to a readable format
+        String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
+        // s[2] = booking, s[3] = deferment
+        String numPI = s[1].substring(1, s[1].length() - 1);
+        String unitPI = s[1].substring(s[1].length() - 1);
+        String unitStringPI;
+        switch (unitPI) {
+            case "Y":
+                unitStringPI = "years";
+                break;
+            case "M":
+                unitStringPI = "months";
+                break;
+            case "W":
+                unitStringPI = "weeks";
+                break;
+            case "D":
+                unitStringPI = "days";
+                break;
+            default:
+                unitStringPI = "Invalid unit";
+        }
+        String numD = s[4].substring(1, s[1].length() - 1);
+        String unitD= s[4].substring(s[4].length() - 1);
+        String unitStringD;
+        switch (unitD) {
+            case "Y":
+                unitStringD = "years";
+                break;
+            case "M":
+                unitStringD = "months";
+                break;
+            case "W":
+                unitStringD = "weeks";
+                break;
+            case "D":
+                unitStringD = "days";
+                break;
+            default:
+                unitStringD = "Invalid unit";
+        }
+
+        // Makes null booking readable
+        String booking = s[2].equals("null") ? "No booking" : s[2];
+
+        return String.format("Last housekeeping: %s, Preferred interval: %s %s, Booking date: %s, Deferment: %s %s",
+                s[0], numPI, unitStringPI, booking, numD, unitStringD);
     }
 
     /**
@@ -213,12 +235,15 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     public Period getDeferment() {
         return deferment;
     }
+    public Booking getBooking() {
+        return booking;
+    }
     public String getDefermentToString() {
         String details = this.toString();
         String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
-        // s[2] = bookingDate, s[3] = deferment
-        String num = s[3].substring(1, s[3].length() - 1);
-        String unit = s[3].substring(s[3].length() - 1);
+        // s[2] = bookingDate, s[4] = deferment
+        String num = s[4].substring(1, s[3].length() - 1);
+        String unit = s[4].substring(s[4].length() - 1);
         String unitString;
         switch (unit) {
             case "Y":
