@@ -98,7 +98,6 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         Email updatedEmail = personToEdit.getEmail();
         Address updatedAddress = personToEdit.getAddress();
         Set<Tag> updatedTags = personToEdit.getTags();
-        Type updatedType = personToEdit.getType();
         Area updatedArea = personToEdit.getArea();
         LocalDate updatedLastHousekeepingDate = editHousekeepingDetailsDescriptor.getLastHousekeepingDate()
                 .orElse(personToEdit.getDetails().getLastHousekeepingDate());
@@ -113,7 +112,7 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         updatedDetails.addDeferment(updatedDeferment);
         updatedDetails.setBooking(updatedBooking);
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType,
+        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 updatedDetails, updatedArea);
     }
 

@@ -1,10 +1,16 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.nio.file.Path;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Person;
@@ -129,7 +135,7 @@ public interface Model {
      * Updates the filter of the filtered housekeeper list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredHousekeeperList(Predicate<Person> predicate);
+    void updateFilteredHousekeeperList(Predicate<? extends Person> predicate);
 
     /**
      * Updates the filter of the filtered housekeeper list to filter by the given {@code housekeeperPredicate}.

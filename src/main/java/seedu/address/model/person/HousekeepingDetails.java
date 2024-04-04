@@ -48,6 +48,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         return storageMatcher.matches();
     }
 
+
     /**
      *  Converts the stored string representation of the housekeeping details to a readable format.
      *
@@ -151,7 +152,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         // Makes null booking readable
         String booking = s[2].equals("null") ? "No booking" : s[2];
 
-        return String.format("Last housekeeping: %s\nPreferred interval: %s %s\nBooking date: %s\nDeferment: %s %s",
+        return String.format("Last housekeeping: %s, Preferred interval: %s %s, Booking date: %s, Deferment: %s %s",
                 s[0], numPI, unitStringPI, booking, numD, unitStringD);
     }
 

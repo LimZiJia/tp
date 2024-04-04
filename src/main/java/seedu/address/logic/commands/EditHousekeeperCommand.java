@@ -65,12 +65,11 @@ public class EditHousekeeperCommand extends EditCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
         BookingList updatedBookingList = editPersonDescriptor.getBookingList()
                 .orElse(housekeeperToEdit.getBookingList());
 
         return new Housekeeper(
-                updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType, updatedArea, updatedBookingList);
+                updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedArea, updatedBookingList);
     }
 }

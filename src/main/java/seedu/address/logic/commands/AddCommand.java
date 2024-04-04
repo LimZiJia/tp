@@ -30,6 +30,8 @@ abstract public class AddCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
+            + PREFIX_AREA + "AREA "
+            + "[" + PREFIX_DETAILS + "DETAILS](for client only) "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " client "
             + PREFIX_NAME + "John Doe "

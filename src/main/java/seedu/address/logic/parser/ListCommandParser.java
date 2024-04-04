@@ -39,10 +39,10 @@ public class ListCommandParser implements Parser<ListCommand> {
         }
 
         if (trimmedArgs.equals("client")) {
-            return new ListClientCommand(new TypePredicate("client"));
+            return new ListClientCommand();
         } else {
             // As the type is either "client" or "housekeeper", we can safely assume that the type is "housekeeper"
-            return new ListHousekeeperCommand(new TypePredicate("housekeeper"));
+            return new ListHousekeeperCommand();
         }
     }
 

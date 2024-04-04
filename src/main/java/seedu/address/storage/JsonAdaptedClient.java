@@ -29,9 +29,9 @@ public class JsonAdaptedClient extends JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedClient(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("details") JsonAdaptedDetails details, @JsonProperty("area") String area) {
-        super(name, phone, email, address, tags, type, area);
+        super(name, phone, email, address, tags, area);
         this.details = details;
     }
 
@@ -84,13 +84,6 @@ public class JsonAdaptedClient extends JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        if (type == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
-        }
-        if (!Type.isValidType(type)) {
-            throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
-        }
-        final Type modelType = new Type(type);
         if (details == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     HousekeepingDetails.class.getSimpleName()));
@@ -98,6 +91,6 @@ public class JsonAdaptedClient extends JsonAdaptedPerson {
         final HousekeepingDetails modelDetail = details.toModelType();
         final Area modelArea = new Area(area);
       
-        return new Client(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelType, modelDetail, modelArea);
+        return new Client(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelDetail, modelArea);
     }
 }

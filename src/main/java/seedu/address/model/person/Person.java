@@ -24,20 +24,18 @@ public abstract class Person {
     // Data fields
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
-    private final Type type;
     private final Area area;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type, Area area) {
-        requireAllNonNull(name, phone, email, address, tags, type);
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Area area) {
+        requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.type = type;
         this.area = area;
     }
 
@@ -57,9 +55,6 @@ public abstract class Person {
         return address;
     }
 
-    public Type getType() {
-        return type;
-    }
     public Area getArea() {
         return area;
     }
@@ -88,20 +83,7 @@ public abstract class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, area, type);
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .add("name", name)
-                .add("phone", phone)
-                .add("email", email)
-                .add("address", address)
-                .add("tags", tags)
-                .add("type", type)
-                .add("area", area)
-                .toString();
+        return Objects.hash(name, phone, email, address, tags, area);
     }
 
     /**

@@ -41,11 +41,8 @@ public class FindCommandParser implements Parser<FindCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }
 
-        Type type = ParserUtil.parseType(subArgs[0]);
-        if ((!type.equals(new Type("client"))) && (!type.equals(new Type("housekeeper")))) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
-        }
+        String type = ParserUtil.parseType(subArgs[0]);
+
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_ADDRESS, PREFIX_AREA);
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
@@ -73,7 +70,7 @@ public class FindCommandParser implements Parser<FindCommand> {
             throw new ParseException(FindCommand.MESSAGE_NOT_FOUND);
         }
 
-        if (type.equals(new Type("client"))) {
+        if (type.equals("client")) {
             return new FindClientCommand(new ContainsKeywordsPredicate(Arrays.asList(nameKeywords),
                     Arrays.asList(addressKeywords), Arrays.asList(areaKeywords)));
         } else {

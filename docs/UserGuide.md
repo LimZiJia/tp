@@ -3,7 +3,13 @@ layout: page
 title: Housekeeping Hub User Guide
 ---
 
-Welcome to HouseKeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the convenience of a Graphical User Interface ([GUI](#gui))**, HouseKeeping Hub offers unparalleled speed and ease of use. Whether you're a typist or a clicker, HouseKeeping Hub ensures swift completion of all your contact management tasks. Bid farewell to the sluggishness of traditional GUI apps - with HouseKeeping Hub, managing your contacts has never been faster or simpler.
+Welcome to HouseKeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. 
+Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the convenience of a Graphical User Interface ([GUI](#gui))**,
+HouseKeeping Hub offers unparalleled speed and ease of use. Whether you're a typist or a clicker, 
+HouseKeeping Hub ensures swift completion of all your contact management tasks. 
+Bid farewell to the sluggishness of traditional GUI apps - with HouseKeeping Hub, managing your contacts has never been faster or simpler.
+
+## Table of Contents
 * Table of Contents
 {:toc}
 
@@ -16,7 +22,11 @@ you will find a quick start (guide to install and start using our product), a li
 a glossary to help you understand some jargon. This guide is designed to provide you with clear and concise instructions 
 and a reader-friendly format to enhance your experience in using our product.
 
-## How to use this guide
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## How to use this guide:question:
 
 Let's get started! Here's a rundown of every section in this guide:
 
@@ -36,13 +46,21 @@ Finally, we have the [glossary](#glossary) section to clarify any technical jarg
 Now you have successfully mastered how to use this guide! One last thing: learn how to **navigate the guide**
 in the section below.
 
-## Navigating our guide
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Navigating our guide :mag:
 
 Words highlighted in blue in our guide can direct you to a specific section in our guide ([FAQ](#faq)), 
-an external link ([download link](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases)), or to an explanation of
-a term in the glossary ([CLI](#cli)).
+an external link ([download link](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases)), or to an explanation of a term in the glossary ([CLI](#cli)).
+There will be [:arrow_up_small:](#table-of-contents) links, which you can click on to return to the table of contents.
 
-## Installation
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Installation :computer:
 <a id="installation"></a>
 
 1. Ensure you have Java `11` or above installed in your Computer.
@@ -57,6 +75,10 @@ a term in the glossary ([CLI](#cli)).
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](./images/Ui.png)
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
 
 ## Tutorial
 <a id="tutorial"></a>
@@ -75,6 +97,8 @@ a term in the glossary ([CLI](#cli)).
    * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
+
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -103,6 +127,10 @@ a term in the glossary ([CLI](#cli)).
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
 ### Viewing help : `help`
 
 Shows a message explaning how to access the help page.
@@ -111,25 +139,39 @@ Shows a message explaning how to access the help page.
 
 Format: `help`
 
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
 
 ### Adding a person: `add`
 
-Adds a client or housekeeper to the address book.
+Adds a client or housekeeper to Housekeeping Hub.
 
-Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [t/TAG]…​ [d/DETAILS]`
+Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [t/TAG]…​`
 
-Notes: `TYPE` can be either 'client' or 'housekeeper'<br>
-   `DETAILS` is optional and refers to the last time of housekeeping and preferred interval between housekeeping.<br>
-    The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last <br>
-    housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
+Notes: 
+* `TYPE` can be either 'client' or 'housekeeper'.
+* `DETAILS` is optional and refers to the housekeeping details for CLIENT ONLY. It is not applicable for housekeepers.
+The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last
+housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
 </div>
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Housekeeping details of the client can be modified using the `booking` command. Without housekeeping details,
+the customer is assumed to not want notifications for housekeeping. Therefore, `leads` will not include clients without housekeeping details.
+To set or remove housekeeping details after initiation, refer to `set` and `remove` under `booking` below.
+</div>
+
 Examples:
 * `add client n/Elon e/elon@gmail.com p/+6088888888 a/Elon Street, Block 123, 101010 Singapore`
 * `add housekeeper n/Betsy Crowe p/+441234567 e/betsycrowe@example.com a/Newgate Prison t/criminal t/famous`
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
 
 ### Listing all persons : `list`
 
@@ -137,46 +179,110 @@ Shows a list of all persons with the given type in the address book.
 
 Format: `list TYPE`
 
-Notes: `TYPE` can only be either 'client' or 'housekeeper'
+Notes: 
+* `TYPE` can only be either 'client' or 'housekeeper'
 
 Example:
 * `list client`
 * `list housekeeper`
 
-### Getting client call list: `leads`
-Sorts the clients based on the last time of housekeeping and preferred interval between housekeeping to generate sales
-leads based on predicted next time of housekeeping.
+[:arrow_up_small:](#table-of-contents)
 
-Format: `leads`
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-The leads are sorted with the client with the earliest next housekeeping date at the top. Housekeeping details are optional so clients without housekeeping details will not be included in the leads.
-</div>
+--------------------------------------------------------------------------------------------------------------------
 
 ### Deleting a person : `delete`
 
 Deletes the specified client or housekeeper from the address book.
 
-Format: `delete INDEX`
-
+Format: `delete TYPE INDEX`
 
 * Deletes the client or housekeeper at the specified `INDEX`.
 * The index refers to the index number shown in the displayed list.
 * The index **must be a positive integer** 1, 2, 3, …​
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-The index to delete will work for any displayed list. i.e. Client list, Housekeeper list, original combined list at start up and filtered lists
+The index to delete will work for any displayed list. i.e. What you see is what you get.
 </div>
 
 Examples:
 * `list client` followed by `delete client 2` deletes the 2nd person in the client list.
 * `list housekeeper` followed by `delete housekeeper 1` deletes the 1st person in the housekeeper list.
 
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+### Getting client call list: `leads`
+Sorts the clients based on the predicted next time of housekeeping.
+
+Format: `leads`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The leads are sorted with the client with the earliest predicted next housekeeping date at the top. Housekeeping details are optional so clients without housekeeping details will not be included in the leads.
+</div>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+### Booking commands: `booking`
+We have booking functionality for both client and housekeepers. The booking command allows you to update the housekeeping details of a client and update bookings for a housekeeper.
+
+General format: `booking TYPE ACTION INDEX [PARAMETERS]`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+For the subcommands of booking below, here are some clarifications.<br>
+`INDEX` refers to the index of the observed client/housekeeper list.<br>
+`NUMBER` refers to any integer. This could represent the quantity of `INTERVAL`(s).<br>
+`INTERVAL` refers to a period, which can be 'days', 'weeks', 'months' or 'years'.<br>
+`AREA` refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest'.
+</div>
+
+##### Updating client's housekeeping details: `booking client`
+
+Client's housekeeping details are optional, and it has 4 attributes: 
+<u>[1] last booking date, [2] preferred interval, [3] booking time slot, and [4] deferment.</u>
+This is a value added service for you to keep track of your client's housekeeping schedule and call clients for housekeeping at the right time.
+If clients do not have housekeeping details, they are assumed to not want notifications for housekeeping. Therefore, `leads` will not include clients without housekeeping details.
+
+*** [1] and [2] are mandatory while [3] and [4] are optional. ([4] deferment will be set to 0 by default)
+
+We have 7 commands for updating client's housekeeping details. `last`, `interval`, `defer`, `add`, `delete`, `set`, and `remove`.
+Without a housekeeping detail, `last`, `interval`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
+
+Action | Format, Explainations, Examples                                                                                                                                                
+--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`edit /lhd` | Edit client's last housekeeping date with `edit lhd/`<br>Format: `booking client edit lhd/INDEX yyyy-MM-dd`<br>Example: `booking client last 2 2024-04-01`                                  
+`edit /pi` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit pi/INDEX NUMBER INTERVAL`<br>Example: `booking client interval 2 2 weeks`                    
+`defer` | Add period to delay calling clients with `defer`<br>Format: `booking client defer INDEX NUMBER INTERVAL`<br>Example: `booking client defer 2 1 months`                         
+`add` | Add client's booking date with `add`<br>Format: `booking client add INDEX yyyy-MM-dd (am\|pm)`<br>Example: `booking client add 2 2024-04-01 am`                                
+`delete` | Delete client's booking date with `delete`<br>Format: `booking client delete INDEX` <br>Example: `booking client delete 2`                                                     
+`set` | Set client's housekeeping details with `set`. Same format as initiation, you can set last housekeeping date and preferred interval. <br>Format: `booking client set INDEX yyyy-MM-dd NUMBER INTERVAL`<br>Example: `booking client set 2 2024-04-01 15 days`
+`remove` | Remove client's housekeeping details with `remove`<br>Format: `booking client remove INDEX`<br>Example: `booking client remove 2`
+
+##### Updating housekeeper's housekeeping details: `booking housekeeper
+
+Housekeepers all have a list of bookings (that can be empty). This allows for Housekeeping Hub to suggest housekeepers for clients based on their availability. There are 4 commands `add`, `delete`, `list` and `search`.
+
+Action | Format, Explainations, Examples                                                                                                                                       
+--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`add` | Add booking to a housekeeper's list with `add`<br>Format: `booking housekeeper add INDEX yyyy-MM-dd (am|pm)`<br>Example: `booking housekeeper add 2 2024-04-01 am` 
+`delete` | Delete booking from a housekeeper's list with `delete`<br>Format: `booking housekeeper delete INDEX INDEX`<br>Example: `booking housekeeper delete 1 2`<br>* The first INDEX refers to the housekeeper index and the second INDEX refers to the booking index (shown in `list` action).
+`list` | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
+`search` | Search for housekeepers available on a specific area and date date with `search`<br>Format: `booking housekeeper search AREA yyyy-MM-dd (am|pm)`<br>Example: `booking housekeeper search east 2024-04-05 pm`
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
 
 Format: `clear`
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+This command is irreversible. All data will be lost.
+</div>
 
 ### Exiting the program : `exit`
 
@@ -197,6 +303,7 @@ If your changes to the data file makes its format invalid, HouseKeeping Hub will
 Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -206,6 +313,8 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 **Q**: How do I transfer my data to another Computer?<br>
 **A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HouseKeeping Hub home folder.
 
+[:arrow_up_small:](#table-of-contents)
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Command summary
@@ -213,14 +322,19 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS …​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**List** | `list [type]`
-**Help** | `help`                                                                                                                                                                                                                                 |
+[**Add**](#adding-a-person-add) | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [t/TAGS]…​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore d/2024-04-02 1 years t/VIP`
+[**Delete**](#deleting-a-person--delete) | `delete TYPE INDEX`<br> e.g., `delete housekeeper 3`
+[**List**](#listing-all-persons--list) | `list TYPE`<br> e.g., `list client`
+[**Leads**](#getting-client-call-list-leads) | `leads`
+[**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
+[**Clear**](#clearing-all-entries--clear) | `clear`
+[**Exit**](#exiting-the-program--exit) | `exit`
+[**Help**](#viewing-help--help) | `help`                                                                                                                                                                                                                                 |
+
+[:arrow_up_small:](#table-of-contents)
 
 ----------------------------------------------------------------------------------------------------------------------
-## Glossary
+## Glossary :book:
 <a id="glossary"></a>
 
 **JAR**
@@ -247,3 +361,5 @@ Popular terminals in mainstream operating systems include command prompt (CMD) f
 <img src="https://forums.macrumors.com/attachments/screen-shot-2020-12-09-at-4-50-12-pm-png.1690397/" alt="drawing" width="500"/>
 <br> **Terminal (Linux)** <br>
 <img src="https://static1.howtogeekimages.com/wordpress/wp-content/uploads/2013/03/linux-terminal-on-ubuntu.png" alt="drawing" width="500"/>
+
+[:arrow_up_small:](#table-of-contents)
