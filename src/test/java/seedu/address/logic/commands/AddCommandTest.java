@@ -11,6 +11,7 @@ import static seedu.address.testutil.TypicalPersons.BOB;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -237,7 +238,8 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updateAndSortFilteredClientList(Predicate<Client> predicate) {
+        public void updateAndSortFilteredClientList(Predicate<Client> predicate, Comparator<Client> comparator) {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
