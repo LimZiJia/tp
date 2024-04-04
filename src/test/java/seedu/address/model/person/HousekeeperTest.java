@@ -25,6 +25,8 @@ import org.junit.jupiter.api.Test;
 
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.testutil.HousekeeperBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class HousekeeperTest {
     private static Housekeeper copyBob;
@@ -74,23 +76,23 @@ public class HousekeeperTest {
         assertFalse(copyBob.equals(AMY));
 
         // different name -> returns false
-        Person editedCopyBob = new PersonBuilder(BOB).withName(VALID_NAME_AMY).build();
+        Person editedCopyBob = new HousekeeperBuilder(BOB).withName(VALID_NAME_AMY).build();
         assertFalse(copyBob.equals(editedCopyBob));
 
         // different phone -> returns false
-        editedCopyBob = new PersonBuilder(BOB).withPhone(VALID_PHONE_AMY).build();
+        editedCopyBob = new HousekeeperBuilder(BOB).withPhone(VALID_PHONE_AMY).build();
         assertFalse(copyBob.equals(editedCopyBob));
 
         // different email -> returns false
-        editedCopyBob = new PersonBuilder(BOB).withEmail(VALID_EMAIL_AMY).build();
+        editedCopyBob = new HousekeeperBuilder(BOB).withEmail(VALID_EMAIL_AMY).build();
         assertFalse(copyBob.equals(editedCopyBob));
 
         // different address -> returns false
-        editedCopyBob = new PersonBuilder(BOB).withAddress(VALID_ADDRESS_AMY).build();
+        editedCopyBob = new HousekeeperBuilder(BOB).withAddress(VALID_ADDRESS_AMY).build();
         assertFalse(copyBob.equals(editedCopyBob));
 
         // different tags -> returns false
-        editedCopyBob = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        editedCopyBob = new HousekeeperBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
         assertFalse(copyBob.equals(editedCopyBob));
 
     }
