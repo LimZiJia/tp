@@ -169,9 +169,9 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateFilteredHousekeeperList(Predicate<Person> predicate) {
+    public void updateFilteredHousekeeperList(Predicate<? extends Person> predicate) {
         requireNonNull(predicate);
-        filteredHousekeepers.setPredicate(predicate);
+        filteredHousekeepers.setPredicate((Predicate<? super Housekeeper>) predicate);
     }
 
     @Override
