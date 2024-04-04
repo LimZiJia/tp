@@ -83,7 +83,7 @@ public class BookingCommand extends Command {
             + "Parameters: AREA DATE(yyyy-mm-dd) TIME(am|pm)\n"
             + "Example: " + COMMAND_WORD + " housekeeper " + ACTION_WORD_HOUSEKEEPER_SEARCH + " west 2024-01-01 am";
 
-    public static final String ADD_MESSAGE_CONSTRAINT = "If client does not have housekeeping details, "
+    public static final String NO_DETAILS_MESSAGE_CONSTRAINT = "If client does not have housekeeping details, "
             + "please set housekeeping details first using 'set'.";
 
     private String actionWord;
@@ -227,19 +227,20 @@ public class BookingCommand extends Command {
         }
 
         Client clientToEdit = lastShownList.get(index.getZeroBased());
-        if (clientToEdit.hasHousekeepingDetails()) {
-            HousekeepingDetails details = clientToEdit.getDetails();
-            details.setBooking(booking);
 
-            EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-            editPersonDescriptor.setDetails(details);
-
-            Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
-            model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
-            return editClientCommand.execute(model);
-        } else {
-            throw new CommandException(ADD_MESSAGE_CONSTRAINT);
+        if (!clientToEdit.hasHousekeepingDetails()) {
+            throw new CommandException(NO_DETAILS_MESSAGE_CONSTRAINT);
         }
+
+        HousekeepingDetails details = clientToEdit.getDetails();
+        details.setBooking(booking);
+
+        EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+        editPersonDescriptor.setDetails(details);
+
+        Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+        return editClientCommand.execute(model);
     }
 
     private CommandResult clientDelete(Model model) throws CommandException {
@@ -250,6 +251,11 @@ public class BookingCommand extends Command {
         }
 
         Client clientToEdit = lastShownList.get(index.getZeroBased());
+
+        if (!clientToEdit.hasHousekeepingDetails()) {
+            throw new CommandException(NO_DETAILS_MESSAGE_CONSTRAINT);
+        }
+
         HousekeepingDetails details = clientToEdit.getDetails();
         details.deleteBooking();
 
@@ -281,12 +287,14 @@ public class BookingCommand extends Command {
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-        Client personToEdit = lastShownList.get(index.getZeroBased());
+        Client clientToEdit = lastShownList.get(index.getZeroBased());
 
-        HousekeepingDetails detailsToEdit = personToEdit.getDetails();
+        if (!clientToEdit.hasHousekeepingDetails()) {
+            throw new CommandException(NO_DETAILS_MESSAGE_CONSTRAINT);
+        }
 
+        HousekeepingDetails detailsToEdit = clientToEdit.getDetails();
         detailsToEdit.addDeferment(defer);
-
         return new CommandResult(String.format(MESSAGE_DEFER_PERSON_SUCCESS, detailsToEdit.getDefermentToString()));
     }
 
