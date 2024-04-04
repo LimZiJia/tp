@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showClientAtIndex;
+import static seedu.address.logic.commands.CommandTestUtil.showHousekeeperAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
@@ -17,6 +18,8 @@ import seedu.address.logic.Messages;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Person;
 
 /**
@@ -29,92 +32,174 @@ public class DeleteCommandTest {
 
     @Test
     public void execute_validIndexUnfilteredList_success() {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
+        // Test for deleting client
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
+        String expectedMessageClient = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
+                Messages.formatClient(clientToDelete));
 
         ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        expectedModel.deleteClient(clientToDelete);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteClientCommand, model, expectedMessageClient, expectedModel);
+
+        // Test for deleting housekeeper
+        Housekeeper housekeeperToDelete = model.getFilteredHousekeeperList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteHousekeeperCommand deleteHousekeeperCommand = new DeleteHousekeeperCommand(INDEX_FIRST_PERSON);
+
+        String expectedMessage = String.format(DeleteHousekeeperCommand.MESSAGE_DELETE_HOUSEKEEPER_SUCCESS,
+                Messages.formatHousekeeper(housekeeperToDelete));
+
+        ModelManager expectedModelHousekeeper = new ModelManager(model.getAddressBook(), new UserPrefs());
+        expectedModelHousekeeper.deleteHousekeeper(housekeeperToDelete);
+
+        assertCommandSuccess(deleteHousekeeperCommand, model, expectedMessage, expectedModelHousekeeper);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+        // Test for deleting client
+        Index outOfBoundIndexClient = Index.fromOneBased(model.getFilteredClientList().size() + 1);
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(outOfBoundIndexClient);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteClientCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+
+        // Test for deleting housekeeper
+        Index outOfBoundIndexHousekeeper = Index.fromOneBased(model.getFilteredHousekeeperList().size() + 1);
+        DeleteHousekeeperCommand deleteHousekeeperCommand = new DeleteHousekeeperCommand(outOfBoundIndexHousekeeper);
+
+        assertCommandFailure(deleteHousekeeperCommand, model, Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS,
-                Messages.format(personToDelete));
-
         Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
 
-        assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
+        // Test for deleting housekeeper
+        showClientAtIndex(model, INDEX_FIRST_PERSON);
+
+        Client clientToDelete = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
+
+        String expectedClientMessage = String.format(DeleteClientCommand.MESSAGE_DELETE_CLIENT_SUCCESS,
+                Messages.formatClient(clientToDelete));
+
+        expectedModel.deleteClient(clientToDelete);
+        showNoClient(expectedModel);
+
+        assertCommandSuccess(deleteClientCommand, model, expectedClientMessage, expectedModel);
+
+        // Test for deleting housekeeper
+        showHousekeeperAtIndex(model, INDEX_FIRST_PERSON);
+
+        Housekeeper housekeeperToDelete = model.getFilteredHousekeeperList().get(INDEX_FIRST_PERSON.getZeroBased());
+        DeleteHousekeeperCommand deleteHousekeeperCommand = new DeleteHousekeeperCommand(INDEX_FIRST_PERSON);
+
+        String expectedHousekeeperMessage = String.format(DeleteHousekeeperCommand.MESSAGE_DELETE_HOUSEKEEPER_SUCCESS,
+                Messages.formatHousekeeper(housekeeperToDelete));
+
+        expectedModel.deleteHousekeeper(housekeeperToDelete);
+        showNoHousekeeper(expectedModel);
+
+        assertCommandSuccess(deleteHousekeeperCommand, model, expectedHousekeeperMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
         Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
 
-        DeleteCommand deleteCommand = new DeleteCommand(outOfBoundIndex);
+        // Test for deleting client
+        showClientAtIndex(model, INDEX_FIRST_PERSON);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getClientList().size());
+
+        DeleteClientCommand deleteCommand = new DeleteClientCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+
+        // Test for deleting housekeeper
+        showHousekeeperAtIndex(model, INDEX_FIRST_PERSON);
+
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getHousekeeperList().size());
+
+        DeleteHousekeeperCommand deleteHousekeeperCommand = new DeleteHousekeeperCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteHousekeeperCommand, model, Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
     }
 
     @Test
     public void equals() {
-        DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = new DeleteCommand(INDEX_SECOND_PERSON);
+        // Test for deleting client
+        DeleteClientCommand deleteFirstClientCommand = new DeleteClientCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteSecondClientCommand = new DeleteClientCommand(INDEX_SECOND_PERSON);
 
         // same object -> returns true
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+        assertTrue(deleteFirstClientCommand.equals(deleteFirstClientCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_PERSON);
-        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+        DeleteClientCommand deleteFirstClientCommandCopy = new DeleteClientCommand(INDEX_FIRST_PERSON);
+        assertTrue(deleteFirstClientCommand.equals(deleteFirstClientCommandCopy));
 
         // different types -> returns false
-        assertFalse(deleteFirstCommand.equals(1));
+        assertFalse(deleteFirstClientCommand.equals(1));
 
         // null -> returns false
-        assertFalse(deleteFirstCommand.equals(null));
+        assertFalse(deleteFirstClientCommand.equals(null));
 
         // different person -> returns false
-        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+        assertFalse(deleteFirstClientCommand.equals(deleteSecondClientCommand));
+
+        // Test for deleting housekeeper
+        DeleteHousekeeperCommand deleteFirstHousekeeperCommand = new DeleteHousekeeperCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteSecondHousekeeperCommand = new DeleteHousekeeperCommand(INDEX_SECOND_PERSON);
+
+        // same object -> returns true
+        assertTrue(deleteFirstHousekeeperCommand.equals(deleteFirstHousekeeperCommand));
+
+        // same values -> returns true
+        DeleteHousekeeperCommand deleteFirstHousekeeperCommandCopy = new DeleteHousekeeperCommand(INDEX_FIRST_PERSON);
+        assertTrue(deleteFirstHousekeeperCommand.equals(deleteFirstHousekeeperCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstHousekeeperCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstHousekeeperCommand.equals(null));
+
+        // different person -> returns false
+        assertFalse(deleteFirstHousekeeperCommand.equals(deleteSecondHousekeeperCommand));
     }
 
     @Test
     public void toStringMethod() {
         Index targetIndex = Index.fromOneBased(1);
-        DeleteCommand deleteCommand = new DeleteCommand(targetIndex);
-        String expected = DeleteCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
-        assertEquals(expected, deleteCommand.toString());
+        // Test for deleting client
+        DeleteClientCommand deleteClientCommand = new DeleteClientCommand(targetIndex);
+        String expected = DeleteClientCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+        assertEquals(expected, deleteClientCommand.toString());
+
+        // Test for deleting housekeeper
+        DeleteHousekeeperCommand deleteHousekeeperCommand = new DeleteHousekeeperCommand(targetIndex);
+        expected = DeleteHousekeeperCommand.class.getCanonicalName() + "{targetIndex=" + targetIndex + "}";
+        assertEquals(expected, deleteHousekeeperCommand.toString());
     }
 
     /**
-     * Updates {@code model}'s filtered list to show no one.
+     * Updates {@code model}'s filtered client list to show no one.
      */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+    private void showNoClient(Model model) {
+        model.updateFilteredClientList(p -> false);
 
-        assertTrue(model.getFilteredPersonList().isEmpty());
+        assertTrue(model.getFilteredClientList().isEmpty());
+    }
+
+    /**
+     * Updates {@code model}'s filtered housekeeper list to show no one.
+     */
+    private void showNoHousekeeper(Model model) {
+        model.updateFilteredHousekeeperList(p -> false);
+
+        assertTrue(model.getFilteredHousekeeperList().isEmpty());
     }
 }

@@ -133,18 +133,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
-     */
-    public void removePerson(Person key) {
-        if (key.isClient()) {
-            clients.remove((Client) key);
-        } else {
-            housekeepers.remove((Housekeeper) key);
-        }
-    }
-
-    /**
      * Removes {@code client} from this {@code AddressBook}.
      * {@code client} must exist in the address book.
      */
