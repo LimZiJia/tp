@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
 import org.junit.jupiter.api.Test;
+import seedu.address.testutil.ClientBuilder;
+import seedu.address.testutil.HousekeeperBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 import java.time.LocalDate;
@@ -18,8 +20,8 @@ class LeadsFilterPredicateTest {
             LeadsFilterPredicate predicate = new LeadsFilterPredicate();
 
             HousekeepingDetails housekeepingDetails = new HousekeepingDetails();
-            PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-            Client client = (Client) personBuilder.build();
+            ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+            Client client = clientBuilder.build();
 
             assertFalse(predicate.test(client));
         }
@@ -29,8 +31,8 @@ class LeadsFilterPredicateTest {
             LeadsFilterPredicate predicate = new LeadsFilterPredicate();
 
             HousekeepingDetails housekeepingDetails = new HousekeepingDetails(DEFAULT_DATE, DEFAULT_PERIOD);
-            PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-            Client client = (Client) personBuilder.build();
+            ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+            Client client = clientBuilder.build();
 
             assertFalse(predicate.test(client));
         }
@@ -42,8 +44,8 @@ class LeadsFilterPredicateTest {
             Period period = Period.ofMonths(1);
             LocalDate date = LocalDate.now().plus(period); // Create a date one month from now
             HousekeepingDetails housekeepingDetails = new HousekeepingDetails(date, DEFAULT_PERIOD);
-            PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-            Client client = (Client) personBuilder.build();
+            ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+            Client client = clientBuilder.build();
 
             assertFalse(predicate.test(client));
         }
@@ -54,8 +56,8 @@ class LeadsFilterPredicateTest {
 
         LocalDate date = LocalDate.now(); // Create a date that is today
         HousekeepingDetails housekeepingDetails = new HousekeepingDetails(date, DEFAULT_PERIOD);
-        PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-        Client client = (Client) personBuilder.build();
+        ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+        Client client = clientBuilder.build();
 
         assertFalse(predicate.test(client));
     }
@@ -67,8 +69,8 @@ class LeadsFilterPredicateTest {
         Period period = Period.ofMonths(1);
         LocalDate date = LocalDate.now().minus(period); // Create a date that is before today
         HousekeepingDetails housekeepingDetails = new HousekeepingDetails(date, DEFAULT_PERIOD);
-        PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-        Client client = (Client) personBuilder.build();
+        ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+        Client client = clientBuilder.build();
 
         assertTrue(predicate.test(client));
     }
@@ -78,8 +80,8 @@ class LeadsFilterPredicateTest {
         LeadsFilterPredicate predicate = new LeadsFilterPredicate();
 
         HousekeepingDetails housekeepingDetails = new HousekeepingDetails(DEFAULT_DATE, DEFAULT_PERIOD);
-        PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-        Client client = (Client) personBuilder.build();
+        ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+        Client client = clientBuilder.build();
 
         assertTrue(predicate.test(client));
     }
@@ -91,8 +93,8 @@ class LeadsFilterPredicateTest {
         LocalDate date = LocalDate.now();
         Period period = Period.ZERO;
         HousekeepingDetails housekeepingDetails = new HousekeepingDetails(date, period);
-        PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-        Client client = (Client) personBuilder.build();
+        ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+        Client client = clientBuilder.build();
 
         assertTrue(predicate.test(client));
     }
@@ -104,8 +106,8 @@ class LeadsFilterPredicateTest {
         LocalDate date = LocalDate.now();
         Period period = Period.ofMonths(1);
         HousekeepingDetails housekeepingDetails = new HousekeepingDetails(date, period);
-        PersonBuilder personBuilder = new PersonBuilder().withHousekeepingDetails(housekeepingDetails);
-        Client client = (Client) personBuilder.build();
+        ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
+        Client client = clientBuilder.build();
 
         assertFalse(predicate.test(client));
     }
