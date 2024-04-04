@@ -73,6 +73,9 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         }
 
         Client personToEdit = lastShownList.get(index.getZeroBased());
+        if (!personToEdit.hasHousekeepingDetails()) {
+            throw new CommandException(NO_DETAILS_MESSAGE_CONSTRAINT);
+        }
         Client editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
 
         if (!personToEdit.isSamePerson(editedPerson) && model.hasClient(editedPerson)) {
