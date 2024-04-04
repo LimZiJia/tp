@@ -63,12 +63,11 @@ public class EditClientCommand extends EditCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Type updatedType = editPersonDescriptor.getType().orElse(personToEdit.getType());
         Area updatedArea = editPersonDescriptor.getArea().orElse(personToEdit.getArea());
         HousekeepingDetails updatedDetails =
                 editPersonDescriptor.getDetails().orElse(personToEdit.getDetails());
 
-        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedType,
-                updatedDetails, updatedArea);
+        return new Client(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedDetails,
+                updatedArea);
     }
 }

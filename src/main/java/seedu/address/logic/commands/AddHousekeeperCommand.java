@@ -10,6 +10,8 @@ import seedu.address.model.person.Housekeeper;
 public class AddHousekeeperCommand extends AddCommand {
     public static final String MESSAGE_SUCCESS = "New housekeeper added: %1$s";
     public static final String MESSAGE_DUPLICATE_HOUSEKEEPER = "This housekeeper already exists in the address book";
+    public static final String MESSAGE_NO_HOUSEKEEPING_DETAILS = "Housekeeper should not have housekeeping details, " +
+            "that is specifically for client.";
 
     public AddHousekeeperCommand(Housekeeper housekeeper) {
         super(housekeeper);

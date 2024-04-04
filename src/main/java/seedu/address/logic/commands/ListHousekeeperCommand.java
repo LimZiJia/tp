@@ -6,8 +6,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.TypePredicate;
 
 public class ListHousekeeperCommand extends ListCommand {
-    public ListHousekeeperCommand(TypePredicate predicate) {
-        super(predicate);
+    public ListHousekeeperCommand() {
+        super(new TypePredicate("housekeeper"));
     }
 
     @Override

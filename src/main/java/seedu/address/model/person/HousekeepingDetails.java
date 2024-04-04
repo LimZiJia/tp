@@ -49,6 +49,48 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     }
 
     /**
+     * Converts the stored string representation of the housekeeping details to a readable format horizontally.
+     * @param details The stored string representation of the housekeeping details.
+     * @return Readable string representation of the housekeeping details.
+     */
+    public static String makeStoredDetailsReadableHorizontally(String details) {
+        if (details.equals("null")) {
+            return NO_DETAILS_PROVIDED;
+        }
+        else if (!isValidHousekeepingDetailsStorage(details)) {
+            return "Invalid housekeeping details format";
+        }
+
+        // Converting Period of preferred interval to a readable format
+        String[] s = details.split(" ");
+        String num = s[1].substring(1, s[1].length() - 1);
+        String unit = s[1].substring(s[1].length() - 1);
+        String unitString;
+        switch (unit) {
+        case "Y":
+            unitString = "years";
+            break;
+        case "M":
+            unitString = "months";
+            break;
+        case "W":
+            unitString = "weeks";
+            break;
+        case "D":
+            unitString = "days";
+            break;
+        default:
+            unitString = "Invalid unit";
+        }
+
+        // Makes null booking readable
+        String booking = s[2].equals("null") ? "No booking" : s[2];
+
+        return String.format("Last housekeeping: %s, Preferred interval: %s %s, Booking date: %s",
+                s[0], num, unitString, booking);
+    }
+
+    /**
      *  Converts the stored string representation of the housekeeping details to a readable format.
      *
      * @param details The stored string representation of the housekeeping details.

@@ -22,49 +22,80 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Person;
+import seedu.address.testutil.ClientBuilder;
+import seedu.address.testutil.HousekeeperBuilder;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
 
     @Test
     public void constructor_nullPerson_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddCommand(null));
+        assertThrows(NullPointerException.class, () -> new AddClientCommand(null));
+
+        assertThrows(NullPointerException.class, () -> new AddHousekeeperCommand(null));
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
+    public void execute_clientAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+        Client validClient = new ClientBuilder().build();
 
-        CommandResult commandResult = new AddCommand(validPerson).execute(modelStub);
+        CommandResult commandResult = new AddClientCommand(validClient).execute(modelStub);
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(validPerson)),
+        assertEquals(String.format(AddClientCommand.MESSAGE_SUCCESS, Messages.formatClient(validClient)),
                 commandResult.getFeedbackToUser());
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(Arrays.asList(validClient), modelStub.clientsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() {
-        Person validPerson = new PersonBuilder().build();
-        AddCommand addCommand = new AddCommand(validPerson);
-        ModelStub modelStub = new ModelStubWithPerson(validPerson);
+    public void execute_housekeeperAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Housekeeper validHousekeeper = new HousekeeperBuilder().build();
 
-        assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+        CommandResult commandResult = new AddHousekeeperCommand(validHousekeeper).execute(modelStub);
+
+        assertEquals(String.format(AddHousekeeperCommand.MESSAGE_SUCCESS, Messages.formatHousekeeper(validHousekeeper)),
+                commandResult.getFeedbackToUser());
+        assertEquals(Arrays.asList(validHousekeeper), modelStub.housekeepersAdded);
+    }
+
+    @Test
+    public void execute_duplicateClient_throwsCommandException() {
+        Client validClient = new ClientBuilder().build();
+        Housekeeper validHousekeeper = new HousekeeperBuilder().build();
+        AddClientCommand addClientCommand = new AddClientCommand(validClient);
+        ModelStub modelStub = new ModelStubWithPerson(validClient, validHousekeeper);
+
+        assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT,
+                () -> addClientCommand.execute(modelStub));
+    }
+
+    @Test
+    public void execute_duplicateHousekeeper_throwsCommandException() {
+        Client validClient = new ClientBuilder().build();
+        Housekeeper validHousekeeper = new HousekeeperBuilder().build();
+        AddHousekeeperCommand addHousekeeperCommand = new AddHousekeeperCommand(validHousekeeper);
+        ModelStub modelStub = new ModelStubWithPerson(validClient, validHousekeeper);
+
+        assertThrows(CommandException.class, AddHousekeeperCommand.MESSAGE_DUPLICATE_HOUSEKEEPER,
+                () -> addHousekeeperCommand.execute(modelStub));
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
-        AddCommand addAliceCommand = new AddCommand(alice);
-        AddCommand addBobCommand = new AddCommand(bob);
+        Client alice = new ClientBuilder().withName("Alice").build();
+        Housekeeper bob = new HousekeeperBuilder().withName("Bob").build();
+        AddClientCommand addAliceCommand = new AddClientCommand(alice);
+        AddHousekeeperCommand addBobCommand = new AddHousekeeperCommand(bob);
 
         // same object -> returns true
         assertTrue(addAliceCommand.equals(addAliceCommand));
 
         // same values -> returns true
-        AddCommand addAliceCommandCopy = new AddCommand(alice);
+        AddClientCommand addAliceCommandCopy = new AddClientCommand(alice);
         assertTrue(addAliceCommand.equals(addAliceCommandCopy));
 
         // different types -> returns false
@@ -73,15 +104,28 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
+        // same object -> returns true
+        assertTrue(addBobCommand.equals(addBobCommand));
+
+        // same values -> returns true
+        AddHousekeeperCommand addBobCommandCopy = new AddHousekeeperCommand(bob);
+        assertTrue(addBobCommand.equals(addBobCommandCopy));
+
+        // different types -> returns false
+        assertFalse(addBobCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(addBobCommand.equals(null));
+
         // different person -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     @Test
     public void toStringMethod() {
-        AddCommand addCommand = new AddCommand(ALICE);
-        String expected = AddCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
-        assertEquals(expected, addCommand.toString());
+        AddClientCommand addClientCommand = new AddClientCommand(ALICE);
+        String expected = AddClientCommand.class.getCanonicalName() + "{toAdd=" + ALICE + "}";
+        assertEquals(expected, addClientCommand.toString());
     }
 
     /**
@@ -119,7 +163,12 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addPerson(Person person) {
+        public void addClient(Client client) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addHousekeeper(Housekeeper housekeeper) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -134,46 +183,80 @@ public class AddCommandTest {
         }
 
         @Override
-        public boolean hasPerson(Person person) {
+        public boolean hasClient(Client client) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void deletePerson(Person target) {
+        public boolean hasHousekeeper(Housekeeper housekeeper) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void setPerson(Person target, Person editedPerson) {
+        public void deleteClient(Client client) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public void deleteHousekeeper(Housekeeper housekeeper) {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void setClient(Client target, Client editedClient) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setHousekeeper(Housekeeper target, Housekeeper editedHousekeeper) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Client> getFilteredClientList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Housekeeper> getFilteredHousekeeperList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredClientList(Predicate<Client> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredHousekeeperList(Predicate<Housekeeper> predicate) {
             throw new AssertionError("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that contains a single person.
+     * A Model stub that contains a single client and housekeeper.
      */
     private class ModelStubWithPerson extends ModelStub {
-        private final Person person;
+        private final Client client;
+        private final Housekeeper housekeeper;
 
-        ModelStubWithPerson(Person person) {
-            requireNonNull(person);
-            this.person = person;
+        ModelStubWithPerson(Client client, Housekeeper housekeeper) {
+            requireNonNull(client);
+            requireNonNull(housekeeper);
+            this.client = client;
+            this.housekeeper = housekeeper;
         }
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return this.person.isSamePerson(person);
+        public boolean hasClient(Client client) {
+            requireNonNull(client);
+            return this.client.isSamePerson(client);
+        }
+
+        @Override
+        public boolean hasHousekeeper(Housekeeper housekeeper) {
+            requireNonNull(housekeeper);
+            return this.housekeeper.isSamePerson(housekeeper);
         }
     }
 
@@ -181,18 +264,31 @@ public class AddCommandTest {
      * A Model stub that always accept the person being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+        final ArrayList<Client> clientsAdded = new ArrayList<>();
+        final ArrayList<Housekeeper> housekeepersAdded = new ArrayList<>();
 
         @Override
-        public boolean hasPerson(Person person) {
-            requireNonNull(person);
-            return personsAdded.stream().anyMatch(person::isSamePerson);
+        public boolean hasClient(Client client) {
+            requireNonNull(client);
+            return clientsAdded.stream().anyMatch(client::isSamePerson);
         }
 
         @Override
-        public void addPerson(Person person) {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public boolean hasHousekeeper(Housekeeper housekeeper) {
+            requireNonNull(housekeeper);
+            return housekeepersAdded.stream().anyMatch(housekeeper::isSamePerson);
+        }
+
+        @Override
+        public void addClient(Client client) {
+            requireNonNull(client);
+            clientsAdded.add(client);
+        }
+
+        @Override
+        public void addHousekeeper(Housekeeper housekeeper) {
+            requireNonNull(housekeeper);
+            housekeepersAdded.add(housekeeper);
         }
 
         @Override

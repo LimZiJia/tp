@@ -22,20 +22,22 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public DeleteCommand parse(String args) throws ParseException {
         try {
             String[] splitArgs = args.trim().split(" ");
-            Type type = ParserUtil.parseType(splitArgs[0]);
+            String type = ParserUtil.parseType(splitArgs[0]);
             Index index = ParserUtil.parseIndex(splitArgs[1]);
-            if (type.equals(new Type("client"))) {
+            if (type.equals("client")) {
                 return new DeleteClientCommand(index);
-            } else if (type.equals(new Type("housekeeper"))) {
+            } else if (type.equals("housekeeper")) {
                 return new DeleteHousekeeperCommand(index);
             } else {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
-
             }
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
         }
     }
 

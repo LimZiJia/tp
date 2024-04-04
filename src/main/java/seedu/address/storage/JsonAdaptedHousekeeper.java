@@ -30,9 +30,9 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedHousekeeper(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type, @JsonProperty("area") String area, 
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("area") String area,
                              @JsonProperty("booking list") ArrayList<JsonAdaptedBooking> bookingList) {
-        super(name, phone, email, address, tags, type, area);
+        super(name, phone, email, address, tags, area);
         this.bookingList = bookingList;
     }
 
@@ -92,13 +92,6 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        if (type == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
-        }
-        if (!Type.isValidType(type)) {
-            throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
-        }
-        final Type modelType = new Type(type);
         final Area modelArea = new Area(area);
 
         final ArrayList<Booking> personBookings = new ArrayList<>();
@@ -108,6 +101,6 @@ public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
 
         final BookingList modelBookingList = new BookingList(personBookings);
 
-        return new Housekeeper(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelType, modelArea, modelBookingList);
+        return new Housekeeper(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelArea, modelBookingList);
     }
 }
