@@ -52,7 +52,7 @@ public class Messages {
         if (housekeepingDetails == null) {
             details = HousekeepingDetails.NO_DETAILS_PROVIDED;
         } else {
-            details = HousekeepingDetails.makeStoredDetailsReadable(housekeepingDetails.toString());
+            details = HousekeepingDetails.makeStoredDetailsReadableWithDeferment(housekeepingDetails.toString());
         }
 
         final StringBuilder builder = new StringBuilder();

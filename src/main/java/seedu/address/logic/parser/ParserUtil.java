@@ -8,23 +8,21 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Area;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.HousekeepingDetails;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.Type;
+import seedu.address.model.person.*;
 import seedu.address.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
+
+    private static final Pattern PATTERN_BOOKING = Pattern.compile(
+            "(\\d{4}-\\d{2}-\\d{2}\\s+(am|pm))");
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
@@ -160,7 +158,21 @@ public class ParserUtil {
 
     public static LocalDate parseLastHousekeepingDate(String lHD) throws ParseException {
         requireNonNull(lHD);
-        return LocalDate.parse(lHD);
+        try {
+            LocalDate parsedLHD = LocalDate.parse(lHD);
+            return parsedLHD;
+        } catch (Exception e) {
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
+    }
+    public static Booking parseBooking(String booking) throws ParseException {
+        requireNonNull(booking);
+        if (PATTERN_BOOKING.matcher(booking.trim()).matches()) {
+            Booking parsedBooking = new Booking(booking);
+            return parsedBooking;
+        } else {
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
     }
 
     public static Period parsePreferredInterval(String pI) throws ParseException {
