@@ -147,10 +147,11 @@ Format: `help`
 
 Adds a client or housekeeper to Housekeeping Hub.
 
-Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [t/TAG]…​`
+Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [ar/AREA] [t/TAG]…​`
 
 Notes: 
 * `TYPE` can be either 'client' or 'housekeeper'.
+* `AREA` can be either 'east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', or 'northeast'.
 * `DETAILS` is optional and refers to the housekeeping details for CLIENT ONLY. It is not applicable for housekeepers.
 The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last
 housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
@@ -166,8 +167,8 @@ To set or remove housekeeping details after initiation, refer to `set` and `remo
 </div>
 
 Examples:
-* `add client n/Elon e/elon@gmail.com p/+6088888888 a/Elon Street, Block 123, 101010 Singapore`
-* `add housekeeper n/Betsy Crowe p/+441234567 e/betsycrowe@example.com a/Newgate Prison t/criminal t/famous`
+* `add client n/Elon e/elon@gmail.com p/088888888 a/Elon Street, Block 123, 101010 Singapore ar/west`
+* `add housekeeper n/Betsy Crowe p/441234567 e/betsycrowe@example.com a/Newgate Prison t/criminal t/famous ar/south`
 
 [:arrow_up_small:](#table-of-contents)
 
@@ -196,6 +197,8 @@ Deletes the specified client or housekeeper from the address book.
 
 Format: `delete TYPE INDEX`
 
+Notes:
+* `TYPE` can be either 'client' or 'housekeeper'.
 * Deletes the client or housekeeper at the specified `INDEX`.
 * The index refers to the index number shown in the displayed list.
 * The index **must be a positive integer** 1, 2, 3, …​
@@ -211,6 +214,55 @@ Examples:
 [:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
+### Editing a person : `edit`
+
+Edits an existing person in the address book.
+
+Format: `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [ar/AREA] [t/TAG]…​`
+
+Notes:
+* `TYPE` can be either 'client' or 'housekeeper'.
+* `AREA` can be either 'east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', or 'northeast'.
+* `DETAILS` is optional and refers to the housekeeping details for CLIENT ONLY. It is not applicable for housekeepers.
+  The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last
+  housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove all the person’s tags by typing `t/` without
+  specifying any tags after it.
+
+Examples:
+*  `edit client 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st client to be `91234567` and `johndoe@example.com` respectively.
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+### Locating persons by keywords: `find`
+
+Finds client or housekeeper whose names, address, or area contain any of the given keywords.
+
+Format: `find TYPE n/KEYWORD [MORE_KEYWORDS] ar/KEYWORD [MORE_KEYWORDS] a/KEYWORD [MORE_KEYWORDS]`
+
+Notes:
+* `TYPE` can be either 'client' or 'housekeeper'.
+* `AREA` can be either 'east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', or 'northeast'.
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `find client n/John` returns `john` and `John Doe`
+* `find housekeeper n/alex david ar/west` returns housekeeper which name is alex or david and cover the service of west area<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
 
 ### Getting client call list: `leads`
 Sorts the clients based on the predicted next time of housekeeping.
@@ -250,13 +302,15 @@ If clients do not have housekeeping details, they are assumed to not want notifi
 We have 7 commands for updating client's housekeeping details. `last`, `interval`, `defer`, `add`, `delete`, `set`, and `remove`.
 Without a housekeeping detail, `last`, `interval`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
 
-Action | Format, Explainations, Examples                                                                                                                                                
---------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-`edit /lhd` | Edit client's last housekeeping date with `edit lhd/`<br>Format: `booking client edit lhd/INDEX yyyy-MM-dd`<br>Example: `booking client last 2 2024-04-01`                                  
-`edit /pi` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit pi/INDEX NUMBER INTERVAL`<br>Example: `booking client interval 2 2 weeks`                    
-`defer` | Add period to delay calling clients with `defer`<br>Format: `booking client defer INDEX NUMBER INTERVAL`<br>Example: `booking client defer 2 1 months`                         
-`add` | Add client's booking date with `add`<br>Format: `booking client add INDEX yyyy-MM-dd (am\|pm)`<br>Example: `booking client add 2 2024-04-01 am`                                
-`delete` | Delete client's booking date with `delete`<br>Format: `booking client delete INDEX` <br>Example: `booking client delete 2`                                                     
+Action | Format, Explainations, Examples                                                                                                                                               
+--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`edit lhd/` | Edit client's last housekeeping date with `edit lhd/`<br>Format: `booking client edit INDEX lhd/yyyy-MM-dd`<br>Example: `booking client edit 2 lhd/2024-04-01`                                 
+`edit pi/` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit INDEX pi/NUMBER INTERVAL`<br>Example: `booking client edit 2 pi/2 weeks`
+`edit bd/` | Edit client's booking date with `edit bd/`<br>Format: `booking client edit INDEX bd/BOOKING DATE`<br>Example: `booking client edit 2 bd/2024-04-02 am`
+`edit d/` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit INDEX d/NUMBER INTERVAL`<br>Example: `booking client edit 2 d/2 months`
+`defer` | Add period to delay calling clients with `defer`<br>Format: `booking client defer INDEX NUMBER INTERVAL`<br>Example: `booking client defer 2 1 months`                        
+`add` | Add client's booking date with `add`<br>Format: `booking client add INDEX yyyy-MM-dd (am|pm)`<br>Example: `booking client add 2 2024-04-01 am`                                
+`delete` | Delete client's booking date with `delete`<br>Format: `booking client delete INDEX` <br>Example: `booking client delete 2`                                                    
 `set` | Set client's housekeeping details with `set`. Same format as initiation, you can set last housekeeping date and preferred interval. <br>Format: `booking client set INDEX yyyy-MM-dd NUMBER INTERVAL`<br>Example: `booking client set 2 2024-04-01 15 days`
 `remove` | Remove client's housekeeping details with `remove`<br>Format: `booking client remove INDEX`<br>Example: `booking client remove 2`
 
@@ -322,9 +376,11 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 
 Action | Format, Examples
 --------|------------------
-[**Add**](#adding-a-person-add) | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [t/TAGS]…​` <br> e.g., `add client n/Elon e/elon@gmail.com p/88888888 a/Elon Street, Block 123, 101010 Singapore d/2024-04-02 1 years t/VIP`
+[**Add**](#adding-a-person-add) | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [ar/AREA] [t/TAG]…​` <br> e.g., `add client n/Elon e/elon@gmail.com p/088888888 a/Elon Street, Block 123, 101010 Singapore ar/west`
 [**Delete**](#deleting-a-person--delete) | `delete TYPE INDEX`<br> e.g., `delete housekeeper 3`
 [**List**](#listing-all-persons--list) | `list TYPE`<br> e.g., `list client`
+[**EDIT**](#editing-a-person--edit) | `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [ar/AREA] [t/TAG]…​`<br> e.g., `edit client 1 p/91234567 e/johndoe@example.com`
+[**FIND**](#locating-persons-by-keywords--find) | `find TYPE n/KEYWORD [MORE_KEYWORDS] ar/KEYWORD [MORE_KEYWORDS] a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `find client n/John`
 [**Leads**](#getting-client-call-list-leads) | `leads`
 [**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
 [**Clear**](#clearing-all-entries--clear) | `clear`
