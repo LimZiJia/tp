@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LHD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PI;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -14,7 +14,15 @@ import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.person.*;
+import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.Email;
+import seedu.address.model.person.HousekeepingDetails;
+import seedu.address.model.person.Name;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.Phone;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 /**
