@@ -58,8 +58,14 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Area area = ParserUtil.parseArea(argMultimap.getValue(PREFIX_AREA).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
-        HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
+        HousekeepingDetails details;
         BookingList bookingList = new BookingList();
+
+        try {
+            details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
+        } catch (ParseException e) {
+            throw new ParseException(e.getMessage());
+        }
 
         System.out.println(details);
         switch (type) {
