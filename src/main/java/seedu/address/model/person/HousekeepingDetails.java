@@ -184,7 +184,8 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     }
 
     public boolean hasBooking() {
-        return booking != null;
+        LocalDate currentDate = LocalDate.now();
+        return booking != null && booking.getBookedDate().isAfter(currentDate);
     }
 
     public void setBooking(Booking booking) {

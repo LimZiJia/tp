@@ -380,7 +380,7 @@ public class BookingCommand extends Command {
             throw new CommandException(e.getMessage());
         }
 
-        model.updateFilteredHousekeeperListWithHousekeeperPredicate(bookingSearchPredicate);
+        model.updateFilteredHousekeeperList(bookingSearchPredicate);
 
         if (model.getFilteredHousekeeperList().size() == 0) {
             return new CommandResult(String.format(Messages.MESSAGE_NO_AVAILABLE_HOUSEKEEPERS_LISTED_OVERVIEW,

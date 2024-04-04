@@ -14,7 +14,7 @@ public class LeadsFilterPredicate implements Predicate<Client> {
 
     /**
      * Tests that a {@code Client}'s predicted next housekeeping date is <= current date,
-     * and they do not have a booking yet.
+     * and they do not have a booking yet. Also, clients without housekeeping details should be tested false.
      */
     @Override
     public boolean test(Client client) {
