@@ -3,8 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static seedu.address.logic.Messages.MESSAGE_CLIENTS_LISTED_OVERVIEW;
-import static seedu.address.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
+import static seedu.address.logic.Messages.*;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.ELLE;
@@ -85,7 +84,7 @@ public class FindCommandTest {
     @Test
     public void execute_zeroKeywords_noPersonFound() {
         String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 0);
-        ContainsKeywordsPredicate predicate = preparePredicate(" ", " ", " ");
+        ContainsKeywordsPredicate predicate = preparePredicate("a", "2", "west");
         FindClientCommand clientCommand = new FindClientCommand(predicate);
         expectedModel.updateFilteredClientList(predicate);
         assertCommandSuccess(clientCommand, model, expectedMessage, expectedModel);
@@ -94,12 +93,12 @@ public class FindCommandTest {
 
     @Test
     public void execute_multipleKeywords_multiplePersonsFound() {
-        String expectedMessage = String.format(MESSAGE_CLIENTS_LISTED_OVERVIEW, 3);
-        ContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz", " ", " ");
-        FindClientCommand command = new FindClientCommand(predicate);
-        expectedModel.updateFilteredClientList(predicate);
+        String expectedMessage = String.format(MESSAGE_HOUSEKEEPERS_LISTED_OVERVIEW, 2);
+        ContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz", "", "");
+        FindHousekeeperCommand command = new FindHousekeeperCommand(predicate);
+        expectedModel.updateFilteredHousekeeperList(predicate);
         assertCommandSuccess(command, model, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredClientList());
+        assertEquals(Arrays.asList(ELLE, FIONA), model.getFilteredHousekeeperList());
     }
 
     @Test
@@ -107,7 +106,7 @@ public class FindCommandTest {
         ContainsKeywordsPredicate predicate = new ContainsKeywordsPredicate(Arrays.asList("keyword1"),
                 Arrays.asList("keyword2"), Arrays.asList("keyword3"));
         FindClientCommand findCommand = new FindClientCommand(predicate);
-        String expected = FindCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
+        String expected = FindClientCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
 

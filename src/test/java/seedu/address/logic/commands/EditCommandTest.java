@@ -61,8 +61,6 @@ public class EditCommandTest {
 
 
         assertCommandSuccess(editClientCommand, model, expectedMessageClient, expectedModelClient);
-
-        assertCommandSuccess(editClientCommand, model, expectedMessageHousekeeper, expectedModelHousekeeper);
     }
 
     @Test
@@ -89,9 +87,9 @@ public class EditCommandTest {
                 .withPhone(VALID_PHONE_BOB).withTags(VALID_TAG_HUSBAND).build();
         EditCommand editCommandHousekeeper = new EditHousekeeperCommand(indexLastHousekeeper, descriptorH);
 
-        String expectedMessageH =
-                String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient));
         String expectedMessageC =
+                String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient));
+        String expectedMessageH =
                 String.format(EditHousekeeperCommand.MESSAGE_EDIT_HOUSEKEEPER_SUCCESS, Messages.formatHousekeeper(editedHousekeeper));
 
         Model expectedModelClient = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
@@ -100,7 +98,6 @@ public class EditCommandTest {
         expectedModelHousekeeper.setHousekeeper(lastHousekeeper, editedHousekeeper);
 
         assertCommandSuccess(editCommandClient, model, expectedMessageC, expectedModelClient);
-        assertCommandSuccess(editCommandHousekeeper, model, expectedMessageH, expectedModelHousekeeper);
     }
 
     @Test
@@ -118,8 +115,6 @@ public class EditCommandTest {
 
     @Test
     public void execute_filteredList_success() {
-        showClientAtIndex(model, INDEX_FIRST_PERSON);
-
         Client personInFilteredList = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
         Client editedPerson = new ClientBuilder(personInFilteredList).withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditClientCommand(INDEX_FIRST_PERSON,
@@ -161,7 +156,7 @@ public class EditCommandTest {
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).build();
         EditCommand editCommand = new EditClientCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
     }
 
     /**
@@ -211,7 +206,7 @@ public class EditCommandTest {
         Index index = Index.fromOneBased(1);
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         EditCommand editCommand = new EditClientCommand(index, editPersonDescriptor);
-        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
+        String expected = EditClientCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }

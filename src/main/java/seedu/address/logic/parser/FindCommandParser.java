@@ -53,10 +53,6 @@ public class FindCommandParser implements Parser<FindCommand> {
         }
         if (argMultimap.getValue(PREFIX_AREA).isPresent()) {
             area = argMultimap.getValue(PREFIX_AREA).get();
-            if (!Area.isValidArea(area)) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, Area.MESSAGE_CONSTRAINTS));
-            }
         }
 
         String trimmedName = name.trim();
@@ -65,6 +61,13 @@ public class FindCommandParser implements Parser<FindCommand> {
         String[] nameKeywords = trimmedName.split("\\s+");
         String[] addressKeywords = trimmedAddress.split("\\s+");
         String[] areaKeywords = trimmedArea.split("\\s+");
+
+        for (int i = 0; i < areaKeywords.length ; i++) {
+            if (!Area.isValidArea(areaKeywords[i])) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, Area.MESSAGE_CONSTRAINTS));
+            }
+        }
 
         if (nameKeywords[0].isEmpty() && addressKeywords[0].isEmpty() && areaKeywords[0].isEmpty()) {
             throw new ParseException(FindCommand.MESSAGE_NOT_FOUND);
