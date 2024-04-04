@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -129,7 +130,7 @@ public interface Model {
      * Updates and sorts the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateAndSortFilteredClientList(Predicate<Client> predicate);
+    void updateAndSortFilteredClientList(Predicate<Client> predicate, Comparator<Client> comparator);
 
     /**
      * Updates the filter of the filtered housekeeper list to filter by the given {@code predicate}.

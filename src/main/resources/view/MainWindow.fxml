@@ -71,7 +71,7 @@
               </padding>
               <Label styleClass="column-header" text="Housekeeper :"
                      style="-fx-text-fill: black; -fx-background-radius: 10; -fx-border-color: #BFBFBF;
-                     -fx-border-radius: 10; -fx-padding: 0 2 0 8; -fx-alignment: CENTRE_LEFT; -fx-font-weight: bold;
+                     -fx-border-radius: 10; -fx-padding: 0 2 0 8; -fx-alignment: CENTER_LEFT; -fx-font-weight: bold;
                      -fx-font-size: large; -fx-background-color: #FF6A00" prefWidth="115"
               />
               <StackPane fx:id="housekeeperListPanelPlaceholder" VBox.vgrow="ALWAYS" prefWidth="180"/>
