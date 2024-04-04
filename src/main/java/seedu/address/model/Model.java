@@ -1,10 +1,16 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.nio.file.Path;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.Person;
@@ -13,9 +19,7 @@ import seedu.address.model.person.Person;
  * The API of the Model component.
  */
 public interface Model {
-    /**
-     * {@code Predicate} that always evaluate to true
-     */
+    /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_CLIENTS = unused -> true;
     Predicate<Person> PREDICATE_SHOW_ALL_HOUSEKEEPERS = unused -> true;
 
@@ -54,9 +58,7 @@ public interface Model {
      */
     void setAddressBook(ReadOnlyAddressBook addressBook);
 
-    /**
-     * Returns the AddressBook
-     */
+    /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
     /**
@@ -119,27 +121,25 @@ public interface Model {
 
     /**
      * Updates the filter of the filtered client list to filter by the given {@code predicate}.
-     *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredClientList(Predicate<Client> predicate);
+    void updateFilteredClientList(Predicate<? extends Person> predicate);
 
     /**
      * Updates and sorts the filter of the filtered client list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    //void updateAndSortFilteredClientList(Predicate<Client> predicate);
-
-    /**
-     * Updates and sorts the filter of the filtered housekeeper list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    //void updateAndSortFilteredHousekeeperList(Predicate<Housekeeper> predicate);
+    void updateAndSortFilteredClientList(Predicate<Client> predicate);
 
     /**
      * Updates the filter of the filtered housekeeper list to filter by the given {@code predicate}.
-     *
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredHousekeeperList(Predicate<Housekeeper> predicate);
+    void updateFilteredHousekeeperList(Predicate<? extends Person> predicate);
+
+    /**
+     * Updates the filter of the filtered housekeeper list to filter by the given {@code housekeeperPredicate}.
+     * @throws NullPointerException if {@code housekeeperPredicate} is null.
+     */
+    void updateFilteredHousekeeperListWithHousekeeperPredicate(Predicate<Housekeeper> housekeeperPredicate);
 }

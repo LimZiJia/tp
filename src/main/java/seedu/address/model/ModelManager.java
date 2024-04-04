@@ -197,5 +197,4 @@ public class ModelManager implements Model {
                 && filteredClients.equals(otherModelManager.filteredClients)
                 && filteredHousekeepers.equals(otherModelManager.filteredHousekeepers);
     }
-
 }
