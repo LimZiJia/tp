@@ -314,7 +314,7 @@ Action | Format, Explainations, Examples
 `set` | Set client's housekeeping details with `set`. Same format as initiation, you can set last housekeeping date and preferred interval. <br>Format: `booking client set INDEX yyyy-MM-dd NUMBER INTERVAL`<br>Example: `booking client set 2 2024-04-01 15 days`
 `remove` | Remove client's housekeeping details with `remove`<br>Format: `booking client remove INDEX`<br>Example: `booking client remove 2`
 
-##### Updating housekeeper's housekeeping details: `booking housekeeper
+##### Updating housekeeper's housekeeping details: `booking housekeeper`
 
 Housekeepers all have a list of bookings (that can be empty). This allows for Housekeeping Hub to suggest housekeepers for clients based on their availability. There are 4 commands `add`, `delete`, `list` and `search`.
 
