@@ -129,8 +129,8 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
             default:
                 unitStringPI = "Invalid unit";
         }
-        String numD = s[4].substring(1, s[1].length() - 1);
-        String unitD= s[4].substring(s[4].length() - 1);
+        String numD = s[s.length-1].substring(1, s[s.length-1].length() - 1);
+        String unitD= s[s.length-1].substring(s[s.length-1].length() - 1);
         String unitStringD;
         switch (unitD) {
             case "Y":
@@ -243,8 +243,8 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         String details = this.toString();
         String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
         // s[2] = bookingDate, s[4] = deferment
-        String num = s[4].substring(1, s[3].length() - 1);
-        String unit = s[4].substring(s[4].length() - 1);
+        String num = s[s.length-1].substring(1, s[3].length() - 1);
+        String unit = s[s.length-1].substring(s[s.length-1].length() - 1);
         String unitString;
         switch (unit) {
             case "Y":

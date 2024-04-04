@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -226,10 +227,18 @@ public class ParserUtil {
             throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
         }
 
-        String[] s = trimmedDetails.split(" ");
-        LocalDate date = LocalDate.parse(s[0]);
+        String[] s;
+        LocalDate date;
         Period period;
-        int quantity = Integer.parseInt(s[1]);
+        int quantity;
+
+        try {
+            s = trimmedDetails.split(" ");
+            date = LocalDate.parse(s[0]);
+            quantity = Integer.parseInt(s[1]);
+        } catch (DateTimeParseException e) {
+            throw new ParseException(e.getMessage());
+        }
 
         switch (s[2]) {
         case "days":
