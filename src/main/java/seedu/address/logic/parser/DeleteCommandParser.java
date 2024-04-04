@@ -38,12 +38,12 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
 
-            Type type = ParserUtil.parseType(splitArgs[0]);
+            String type = ParserUtil.parseType(splitArgs[0]);
             Index index = ParserUtil.parseIndex(splitArgs[1]);
 
-            if (type.equals(new Type("client"))) {
+            if (type.equals("client")) {
                 return new DeleteClientCommand(index);
-            } else if (type.equals(new Type("housekeeper"))) {
+            } else if (type.equals("housekeeper")) {
                 return new DeleteHousekeeperCommand(index);
             } else {
                 throw new ParseException(

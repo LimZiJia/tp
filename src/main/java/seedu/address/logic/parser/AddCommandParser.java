@@ -51,7 +51,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_AREA);
-        Type type = ParserUtil.parseType(argMultimap.getPreamble());
+        String type = ParserUtil.parseType(argMultimap.getPreamble());
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -61,12 +61,17 @@ public class AddCommandParser implements Parser<AddCommand> {
         HousekeepingDetails details = ParserUtil.parseHousekeepingDetails(argMultimap.getValue(PREFIX_DETAILS));
         BookingList bookingList = new BookingList();
 
-        switch (type.toString()) {
+        System.out.println(details);
+        switch (type) {
         case "client":
-            Client client = new Client(name, phone, email, address, tagList, type, details, area);
+            Client client = new Client(name, phone, email, address, tagList, details, area);
             return new AddClientCommand(client);
         case "housekeeper":
-            Housekeeper housekeeper = new Housekeeper(name, phone, email, address, tagList, type, area, bookingList);
+            if (!details.isEmpty()) {
+                System.out.println(details);
+                throw new ParseException(AddHousekeeperCommand.MESSAGE_NO_HOUSEKEEPING_DETAILS);
+            }
+            Housekeeper housekeeper = new Housekeeper(name, phone, email, address, tagList, area, bookingList);
             return new AddHousekeeperCommand(housekeeper);
         default:
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));

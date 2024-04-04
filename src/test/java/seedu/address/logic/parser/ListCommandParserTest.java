@@ -6,7 +6,9 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.ListClientCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListHousekeeperCommand;
 import seedu.address.model.person.TypePredicate;
 
 public class ListCommandParserTest {
@@ -36,9 +38,9 @@ public class ListCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsListCommand() {
-        assertParseSuccess(parser, "client", new ListCommand(new TypePredicate("client")));
+        assertParseSuccess(parser, "client", new ListClientCommand());
 
-        assertParseSuccess(parser, "housekeeper", new ListCommand(new TypePredicate("housekeeper")));
+        assertParseSuccess(parser, "housekeeper", new ListHousekeeperCommand());
     }
 
 }

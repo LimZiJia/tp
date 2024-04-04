@@ -1,6 +1,7 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -27,6 +28,8 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String TYPE_VALIDATION_REGEX = "[^\\s].*";
+
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -122,13 +125,27 @@ public class ParserUtil {
      *
      * @throws ParseException if the given {@code type} is invalid.
      */
-    public static Type parseType(String type) throws ParseException {
+    public static String parseType(String type) throws ParseException {
         requireNonNull(type);
         String trimmedType = type.trim();
-        if (!Type.isValidType(trimmedType)) {
+        if (!(trimmedType.matches(TYPE_VALIDATION_REGEX) && preambleIsAllowed(trimmedType))) {
             throw new ParseException(Type.MESSAGE_CONSTRAINTS);
         }
-        return new Type(trimmedType);
+        return trimmedType;
+    }
+
+    /**
+     * Checks if a given command uses a preamble that is allowed. (we define preamble as TYPE)
+     * @param preamble
+     * @return true if the preamble is allowed and no if it is not.
+     */
+    public static boolean preambleIsAllowed(String preamble) {
+        for (String s : ALLOWED_PREAMBLES_TYPE) {
+            if (s.equals(preamble)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

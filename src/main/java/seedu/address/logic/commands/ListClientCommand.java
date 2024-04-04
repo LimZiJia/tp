@@ -6,8 +6,8 @@ import seedu.address.model.Model;
 import seedu.address.model.person.TypePredicate;
 
 public class ListClientCommand extends ListCommand {
-    public ListClientCommand(TypePredicate predicate) {
-        super(predicate);
+    public ListClientCommand() {
+        super(new TypePredicate("client"));
     }
 
     @Override

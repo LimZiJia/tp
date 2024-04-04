@@ -26,8 +26,14 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listIsFiltered_showsClientList() {
-        assertCommandSuccess(new ListCommand(new TypePredicate("client")), model, ListCommand.MESSAGE_SUCCESS
+    public void execute_clientListIsFiltered_showsClientList() {
+        assertCommandSuccess(new ListClientCommand(), model, ListCommand.MESSAGE_SUCCESS
                 + "all clients", expectedModel);
+    }
+
+    @Test
+    public void execute_housekeeperListIsFiltered_showsHousekeeperList() {
+        assertCommandSuccess(new ListHousekeeperCommand(), model, ListCommand.MESSAGE_SUCCESS
+                + "all housekeepers", expectedModel);
     }
 }

@@ -26,8 +26,8 @@ public class Client extends Person implements Comparable<Client> {
      * @param tags
      */
     public Client(Name name, Phone phone, Email email, Address address,
-                  Set<Tag> tags, Type type, HousekeepingDetails housekeepingDetails, Area area) {
-        super(name, phone, email, address, tags, type, area);
+                  Set<Tag> tags, HousekeepingDetails housekeepingDetails, Area area) {
+        super(name, phone, email, address, tags, area);
         this.housekeepingDetails = housekeepingDetails;
     }
 
@@ -79,8 +79,7 @@ public class Client extends Person implements Comparable<Client> {
                 && this.getEmail().equals(otherPerson.getEmail())
                 && this.getAddress().equals(otherPerson.getAddress())
                 && this.getTags().equals(otherPerson.getTags())
-                && this.getArea().equals(otherPerson.getArea())
-                && this.getType().equals(otherPerson.getType());
+                && this.getArea().equals(otherPerson.getArea());
     }
 
     @Override
@@ -109,7 +108,6 @@ public class Client extends Person implements Comparable<Client> {
                 .add("email", this.getEmail())
                 .add("address", this.getAddress())
                 .add("tags", this.getTags())
-                .add("type", this.getType())
                 .add("housekeepingDetails", this.housekeepingDetails)
                 .toString();
     }

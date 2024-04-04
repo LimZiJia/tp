@@ -36,7 +36,7 @@ public class EditCommandParser implements Parser<EditCommand> {
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG,
                         PREFIX_AREA);
 
-        Type type;
+        String type;
         Index index;
 
         // check that input is valid
@@ -58,6 +58,8 @@ public class EditCommandParser implements Parser<EditCommand> {
             index = ParserUtil.parseIndex(splitArgs[1]);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_AREA);
@@ -85,9 +87,9 @@ public class EditCommandParser implements Parser<EditCommand> {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
-        if (type.equals(new Type("client"))) {
+        if (type.equals("client")) {
             return new EditClientCommand(index, editPersonDescriptor);
-        } else if (type.equals(new Type("housekeeper"))) {
+        } else if (type.equals("housekeeper")) {
             return new EditHousekeeperCommand(index, editPersonDescriptor);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));

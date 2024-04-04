@@ -9,6 +9,7 @@ import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
 import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 
 /**
  * Container for user visible messages.
@@ -52,26 +53,30 @@ public class Messages {
         if (housekeepingDetails == null) {
             details = HousekeepingDetails.NO_DETAILS_PROVIDED;
         } else {
-            details = HousekeepingDetails.makeStoredDetailsReadable(housekeepingDetails.toString());
+            details = HousekeepingDetails.makeStoredDetailsReadableHorizontally(housekeepingDetails.toString());
         }
+
+        Set<Tag> tags = client.getTags();
 
         final StringBuilder builder = new StringBuilder();
         builder.append("\nName: ")
                 .append(client.getName())
-                .append("; Type: ")
-                .append(client.getType())
                 .append("; Phone: ")
                 .append(client.getPhone())
                 .append("; Email: ")
                 .append(client.getEmail())
                 .append("; Address: ")
                 .append(client.getAddress())
-                .append("; Details: ")
-                .append(details)
                 .append("; Area: ")
                 .append(client.getArea())
                 .append("; Tags: ");
-        client.getTags().forEach(builder::append);
+        if (tags.isEmpty()) {
+            builder.append("No tags");
+        } else {
+            tags.forEach(builder::append);
+        }
+        builder.append("; Details: ")
+                .append(details);
         return builder.toString();
     }
 
@@ -80,22 +85,26 @@ public class Messages {
      */
     public static String formatHousekeeper(Housekeeper housekeeper) {
         final StringBuilder builder = new StringBuilder();
+        Set<Tag> tags = housekeeper.getTags();
+
         builder.append("\nName: ")
                 .append(housekeeper.getName())
-                .append("; Type: ")
-                .append(housekeeper.getType())
                 .append("; Phone: ")
                 .append(housekeeper.getPhone())
                 .append("; Email: ")
                 .append(housekeeper.getEmail())
                 .append("; Address: ")
                 .append(housekeeper.getAddress())
-                .append("; Booking List: ")
-                .append(housekeeper.getBookingList())
                 .append("; Area: ")
                 .append(housekeeper.getArea())
                 .append("; Tags: ");
-        housekeeper.getTags().forEach(builder::append);
+        if (tags.isEmpty()) {
+            builder.append("No tags");
+        } else {
+            tags.forEach(builder::append);
+        }
+        builder.append("; Booking List: ")
+                .append(housekeeper.getBookingList());
         return builder.toString();
     }
 }
