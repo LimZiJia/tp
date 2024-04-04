@@ -64,7 +64,6 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        type = personToCopy.getType();
     }
 
     /**
@@ -131,9 +130,9 @@ public class PersonBuilder {
     public Person build() {
         switch (type.toString()) {
         case "client":
-            return new Client(name, phone, email, address, tags, type, housekeepingDetails, area);
+            return new Client(name, phone, email, address, tags, housekeepingDetails, area);
         case "housekeeper":
-            return new Housekeeper(name, phone, email, address, tags, type, area, bookingList);
+            return new Housekeeper(name, phone, email, address, tags, area, bookingList);
         default:
             return null;
         }
