@@ -53,7 +53,7 @@ public class Messages {
         if (housekeepingDetails == null) {
             details = HousekeepingDetails.NO_DETAILS_PROVIDED;
         } else {
-            details = HousekeepingDetails.makeStoredDetailsReadableHorizontally(housekeepingDetails.toString());
+            details = HousekeepingDetails.makeStoredDetailsReadableWithDeferment(housekeepingDetails.toString());
         }
 
         Set<Tag> tags = client.getTags();
