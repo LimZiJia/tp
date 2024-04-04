@@ -65,13 +65,13 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-1. Download the latest `HousekeepingHub-v1.2.0.jar` from [here](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases).
+1. Download the latest `HousekeepingHub-v1.3.1.jar` from [here](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases).
 
 1. Copy the file to the folder you want to use as the _home folder_ for your HouseKeeping Hub.
 
 1. Open a [command terminal](#terminal), and type in `cd` to navigate into the folder you placed the [jar](#jar) file in.
 
-1. Type in `java -jar HousekeepingHub-v1.2.0.jar` to run the application.<br>
+1. Type in `java -jar HousekeepingHub-v1.3.1.jar` to run the application.<br>
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](./images/Ui.png)
@@ -88,9 +88,9 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 
    * `list client` : Lists all client contacts.
 
-   * `add housekeeper n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a housekeeper named `John Doe`.
+   * `add housekeeper n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 ar/west` : Adds a housekeeper named `John Doe`.
 
-   * `delete 3` : Deletes the 3rd contact shown in the last shown list.
+   * `delete client 3` : Deletes the 3rd contact shown in the last shown list.
 
    * `clear` : Deletes all contacts.
 
@@ -147,7 +147,7 @@ Format: `help`
 
 Adds a client or housekeeper to Housekeeping Hub.
 
-Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [ar/AREA] [t/TAG]…​`
+Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS ar/AREA [d/DETAILS] [t/TAG]…​`
 
 Notes: 
 * `TYPE` can be either 'client' or 'housekeeper'.
@@ -218,14 +218,11 @@ Examples:
 
 Edits an existing person in the address book.
 
-Format: `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [ar/AREA] [t/TAG]…​`
+Format: `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ar/AREA] [t/TAG]…​`
 
 Notes:
 * `TYPE` can be either 'client' or 'housekeeper'.
 * `AREA` can be either 'east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', or 'northeast'.
-* `DETAILS` is optional and refers to the housekeeping details for CLIENT ONLY. It is not applicable for housekeepers.
-  The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last
-  housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
@@ -265,7 +262,8 @@ Examples:
 
 
 ### Getting client call list: `leads`
-Sorts the clients based on the predicted next time of housekeeping.
+Generates a list of leads by sorting the clients based on the predicted next time of housekeeping. 
+Clients with predicted next housekeeping date which is in the future will not be included.
 
 Format: `leads`
 
@@ -299,15 +297,15 @@ If clients do not have housekeeping details, they are assumed to not want notifi
 
 *** [1] and [2] are mandatory while [3] and [4] are optional. ([4] deferment will be set to 0 by default)
 
-We have 7 commands for updating client's housekeeping details. `last`, `interval`, `defer`, `add`, `delete`, `set`, and `remove`.
-Without a housekeeping detail, `last`, `interval`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
+We have 6 commands for updating client's housekeeping details. `edit`, `defer`, `add`, `delete`, `set`, and `remove`.
+Without a housekeeping detail, `edit`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
 
 Action | Format, Explainations, Examples                                                                                                                                               
 --------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 `edit lhd/` | Edit client's last housekeeping date with `edit lhd/`<br>Format: `booking client edit INDEX lhd/yyyy-MM-dd`<br>Example: `booking client edit 2 lhd/2024-04-01`                                 
 `edit pi/` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit INDEX pi/NUMBER INTERVAL`<br>Example: `booking client edit 2 pi/2 weeks`
 `edit bd/` | Edit client's booking date with `edit bd/`<br>Format: `booking client edit INDEX bd/BOOKING DATE`<br>Example: `booking client edit 2 bd/2024-04-02 am`
-`edit d/` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit INDEX d/NUMBER INTERVAL`<br>Example: `booking client edit 2 d/2 months`
+`edit d/` | Edit deferment with `edit d/`<br>Format: `booking client edit INDEX d/NUMBER INTERVAL`<br>Example: `booking client edit 2 d/2 months`
 `defer` | Add period to delay calling clients with `defer`<br>Format: `booking client defer INDEX NUMBER INTERVAL`<br>Example: `booking client defer 2 1 months`                        
 `add` | Add client's booking date with `add`<br>Format: `booking client add INDEX yyyy-MM-dd (am|pm)`<br>Example: `booking client add 2 2024-04-01 am`                                
 `delete` | Delete client's booking date with `delete`<br>Format: `booking client delete INDEX` <br>Example: `booking client delete 2`                                                    
@@ -379,8 +377,8 @@ Action | Format, Examples
 [**Add**](#adding-a-person-add) | `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS [d/DETAILS] [ar/AREA] [t/TAG]…​` <br> e.g., `add client n/Elon e/elon@gmail.com p/088888888 a/Elon Street, Block 123, 101010 Singapore ar/west`
 [**Delete**](#deleting-a-person--delete) | `delete TYPE INDEX`<br> e.g., `delete housekeeper 3`
 [**List**](#listing-all-persons--list) | `list TYPE`<br> e.g., `list client`
-[**EDIT**](#editing-a-person--edit) | `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [ar/AREA] [t/TAG]…​`<br> e.g., `edit client 1 p/91234567 e/johndoe@example.com`
-[**FIND**](#locating-persons-by-keywords--find) | `find TYPE n/KEYWORD [MORE_KEYWORDS] ar/KEYWORD [MORE_KEYWORDS] a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `find client n/John`
+[**Edit**](#editing-a-person--edit) | `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [ar/AREA] [t/TAG]…​`<br> e.g., `edit client 1 p/91234567 e/johndoe@example.com`
+[**Find**](#locating-persons-by-keywords--find) | `find TYPE n/KEYWORD [MORE_KEYWORDS] ar/KEYWORD [MORE_KEYWORDS] a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `find client n/John`
 [**Leads**](#getting-client-call-list-leads) | `leads`
 [**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
 [**Clear**](#clearing-all-entries--clear) | `clear`
@@ -395,27 +393,31 @@ Action | Format, Examples
 
 **JAR**
 <a id="jar"></a>
-: JAR stands for Java Archive. It is based on the ZIP file format that is commonly used to store java programs.
+: JAR stands for Java Archive. It is based on the ZIP file format that is commonly used to store java programs.<br>
+
 
 **CLI**
 <a id="cli"></a>
 : CLI stands for Command Line Interface. It refers to programs that are primarily **text-based** where users interact with the program by typing **commands**. 
-As such, users will use their keyboards more, in contrast to a Graphical User Interface (GUI) where users will use their mouse to interact with the graphical elements.
+As such, users will use their keyboards more, in contrast to a Graphical User Interface (GUI) where users will use their mouse to interact with the graphical elements.<br>
 
+<br>
 **GUI**
 <a id="gui"></a>
-: GUI stands for Graphical User Interface. It refers to programs that are primarily **graphical** where users interact with the program by clicking on **buttons** and **menus**.
+: GUI stands for Graphical User Interface. It refers to programs that are primarily **graphical** where users interact with the program by clicking on **buttons** and **menus**.<br>
+
 
 **Terminal**
 <a id="terminal"></a>
 : A terminal is a Command Line Interface (CLI) that allows users to interact with computers by executing commands and viewing the results. 
 Popular terminals in mainstream operating systems include command prompt (CMD) for windows and Terminal in macOS and Linux.<br>
 
+
 **CMD**<br>
 <img src="https://www.auslogics.com/en/articles/wp-content/uploads/2023/07/Command-Prompt-PING.png" alt="drawing" width="500"/>
-<br> **Terminal (macOS)** <br>
+<br><br>**Terminal (macOS)**<br><br>
 <img src="https://forums.macrumors.com/attachments/screen-shot-2020-12-09-at-4-50-12-pm-png.1690397/" alt="drawing" width="500"/>
-<br> **Terminal (Linux)** <br>
+<br><br> **Terminal (Linux)** <br><br>
 <img src="https://static1.howtogeekimages.com/wordpress/wp-content/uploads/2013/03/linux-terminal-on-ubuntu.png" alt="drawing" width="500"/>
 
 [:arrow_up_small:](#table-of-contents)
