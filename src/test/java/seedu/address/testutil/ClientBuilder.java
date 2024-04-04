@@ -112,6 +112,14 @@ public class ClientBuilder {
     }
 
     /**
+     * Sets the {@code HousekeepingDetails} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withDetails(HousekeepingDetails housekeepingDetails) {
+        this.housekeepingDetails = housekeepingDetails;
+        return this;
+    }
+
+    /**
      * Returns client with the given data.
      */
     public Client build() {
