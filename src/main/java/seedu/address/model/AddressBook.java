@@ -2,8 +2,10 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Client;
@@ -58,6 +60,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void setHousekeepers(List<Housekeeper> housekeepers) {
         this.housekeepers.setPersons(housekeepers);
+    }
+
+    public void sortClients(Comparator<? super Client> comparator) {
+        clients.sort(comparator);
     }
 
     /**

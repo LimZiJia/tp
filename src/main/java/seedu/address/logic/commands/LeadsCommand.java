@@ -5,7 +5,11 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.ClientComparator;
 import seedu.address.model.person.LeadsFilterPredicate;
+
+import java.util.Comparator;
 
 /**
  * Generates a list of leads based on the client's predicted next housekeeping date.
@@ -19,13 +23,14 @@ public class LeadsCommand extends Command {
             + "Example: " + COMMAND_WORD;
 
     private final LeadsFilterPredicate predicate = new LeadsFilterPredicate();
+    private final Comparator<Client> comparator = new ClientComparator();
 
     public LeadsCommand() {}
 
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.updateAndSortFilteredClientList(predicate);
+        model.updateAndSortFilteredClientList(predicate, comparator);
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredClientList().size()));
     }

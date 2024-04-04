@@ -114,8 +114,8 @@ public class ClientBuilder {
     /**
      * Sets the {@code HousekeepingDetails} of the {@code Client} that we are building.
      */
-    public ClientBuilder withHousekeepingDetails(LocalDate lastCleaningDate, Period preferredInterval) {
-        this.housekeepingDetails = new HousekeepingDetails(lastCleaningDate, preferredInterval);
+    public ClientBuilder withDetails(HousekeepingDetails housekeepingDetails) {
+        this.housekeepingDetails = housekeepingDetails;
         return this;
     }
 

@@ -44,6 +44,7 @@ public class TypicalPersons {
     public static final Housekeeper GEORGE = new HousekeeperBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").withArea("southwest").build();
 
+
     // Manually added
     public static final Client HOON = new ClientBuilder().withName("Hoon Meier").withPhone("8482424")
             .withEmail("stefan@example.com").withAddress("little india").withArea("west").build();

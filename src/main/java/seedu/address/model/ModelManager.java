@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -162,10 +163,10 @@ public class ModelManager implements Model {
     }
 
     @Override
-    public void updateAndSortFilteredClientList(Predicate<Client> predicate) {
+    public void updateAndSortFilteredClientList(Predicate<Client> predicate, Comparator<Client> comparator) {
         requireNonNull(predicate);
+        addressBook.sortClients(comparator);
         filteredClients.setPredicate(predicate);
-        filteredClients.sort(null); // Client is already comparable
     }
 
     @Override

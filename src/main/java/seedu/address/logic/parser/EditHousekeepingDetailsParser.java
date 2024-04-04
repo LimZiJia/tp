@@ -2,6 +2,8 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DEFERMENT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_LHD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PI;
 
@@ -22,17 +24,18 @@ public class EditHousekeepingDetailsParser implements Parser<EditHousekeepingDet
      */
     public EditHousekeepingDetailsCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_LHD, PREFIX_PI);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_LHD, PREFIX_PI, PREFIX_BD,
+                PREFIX_DEFERMENT);
         Index index;
         try {
             String[] splitArgs = argMultimap.getPreamble().trim().split("edit ");
             index = ParserUtil.parseIndex(splitArgs[1]);
-        } catch (ParseException pe) {
+        } catch (Exception pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     EditHousekeepingDetailsCommand.MESSAGE_USAGE), pe);
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_LHD, PREFIX_PI);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_LHD, PREFIX_PI, PREFIX_BD, PREFIX_DEFERMENT);
 
         EditHousekeepingDetailsDescriptor editPersonDescriptor = new EditHousekeepingDetailsDescriptor();
 
@@ -43,6 +46,14 @@ public class EditHousekeepingDetailsParser implements Parser<EditHousekeepingDet
         if (argMultimap.getValue(PREFIX_PI).isPresent()) {
             editPersonDescriptor.setPreferredInterval(ParserUtil
                     .parsePreferredInterval(argMultimap.getValue(PREFIX_PI).get()));
+        }
+        if (argMultimap.getValue(PREFIX_BD).isPresent()) {
+            editPersonDescriptor.setBooking(ParserUtil
+                    .parseBooking(argMultimap.getValue(PREFIX_BD).get()));
+        }
+        if (argMultimap.getValue(PREFIX_DEFERMENT).isPresent()) {
+            editPersonDescriptor.setDeferment(ParserUtil
+                    .parsePreferredInterval(argMultimap.getValue(PREFIX_DEFERMENT).get()));
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

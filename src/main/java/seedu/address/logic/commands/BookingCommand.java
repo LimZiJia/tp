@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
 
 import java.time.Period;
@@ -219,7 +220,12 @@ public class BookingCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        Booking booking = new Booking(bookedDateAndTime);
+        Booking booking;
+        try {
+            booking = new Booking(bookedDateAndTime);
+        } catch (DateTimeParseException e) {
+            throw new CommandException(e.getMessage());
+        }
 
         Client clientToEdit = lastShownList.get(index.getZeroBased());
         if (clientToEdit.hasHousekeepingDetails()) {
@@ -230,6 +236,7 @@ public class BookingCommand extends Command {
             editPersonDescriptor.setDetails(details);
 
             Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
+            model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
             return editClientCommand.execute(model);
         } else {
             throw new CommandException(ADD_MESSAGE_CONSTRAINT);
@@ -380,7 +387,7 @@ public class BookingCommand extends Command {
             throw new CommandException(e.getMessage());
         }
 
-        model.updateFilteredHousekeeperListWithHousekeeperPredicate(bookingSearchPredicate);
+        model.updateFilteredHousekeeperList(bookingSearchPredicate);
 
         if (model.getFilteredHousekeeperList().size() == 0) {
             return new CommandResult(String.format(Messages.MESSAGE_NO_AVAILABLE_HOUSEKEEPERS_LISTED_OVERVIEW,
