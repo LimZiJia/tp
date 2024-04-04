@@ -299,6 +299,8 @@ If clients do not have housekeeping details, they are assumed to not want notifi
 
 We have 6 commands for updating client's housekeeping details. `edit`, `defer`, `add`, `delete`, `set`, and `remove`.
 Without a housekeeping detail, `edit`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
+`edit` has prefixes `lhd/`, `pi/`, `bd/` and `d/` to edit last housekeeping date, preferred interval, booking date and deferment respectively.
+More than one prefix can be used in a single `edit` command.
 
 Action | Format, Explainations, Examples                                                                                                                                               
 --------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -349,6 +351,10 @@ HouseKeeping Hub data are saved in the hard disk automatically after any command
 ### Editing the data file
 
 HouseKeeping Hub data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+If you wish to load our sample data, you must delete the existing `addressbook.json` from the stated location and restart the app.
+</div>
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
 If your changes to the data file makes its format invalid, HouseKeeping Hub will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
