@@ -252,8 +252,8 @@ Without a housekeeping detail, `last`, `interval`, `defer`, `add`, `delete` will
 
 Action | Format, Explainations, Examples                                                                                                                                                
 --------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-`last` | Edit client's last cleaning date with `last`<br>Format: `booking client last INDEX yyyy-MM-dd`<br>Example: `booking client last 2 2024-04-01`                                  
-`interval` | Edit client's preferred interval with `interval`<br>Format: `booking client interval INDEX NUMBER INTERVAL`<br>Example: `booking client interval 2 2 weeks`                    
+`edit /lhd` | Edit client's last housekeeping date with `edit lhd/`<br>Format: `booking client edit lhd/INDEX yyyy-MM-dd`<br>Example: `booking client last 2 2024-04-01`                                  
+`edit /pi` | Edit client's preferred interval with `edit pi/`<br>Format: `booking client edit pi/INDEX NUMBER INTERVAL`<br>Example: `booking client interval 2 2 weeks`                    
 `defer` | Add period to delay calling clients with `defer`<br>Format: `booking client defer INDEX NUMBER INTERVAL`<br>Example: `booking client defer 2 1 months`                         
 `add` | Add client's booking date with `add`<br>Format: `booking client add INDEX yyyy-MM-dd (am\|pm)`<br>Example: `booking client add 2 2024-04-01 am`                                
 `delete` | Delete client's booking date with `delete`<br>Format: `booking client delete INDEX` <br>Example: `booking client delete 2`                                                     
@@ -264,12 +264,12 @@ Action | Format, Explainations, Examples
 
 Housekeepers all have a list of bookings (that can be empty). This allows for Housekeeping Hub to suggest housekeepers for clients based on their availability. There are 4 commands `add`, `delete`, `list` and `search`.
 
-Action | Format, Explainations, Examples                                                                                                                                         
---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-`add` | Add booking to a housekeeper's list with `add`<br>Format: `booking housekeeper add INDEX yyyy-MM-dd (am\|pm)`<br>Example: `booking housekeeper add 2 2024-04-01 am` 
+Action | Format, Explainations, Examples                                                                                                                                       
+--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+`add` | Add booking to a housekeeper's list with `add`<br>Format: `booking housekeeper add INDEX yyyy-MM-dd (am|pm)`<br>Example: `booking housekeeper add 2 2024-04-01 am` 
 `delete` | Delete booking from a housekeeper's list with `delete`<br>Format: `booking housekeeper delete INDEX INDEX`<br>Example: `booking housekeeper delete 1 2`<br>* The first INDEX refers to the housekeeper index and the second INDEX refers to the booking index (shown in `list` action).
 `list` | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
-`search` | Search for housekeepers available on a specific area and date date with `search`<br>Format: `booking housekeeper search AREA yyyy-MM-dd (am\|pm)`<br>Example: `booking housekeeper search east 2024-04-05 pm`
+`search` | Search for housekeepers available on a specific area and date date with `search`<br>Format: `booking housekeeper search AREA yyyy-MM-dd (am|pm)`<br>Example: `booking housekeeper search east 2024-04-05 pm`
 
 [:arrow_up_small:](#table-of-contents)
 
