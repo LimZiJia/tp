@@ -1,11 +1,14 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteClientCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteHousekeeperCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Type;
 
@@ -22,8 +25,22 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public DeleteCommand parse(String args) throws ParseException {
         try {
             String[] splitArgs = args.trim().split(" ");
+
+            // check that input is valid
+            if (splitArgs.length < 2 || splitArgs.length > 2) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+            }
+            try {
+                if (Integer.parseInt(splitArgs[1]) < 0) {
+                    throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+                }
+            } catch (NumberFormatException e) {
+                throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
             String type = ParserUtil.parseType(splitArgs[0]);
             Index index = ParserUtil.parseIndex(splitArgs[1]);
+
             if (type.equals("client")) {
                 return new DeleteClientCommand(index);
             } else if (type.equals("housekeeper")) {
@@ -32,12 +49,8 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
             }
-        } catch (ParseException pe) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE), pe);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
+       } catch (ParseException pe) {
+            throw new ParseException(pe.getMessage());
         }
     }
 

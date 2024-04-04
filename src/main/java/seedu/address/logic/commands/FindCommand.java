@@ -32,10 +32,10 @@ abstract public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients or housekeepers whose names contain "
-            + "any of the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: TYPE(client or housekeeper) KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " client alice bob charlie";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients or housekeepers filtered by "
+            + "the specified attribute(s). Valid attributes: {name, phone, address, area}\n"
+            + "Parameters: TYPE(client or housekeeper) PREFIX/KEYWORD [PREFIX/KEYWORDS...] (optional)\n"
+            + "Example: " + COMMAND_WORD + " client n/alice p/90274629";
 
     public static final String MESSAGE_NOT_FOUND = "At least one field to find must be provided.";
 

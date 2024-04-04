@@ -14,6 +14,9 @@ public class CliSyntax {
     public static final Prefix PREFIX_AREA = new Prefix("ar/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_DETAILS = new Prefix("d/");
+    public static final Prefix PREFIX_LHD = new Prefix("lhd/");
+    public static final Prefix PREFIX_PI = new Prefix("pi/");
+    public static final String[] ALLOWED_PREAMBLES = new String[] {"client", "housekeeper"};
     public static final String[] ALLOWED_PREAMBLES_TYPE = new String[] {"client", "housekeeper"};
     public static final String[] ALLOWED_PREAMBLES_AREA = new String[] {"north", "northeast", "east", "southeast"
             , "south", "southwest", "west", "northwest"};
