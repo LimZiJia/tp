@@ -233,12 +233,12 @@ public class EditCommandTest {
     }
 
     @Test
-    public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_PERSON, DESC_AMY);
+    public void equals_client() {
+        final EditClientCommand standardCommand = new EditClientCommand(INDEX_FIRST_PERSON, DESC_AMY);
 
         // same values -> returns true
         EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
-        EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        EditClientCommand commandWithSameValues = new EditClientCommand(INDEX_FIRST_PERSON, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
         // same object -> returns true
@@ -251,17 +251,52 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditClientCommand(INDEX_SECOND_PERSON, DESC_AMY)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditClientCommand(INDEX_FIRST_PERSON, DESC_BOB)));
     }
 
     @Test
-    public void toStringMethod() {
+    public void equals_housekeeper() {
+        final EditHousekeeperCommand standardCommand = new EditHousekeeperCommand(INDEX_FIRST_PERSON, DESC_AMY);
+
+        // same values -> returns true
+        EditPersonDescriptor copyDescriptor = new EditPersonDescriptor(DESC_AMY);
+        EditHousekeeperCommand commandWithSameValues = new EditHousekeeperCommand(INDEX_FIRST_PERSON, copyDescriptor);
+        assertTrue(standardCommand.equals(commandWithSameValues));
+
+        // same object -> returns true
+        assertTrue(standardCommand.equals(standardCommand));
+
+        // null -> returns false
+        assertFalse(standardCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(standardCommand.equals(new ClearCommand()));
+
+        // different index -> returns false
+        assertFalse(standardCommand.equals(new EditHousekeeperCommand(INDEX_SECOND_PERSON, DESC_AMY)));
+
+        // different descriptor -> returns false
+        assertFalse(standardCommand.equals(new EditHousekeeperCommand(INDEX_FIRST_PERSON, DESC_BOB)));
+    }
+
+    @Test
+    public void toStringMethodClient() {
         Index index = Index.fromOneBased(1);
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        EditCommand editCommand = new EditCommand(index, editPersonDescriptor);
+        EditCommand editCommand = new EditClientCommand(index, editPersonDescriptor);
+        String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
+                + editPersonDescriptor + "}";
+        assertEquals(expected, editCommand.toString());
+    }
+
+    @Test
+    public void toStringMethodHousekeeper() {
+        Index index = Index.fromOneBased(1);
+        EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        EditCommand editCommand = new EditHousekeeperCommand(index, editPersonDescriptor);
         String expected = EditCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
