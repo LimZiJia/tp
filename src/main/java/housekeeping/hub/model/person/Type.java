@@ -1,8 +1,8 @@
 package housekeeping.hub.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.commons.util.AppUtil.checkArgument;
 import static housekeeping.hub.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's Type in the hub book.

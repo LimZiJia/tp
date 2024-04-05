@@ -60,5 +60,5 @@ abstract class JsonAdaptedPerson {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
-    abstract public Person toModelType() throws IllegalValueException;
+    public abstract Person toModelType() throws IllegalValueException;
 }

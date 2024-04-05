@@ -1,14 +1,12 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.commons.util.ToStringBuilder;
 
 /**
  * Deletes a person identified using it's displayed index from the hub book.
  */
-abstract public class DeleteCommand extends Command {
+public abstract class DeleteCommand extends Command {
 
     public static final String COMMAND_WORD = "delete";
 

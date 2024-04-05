@@ -10,15 +10,18 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import housekeeping.hub.commons.exceptions.IllegalValueException;
 import housekeeping.hub.model.person.Address;
+import housekeeping.hub.model.person.Area;
 import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.BookingList;
-import housekeeping.hub.model.person.Area;
 import housekeeping.hub.model.person.Email;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Phone;
 import housekeeping.hub.model.tag.Tag;
 
+/**
+ * Jackson-friendly version of {@link Housekeeper}.
+ */
 public class JsonAdaptedHousekeeper extends JsonAdaptedPerson {
     protected final ArrayList<JsonAdaptedBooking> bookingList;
 

@@ -9,12 +9,7 @@ import java.util.regex.Pattern;
  * Represents the housekeeping details of a client.
  */
 public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
-    private static final Pattern USER_FORMAT = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d+ (days|weeks|months|years)");
-    private static final Pattern STORAGE_FORMAT =
-            Pattern.compile("(null|(\\d{4}-\\d{2}-\\d{2})\\s" // Last housekeeping date
-            + "(P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?)\\s" // Preferred interval
-            + "(null|\\d{4}-\\d{2}-\\d{2}\\s+(am|pm))\\s" // Booking date (can be null)
-            + "(P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?))"); // Deferment
+    public static final HousekeepingDetails EMPTY = new HousekeepingDetails();
     public static final String MESSAGE_CONSTRAINTS =
             "Housekeeping details should be in the format: yyyy-mm-dd n (days|weeks|months|years) "
                     + "where n is an integer quantity of days, weeks, months or years.";
@@ -24,8 +19,12 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
                     + "YMWD must be in that order. All fields are optional."
                     + "The second date is the booking date and it can be null";
     public static final String NO_DETAILS_PROVIDED = "No housekeeping details provided";
-
-    public static final HousekeepingDetails empty = new HousekeepingDetails();
+    private static final Pattern USER_FORMAT = Pattern.compile("\\d{4}-\\d{2}-\\d{2} \\d+ (days|weeks|months|years)");
+    private static final Pattern STORAGE_FORMAT =
+            Pattern.compile("(null|(\\d{4}-\\d{2}-\\d{2})\\s" // Last housekeeping date
+            + "(P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?)\\s" // Preferred interval
+            + "(null|\\d{4}-\\d{2}-\\d{2}\\s+(am|pm))\\s" // Booking date (can be null)
+            + "(P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?))"); // Deferment
 
     /** The last date the housekeeping was done. */
     private LocalDate lastHousekeepingDate;
@@ -35,6 +34,50 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     private Booking booking;
     /** The period to delay calling the client */
     private Period deferment;
+
+    /**
+     * Creates a HousekeepingDetails object with no details provided.
+     */
+    public HousekeepingDetails() {
+        this.lastHousekeepingDate = null;
+        this.preferredInterval = null;
+        this.booking = null;
+        this.deferment = null;
+    }
+
+    /**
+     * Creates a HousekeepingDetails object using a string representation of the housekeeping details used for storage.
+     * @param details A string representation of the housekeeping details in the format: "null" or
+     *                yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?
+     */
+    public HousekeepingDetails(String details) {
+        if (details.equals("null")) {
+            this.lastHousekeepingDate = null;
+            this.preferredInterval = null;
+            this.booking = null;
+            this.deferment = null;
+        } else {
+            // Using groups to extract details
+            Matcher storageMatcher = STORAGE_FORMAT.matcher(details);
+            storageMatcher.matches();
+            this.lastHousekeepingDate = LocalDate.parse(storageMatcher.group(2));
+            this.preferredInterval = Period.parse(storageMatcher.group(3));
+            this.booking = storageMatcher.group(8).equals("null") ? null : new Booking(storageMatcher.group(8));
+            this.deferment = Period.parse(storageMatcher.group(10));
+        }
+    }
+
+    /**
+     * Creates a HousekeepingDetails object.
+     * @param lastHousekeepingDate
+     * @param preferredInterval
+     */
+    public HousekeepingDetails(LocalDate lastHousekeepingDate, Period preferredInterval) {
+        this.lastHousekeepingDate = lastHousekeepingDate;
+        this.preferredInterval = preferredInterval;
+        this.booking = null;
+        this.deferment = Period.ZERO;
+    }
 
     /** User must add as "yyyy-mm-dd n (days|weeks|months|years)" */
     public static boolean isValidHousekeepingDetailsUser(String test) {
@@ -58,14 +101,14 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     public static String makeStoredDetailsReadable(String details) {
         if (details.equals("null")) {
             return NO_DETAILS_PROVIDED;
-        }
-        else if (!isValidHousekeepingDetailsStorage(details)) {
+        } else if (!isValidHousekeepingDetailsStorage(details)) {
             return "Invalid housekeeping details format";
         }
 
         // Converting Period of preferred interval to a readable format
-        String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
-                                               // s[2] = booking, s[3] = deferment
+        String[] s = details.split(" ");
+        // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
+        // s[2] = booking, s[3] = deferment
         String num = s[1].substring(1, s[1].length() - 1);
         String unit = s[1].substring(s[1].length() - 1);
         String unitString;
@@ -102,8 +145,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     public static String makeStoredDetailsReadableWithDeferment(String details) {
         if (details.equals("null")) {
             return NO_DETAILS_PROVIDED;
-        }
-        else if (!isValidHousekeepingDetailsStorage(details)) {
+        } else if (!isValidHousekeepingDetailsStorage(details)) {
             return "Invalid housekeeping details format";
         }
 
@@ -113,40 +155,41 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         String numPI = s[1].substring(1, s[1].length() - 1);
         String unitPI = s[1].substring(s[1].length() - 1);
         String unitStringPI;
+
         switch (unitPI) {
-            case "Y":
-                unitStringPI = "years";
-                break;
-            case "M":
-                unitStringPI = "months";
-                break;
-            case "W":
-                unitStringPI = "weeks";
-                break;
-            case "D":
-                unitStringPI = "days";
-                break;
-            default:
-                unitStringPI = "Invalid unit";
+        case "Y":
+            unitStringPI = "years";
+            break;
+        case "M":
+            unitStringPI = "months";
+            break;
+        case "W":
+            unitStringPI = "weeks";
+            break;
+        case "D":
+            unitStringPI = "days";
+            break;
+        default:
+            unitStringPI = "Invalid unit";
         }
-        String numD = s[s.length-1].substring(1, s[s.length-1].length() - 1);
-        String unitD= s[s.length-1].substring(s[s.length-1].length() - 1);
+        String numD = s[s.length - 1].substring(1, s[s.length - 1].length() - 1);
+        String unitD = s[s.length - 1].substring(s[s.length - 1].length() - 1);
         String unitStringD;
         switch (unitD) {
-            case "Y":
-                unitStringD = "years";
-                break;
-            case "M":
-                unitStringD = "months";
-                break;
-            case "W":
-                unitStringD = "weeks";
-                break;
-            case "D":
-                unitStringD = "days";
-                break;
-            default:
-                unitStringD = "Invalid unit";
+        case "Y":
+            unitStringD = "years";
+            break;
+        case "M":
+            unitStringD = "months";
+            break;
+        case "W":
+            unitStringD = "weeks";
+            break;
+        case "D":
+            unitStringD = "days";
+            break;
+        default:
+            unitStringD = "Invalid unit";
         }
 
         // Makes null booking readable
@@ -156,55 +199,14 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
                 s[0], numPI, unitStringPI, booking, numD, unitStringD);
     }
 
-    /**
-     * Creates a HousekeepingDetails object with no details provided.
-     */
-    public HousekeepingDetails() {
-        this.lastHousekeepingDate = null;
-        this.preferredInterval = null;
-        this.booking = null;
-        this.deferment = null;
-    }
-
-    /**
-     * Creates a HousekeepingDetails object.
-     * @param lastHousekeepingDate
-     * @param preferredInterval
-     */
-    public HousekeepingDetails(LocalDate lastHousekeepingDate, Period preferredInterval) {
-        this.lastHousekeepingDate = lastHousekeepingDate;
-        this.preferredInterval = preferredInterval;
-        this.booking = null;
-        this.deferment = Period.ZERO;
-    }
-
-    /**
-     * Creates a HousekeepingDetails object using a string representation of the housekeeping details used for storage.
-     * @param details A string representation of the housekeeping details in the format: "null" or
-     *                yyyy-mm-dd P?Y?M?W?D? yyyy-mm-dd P?Y?M?W?D?
-     */
-    public HousekeepingDetails(String details) {
-        if (details.equals("null")) {
-            this.lastHousekeepingDate = null;
-            this.preferredInterval = null;
-            this.booking = null;
-            this.deferment = null;
-        } else {
-            // Using groups to extract details
-            Matcher storageMatcher = STORAGE_FORMAT.matcher(details);
-            storageMatcher.matches();
-            this.lastHousekeepingDate = LocalDate.parse(storageMatcher.group(2));
-            this.preferredInterval = Period.parse(storageMatcher.group(3));
-            this.booking = storageMatcher.group(8).equals("null") ? null : new Booking(storageMatcher.group(8));
-            this.deferment = Period.parse(storageMatcher.group(10));
-        }
-    }
-
     /** Checks if the housekeeping details is empty */
     public boolean isEmpty() {
-        return this.equals(empty);
+        return this.equals(EMPTY);
     }
 
+    /**
+     * Checks if the client has a booking.
+     */
     public boolean hasBooking() {
         LocalDate currentDate = LocalDate.now();
         return booking != null && booking.getBookedDate().isAfter(currentDate);
@@ -243,24 +245,24 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         String details = this.toString();
         String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
         // s[2] = bookingDate, s[4] = deferment
-        String num = s[s.length-1].substring(1, s[3].length() - 1);
-        String unit = s[s.length-1].substring(s[s.length-1].length() - 1);
+        String num = s[s.length - 1].substring(1, s[3].length() - 1);
+        String unit = s[s.length - 1].substring(s[s.length - 1].length() - 1);
         String unitString;
         switch (unit) {
-            case "Y":
-                unitString = "years";
-                break;
-            case "M":
-                unitString = "months";
-                break;
-            case "W":
-                unitString = "weeks";
-                break;
-            case "D":
-                unitString = "days";
-                break;
-            default:
-                unitString = "Invalid unit";
+        case "Y":
+            unitString = "years";
+            break;
+        case "M":
+            unitString = "months";
+            break;
+        case "W":
+            unitString = "weeks";
+            break;
+        case "D":
+            unitString = "days";
+            break;
+        default:
+            unitString = "Invalid unit";
         }
 
         return num + " " + unitString;
@@ -289,18 +291,18 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         return ((lastHousekeepingDate == otherDetails.lastHousekeepingDate
                 || lastHousekeepingDate.equals(otherDetails.lastHousekeepingDate))
                 && (preferredInterval == otherDetails.preferredInterval
-                ||preferredInterval.equals(otherDetails.preferredInterval))
+                || preferredInterval.equals(otherDetails.preferredInterval))
                 && (booking == otherDetails.booking
                 || booking.equals(otherDetails.booking))
                 && (deferment == otherDetails.deferment
                 || deferment.equals(otherDetails.deferment)));
-        }
+    }
 
     @Override
     public String toString() {
-        if (this.equals(empty)) {
+        if (this.equals(EMPTY)) {
             return "null";
         }
         return lastHousekeepingDate + " " + preferredInterval + " " + booking + " " + deferment;
     }
- }
+}

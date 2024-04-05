@@ -1,12 +1,15 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_LHD;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PI;
+import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 
 import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.commons.util.CollectionUtil;
@@ -90,9 +93,9 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editHousekeepingDetailsDescriptor}.
      */
-    protected Client createEditedPerson
-    (Person personToEdit,
-     EditHousekeepingDetailsCommand.EditHousekeepingDetailsDescriptor editHousekeepingDetailsDescriptor) {
+    protected Client createEditedPerson(
+            Person personToEdit,
+            EditHousekeepingDetailsCommand.EditHousekeepingDetailsDescriptor editHousekeepingDetailsDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = personToEdit.getName();

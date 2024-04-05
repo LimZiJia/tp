@@ -33,6 +33,9 @@ public class JsonAdaptedDetails {
         return details;
     }
 
+    /**
+     * Converts this Jackson-friendly adapted details object into the model's {@code HousekeepingDetails} object.
+     */
     public HousekeepingDetails toModelType() throws IllegalValueException {
         if (!HousekeepingDetails.isValidHousekeepingDetailsStorage(details)) {
             throw new IllegalValueException(HousekeepingDetails.MESSAGE_CONSTRAINTS);

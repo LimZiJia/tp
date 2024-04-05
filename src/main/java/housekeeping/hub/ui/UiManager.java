@@ -2,15 +2,15 @@ package housekeeping.hub.ui;
 
 import java.util.logging.Logger;
 
+import housekeeping.hub.MainApp;
+import housekeeping.hub.commons.core.LogsCenter;
+import housekeeping.hub.commons.util.StringUtil;
+import housekeeping.hub.logic.Logic;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import housekeeping.hub.MainApp;
-import housekeeping.hub.commons.core.LogsCenter;
-import housekeeping.hub.commons.util.StringUtil;
-import housekeeping.hub.logic.Logic;
 
 /**
  * The manager of the UI component.

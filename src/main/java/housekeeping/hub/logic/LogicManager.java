@@ -5,7 +5,6 @@ import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
 import housekeeping.hub.commons.core.GuiSettings;
 import housekeeping.hub.commons.core.LogsCenter;
 import housekeeping.hub.logic.commands.Command;
@@ -18,6 +17,7 @@ import housekeeping.hub.model.ReadOnlyAddressBook;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.storage.Storage;
+import javafx.collections.ObservableList;
 
 /**
  * The main LogicManager of the app.

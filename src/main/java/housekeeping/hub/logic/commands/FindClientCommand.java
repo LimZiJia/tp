@@ -6,6 +6,9 @@ import housekeeping.hub.logic.Messages;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.ContainsKeywordsPredicate;
 
+/**
+ * Finds and lists all clients in the housekeeping hub with matching criteria.
+ */
 public class FindClientCommand extends FindCommand {
     public FindClientCommand(ContainsKeywordsPredicate predicate) {
         super(predicate);

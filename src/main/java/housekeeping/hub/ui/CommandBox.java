@@ -1,12 +1,12 @@
 package housekeeping.hub.ui;
 
+import housekeeping.hub.logic.commands.CommandResult;
+import housekeeping.hub.logic.commands.exceptions.CommandException;
+import housekeeping.hub.logic.parser.exceptions.ParseException;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
-import housekeeping.hub.logic.commands.CommandResult;
-import housekeeping.hub.logic.commands.exceptions.CommandException;
-import housekeeping.hub.logic.parser.exceptions.ParseException;
 
 /**
  * The UI component that is responsible for receiving user command inputs.

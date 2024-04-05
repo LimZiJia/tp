@@ -6,6 +6,9 @@ import housekeeping.hub.logic.Messages;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.ContainsKeywordsPredicate;
 
+/**
+ * Finds and lists all housekeepers in the housekeeping hub with matching criteria.
+ */
 public class FindHousekeeperCommand extends FindCommand {
     public FindHousekeeperCommand(ContainsKeywordsPredicate predicate) {
         super(predicate);
@@ -16,6 +19,7 @@ public class FindHousekeeperCommand extends FindCommand {
         requireNonNull(model);
         model.updateFilteredHousekeeperList(predicate);
         return new CommandResult(
-                String.format(Messages.MESSAGE_HOUSEKEEPERS_LISTED_OVERVIEW, model.getFilteredHousekeeperList().size()));
+                String.format(Messages.MESSAGE_HOUSEKEEPERS_LISTED_OVERVIEW,
+                        model.getFilteredHousekeeperList().size()));
     }
 }

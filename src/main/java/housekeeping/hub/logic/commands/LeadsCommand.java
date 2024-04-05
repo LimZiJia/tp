@@ -2,14 +2,14 @@ package housekeeping.hub.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+
 import housekeeping.hub.commons.util.ToStringBuilder;
 import housekeeping.hub.logic.Messages;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.ClientComparator;
 import housekeeping.hub.model.person.LeadsFilterPredicate;
-
-import java.util.Comparator;
 
 /**
  * Generates a list of leads based on the client's predicted next housekeeping date.

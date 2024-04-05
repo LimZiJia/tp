@@ -1,6 +1,5 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_DETAILS;
@@ -8,6 +7,7 @@ import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PHONE;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_TAG;
+import static java.util.Objects.requireNonNull;
 
 import housekeeping.hub.commons.util.ToStringBuilder;
 import housekeeping.hub.model.person.Person;
@@ -15,7 +15,7 @@ import housekeeping.hub.model.person.Person;
 /**
  * Adds a person to the hub book.
  */
-abstract public class AddCommand extends Command {
+public abstract class AddCommand extends Command {
 
     public static final String COMMAND_WORD = "add";
 

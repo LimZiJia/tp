@@ -1,20 +1,20 @@
 package housekeeping.hub.model;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.commons.util.CollectionUtil.requireAllNonNull;
+import static java.util.Objects.requireNonNull;
 
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import housekeeping.hub.commons.core.GuiSettings;
 import housekeeping.hub.commons.core.LogsCenter;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.Person;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 /**
  * Represents the in-memory model of the hub book data.
@@ -156,6 +156,7 @@ public class ModelManager implements Model {
         return filteredHousekeepers;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void updateFilteredClientList(Predicate<? extends Person> predicate) {
         requireNonNull(predicate);
@@ -169,6 +170,7 @@ public class ModelManager implements Model {
         filteredClients.setPredicate(predicate);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void updateFilteredHousekeeperList(Predicate<? extends Person> predicate) {
         requireNonNull(predicate);

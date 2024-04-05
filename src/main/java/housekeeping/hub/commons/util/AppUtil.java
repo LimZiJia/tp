@@ -2,8 +2,8 @@ package housekeeping.hub.commons.util;
 
 import static java.util.Objects.requireNonNull;
 
-import javafx.scene.image.Image;
 import housekeeping.hub.MainApp;
+import javafx.scene.image.Image;
 
 /**
  * A container for App specific utility functions
