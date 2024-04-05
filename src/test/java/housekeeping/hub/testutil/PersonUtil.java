@@ -15,6 +15,7 @@ import housekeeping.hub.logic.commands.AddHousekeeperCommand;
 import housekeeping.hub.logic.commands.EditCommand.EditPersonDescriptor;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
+import housekeeping.hub.model.person.HousekeepingDetails;
 import housekeeping.hub.model.tag.Tag;
 
 /**
@@ -22,7 +23,7 @@ import housekeeping.hub.model.tag.Tag;
  */
 public class PersonUtil {
     public static String getAddClientCommand(Client client) {
-        return AddClientCommand.COMMAND_WORD + " " + getClientDetails(client);
+        return AddClientCommand.COMMAND_WORD + " client " + getClientDetails(client);
     }
 
     public static String getAddHousekeeperCommand(Housekeeper housekeeper) {
@@ -42,7 +43,10 @@ public class PersonUtil {
         client.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
-        sb.append(PREFIX_DETAILS + client.getDetails().toString());
+        String[] hD = HousekeepingDetails.makeStoredDetailsReadable(client.getDetails().toString()).split("\n");
+        String lHD = hD[0].split(" ")[2];
+        String pI = hD[1].split(" ")[2] + " " + hD[1].split(" ")[3];
+        sb.append(PREFIX_DETAILS + lHD + " " + pI);
 
         return sb.toString();
     }
@@ -83,7 +87,7 @@ public class PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        descriptor.getDetails().ifPresent(details -> sb.append(PREFIX_DETAILS).append(details.toString()));
         return sb.toString();
     }
+
 }
