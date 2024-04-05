@@ -9,7 +9,8 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+* Our project is forked from [AddressBook-Level3](https://github.com/nus-cs2103-AY2324S2/tp)
+* Libraries used: [JavaFX](https://openjfx.io/), [Jackson](https://github.com/FasterXML/jackson), [JUnit5](https://github.com/junit-team/junit5)
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ Given below is a quick overview of main components and how they interact with ea
 
 **Main components of the architecture**
 
-**`Main`** (consisting of classes [`Main`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/Main.java) and [`MainApp`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/MainApp.java)) is in charge of the app launch and shut down.
+**`Main`** (consisting of classes [`Main`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/Main.java) and [`MainApp`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/MainApp.java)) is in charge of the app launch and shut down.
 * At app launch, it initializes the other components in the correct sequence, and connects them up with each other.
 * At shut down, it shuts down the other components and invokes cleanup methods where necessary.
 
@@ -68,13 +69,13 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
-The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
+The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
 
@@ -85,7 +86,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -120,7 +121,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -141,7 +142,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2324S2-CS2103T-W09-1/tp/blob/master/src/main/java/housekeeping/hub/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -152,13 +153,172 @@ The `Storage` component,
 
 ### Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `housekeeping.hub.commons` package.
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Implementation**
 
 This section describes some noteworthy details on how certain features are implemented.
+
+### \[Completed\] Generating leads for housekeeping services
+
+In an admin operator's job there is a use case where they need to sort the clients by the predicted next cleaning date.
+This is useful for the operator to remind the clients to book their next service soon. We have stored this housekeeping information
+in `HousekeepingDetails` which also supports some other use cases such as the client does not want to be called or would
+prefer to be called on a later date.
+
+#### How it is implemented
+We assume clients who do not have `HousekeepingDetails` do not want to be disturbed by the housekeeping company.
+Therefore, the client list should be first filtered by `Client.hasHousekeepingDetais()` then sorted by `HousekeepingDetails`.
+We will also not show clients who have their predicted next housekeeping date that is after the current date.
+
+To do the sorting, the `Client` class now implements `Comparable<Client>` interface, and the `compareTo()` method is 
+overridden to compare the `HousekeepingDetails` of two clients.
+The `compareTo()` method calls the `HousekeepingDetails`'s `compareTo()` method to if both clients have `HousekeepingDetails`.
+The `compareTo()` method in `HousekeepingDetails` uses the `getNextHousekeepingDate()` method which is calculated by 
+`lastHousekeepingDate.plus(preferredInterval)`.
+
+`ClientComprator` is then used by `FXCollections.sort()` to sort the list of clients. `ClientComparator` compares `Client`s
+using their `compareTo()` method.
+
+We will also store `bookingDate` if the `Client` already made a booking. This is convenient for the admin to know and prevent
+calling the client when it is not needed. Furthermore, `deferment` is also stored to know if the client wants to defer the
+reminder to a later date.
+
+Here is how `HousekeepingDetails` class looks like:<br><br>
+![HousekeepingDetailsClassDiagram](images/HousekeepingDetailsClassDiagram.png)
+
+#### Why is it implemented this way
+There are many considerations in the workflow of generating leads for housekeeping services. The proposed implementation
+is chosen because it is able to handle a wide range of scenarios that we have considered. For example, `lastHousekeepingDate`
+and `preferredInterval` are used to calculate the `nextHousekeepingDate`. This is for the convenience of the client as they
+will only need to state their preference only once (when booking their first service).
+`preferredInterval` is a natural aspect of housekeeping services and the client should know this at the top of their head
+instead of concrete dates.
+
+Having a `deferment` attribute is also important as it allows the client to defer the reminder to a later date. This is for
+client satisfaction as it might not be a good time for housekeeping services when we call to remind them.
+
+#### Alternatives considered
+
+##### Alternative 1
+Only store `nexthousekeepingDate` and only call to ask the client on the housekeeping date. `nextHousekeepingDate` is maintained by asking the client everytime they have done a housekeeping service.
+
+Pros: Very simple to implement.
+
+Cons: [1] It adds more work for the admin but more importantly the client. This is because an additional call is required after every service.
+[2] The client may not know an exact date far into the future. If the client is unsure and provide a general period, then we can save the work
+of calling everytime by using `preferredInterval` as in our proposed implementation. [3] If the admin is sick or busy on `nextHousekeepingDate`, 
+then the call will be missed altogether.
+
+##### Alternative 2
+Same as our original implementation but without `deferment`.
+
+Pros: Simpler implementation, less commands for admin to learn.
+
+Cons: [1] Less flexible for the client. The client may not be ready for housekeeping services when we call to remind them.
+[2] It is possible to deal with this as an admin, but it would be "hacky" as the admin would have to edit the `lastHousekeepingDate`.
+
+
+A `ClientComparator` is made using the `compareTo()` is then used by `FXCollections.sort()` to sort the list of clients.
+
+### \[Completed\] Find using multiple attributes
+
+The Find feature has already been developed in AB3. However, it only searches the keywords given in the Name attribute.
+To increase the functionality of the feature, we plan to make it accept keywords for multiple attributes (address and
+area). This changes will also be used to fulfil one of our user stories (As an Operator, I can retrieve details from 
+specified contacts by their name or other criteria. So that I can save a lot of time to find specific clients and 
+housekeepers.) which is to increase the efficiency in finding specific Person. 
+
+#### How the feature is implemented
+
+The previous Find feature implementation use a predicate specifically for Name attribute 
+(NameContainsKeywordsPredicate). To make it able use multiple attributes, we create a new predicate that can be used for 
+Name, Address, and Area attributes (ContainsKeywordsPredicate). The new predicate can be used either with keywords for 
+one attribute or multiple attributes. It first checks, what attribute keywords are provided by the user. The attributes 
+that doesn't have keywords will automatically true. The attributes that have keywords will be checked using the give 
+keywords.
+
+Here is how the activity diagram looks like:
+![FindActivityDiagram](images/FindActivityDiagram.png)
+
+#### Why is it implemented this way
+
+
+The current implementation was chosen because it can handle multiple attributes at the same time. The other alternatives
+we considered can only handle one attribute at the same time or ineffective to makes it able to handle multiple
+attributes at the same time (needs multiple predicate and if-else statement consist of 9 conditions). Therefore, we 
+chose the current implementation as it more effective than the other alternatives.
+
+#### Alternatives considered
+
+##### Alternative 1
+
+Using multiple predicate for each attribute. This way, the Find feature can handle all the attributes. So, to use the
+Find feature, the user needs to give the attribute type of which the keywords will be checked. However, it can only 
+handle one attribute at the same time as each FindCommand can only use one predicate. It can be implemented to handle
+multiple attributes at the same time using chain test on multiple predicate. However, it is ineffective as it needs to
+check multiple situation (use 1 attribute, 2 attributes, or 3 attributes).
+
+### \[Completed\] Separate client and housekeeper list
+In the previous iteration, both clients and housekeepers were consolidated into a single list, presenting them together.
+However, this amalgamation didn't offer enhanced visualization or convenience for our intended users. Hence, we opted to 
+segregate the client and housekeeper lists. This adjustment aims to streamline efficiency for our target users, 
+specifically housekeeping company administrators, enabling easier access to clients and assignment of housekeepers.
+
+#### How the feature is implemented
+The `UniquePersonList` class has been transformed into a generic class. Within the `AddressBook` class, two distinct 
+lists have been instantiated: one for clients and another for housekeepers. These lists store the respective entities, 
+ensuring separation of concerns. Both the saving and loading functionalities now operate independently on these 
+segregated lists.
+
+#### Why is it implemented this way
+This approach offers improvements in both efficiency and performance. By separating clients and housekeepers into 
+distinct lists, interactions between these entities are minimized. This segregation enhances organization and simplifies
+maintenance of the system, as each list can be managed independently without impacting the other.
+
+#### Alternatives considered
+
+##### Alternative 1
+Store clients and housekeepers together in a single list on the hard disk, they are separated upon application startup. 
+Although this method is functional, it introduces overhead by requiring filtering of the single list to achieve 
+eparation, potentially impacting performance negatively. Furthermore, the code complexity increases as it must handle 
+the filtering process, making maintenance more challenging.
+
+### \[Completed\] Delete feature with Type
+
+In the previous iteration, both clients and housekeepers were contained within a singular list, limiting the delete 
+functionality to operate solely within this unified list. In the current iteration, we've segregated these entities into 
+distinct lists—one for clients and another for housekeepers. Consequently, we've introduced an updated Delete feature 
+capable of removing entries from either of these individual lists.
+
+#### How the feature is implemented
+
+Two subclasses, namely `DeleteClientCommand` and `DeleteHousekeeperCommand`, have been developed as subclasses of the 
+abstract class `DeleteCommand`. Each subclass is designed to operate on its respective list. During parsing, the system 
+now evaluates the type specified within the Delete command entered by the user. If the type is identified as "client", 
+the parser returns a `DeleteClientCommand`, enabling deletion of the client identified by the index within the client 
+list. Conversely, if the type is recognized as "housekeeper", a `DeleteHousekeeperCommand` is utilized to remove the 
+housekeeper at the specified index within the housekeeper list.
+
+Here is how the activity diagram looks like: <br>
+![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
+
+#### Why is it implemented this way
+The existing implementation now employs two distinct subclasses: `DeleteClientCommand` and `DeleteHousekeeperCommand`, 
+each tailored for deleting entries from their respective lists. By segregating these functionalities into separate 
+classes, the code adheres more closely to object-oriented programming (OOP) principles, enhancing clarity and 
+maintainability. This approach ensures that each command operates distinctly on its designated list, promoting a more 
+organized and modular codebase.
+
+#### Alternatives considered
+
+##### Alternative 1
+Introducing a new attribute, "Type", within the `DeleteCommand` class may effectively accomplish the task at hand; 
+however, it also brings the drawback of potentially increasing the number of conditional statements, which could degrade 
+readability and maintainability. Moreover, the internal nature of the "Type" attribute might obscure its purpose to 
+developers, leading to confusion.
 
 ### \[Proposed\] Undo/redo feature
 
@@ -234,123 +394,14 @@ The following activity diagram summarizes what happens when a user executes a ne
 **Aspect: How undo & redo executes:**
 
 * **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+    * Pros: Easy to implement.
+    * Cons: May have performance issues in terms of memory usage.
 
 * **Alternative 2:** Individual command knows how to undo/redo by
   itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+    * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+    * Cons: We must ensure that the implementation of each individual command are correct.
 
-_{more aspects and alternatives to be added}_
-
-### \[Proposed\] Sorting cleints by predicted next cleaning date
-
-#### Proposed Implementation
-We assume clients who do not have `HousekeepingDetails` do not want to be disturbed by the housekeeping company.
-Therefore, the client list should be first filtered by `Client.hasHousekeepingDetais()` then sorted by `HousekeepingDetails`.
-
-To do the sorting, the `Client` class now implements `Comparable<Client>` interface, and the `compareTo()` method is 
-overridden to compare the `HousekeepingDetails` of two clients.
-The `compareTo()` method calls the `HousekeepingDetails`'s `compareTo()` method to if both clients have `HousekeepingDetails`.
-The `compareTo()` method in `HousekeepingDetails` uses the `getNextHousekeepingDate()` method which is calculated by 
-`lastHousekeepingDate.plus(preferredInterval)`. 
-
-### \[Completed\] Find using multiple attributes
-
-The Find feature has already been developed in AB3. However, it only searches the keywords given in the Name attribute.
-To increase the functionality of the feature, we plan to make it accept keywords for multiple attributes (address and
-area). This changes will also be used to fulfil one of our user stories (As an Operator, I can retrieve details from 
-specified contacts by their name or other criteria. So that I can save a lot of time to find specific clients and 
-housekeepers.) which is to increase the efficiency in finding specific Person. 
-
-#### How the feature is implemented
-
-The previous Find feature implementation use a predicate specifically for Name attribute 
-(NameContainsKeywordsPredicate). To make it able use multiple attributes, we create a new predicate that can be used for 
-Name, Address, and Area attributes (ContainsKeywordsPredicate). The new predicate can be used either with keywords for 
-one attribute or multiple attributes. It first checks, what attribute keywords are provided by the user. The attributes 
-that doesn't have keywords will automatically true. The attributes that have keywords will be checked using the give 
-keywords.
-
-Here is how the activity diagram looks like:
-![FindActivityDiagram](images/FindActivityDiagram.png)
-
-#### Why is it implemented this way
-
-The current implementation was chosen because it can handle multiple attributes at the same time. The other alternatives
-we considered can only handle one attribute at the same time or ineffective to makes it able to handle multiple
-attributes at the same time (needs multiple predicate and if-else statement consist of 9 conditions). Therefore, we 
-chose the current implementation as it more effective than the other alternatives.
-
-#### Alternatives considered
-
-##### Alternative 1
-
-Using multiple predicate for each attribute. This way, the Find feature can handle all the attributes. So, to use the
-Find feature, the user needs to give the attribute type of which the keywords will be checked. However, it can only 
-handle one attribute at the same time as each FindCommand can only use one predicate. It can be implemented to handle
-multiple attributes at the same time using chain test on multiple predicate. However, it is ineffective as it needs to
-check multiple situation (use 1 attribute, 2 attributes, or 3 attributes).
-
-### \[Completed\] Separate client and housekeeper list
-In the previous iteration, both clients and housekeepers were consolidated into a single list, presenting them together.
-However, this amalgamation didn't offer enhanced visualization or convenience for our intended users. Hence, we opted to 
-segregate the client and housekeeper lists. This adjustment aims to streamline efficiency for our target users, 
-specifically housekeeping company administrators, enabling easier access to clients and assignment of housekeepers.
-
-#### How the feature is implemented
-The `UniquePersonList` class has been transformed into a generic class. Within the `AddressBook` class, two distinct 
-lists have been instantiated: one for clients and another for housekeepers. These lists store the respective entities, 
-ensuring separation of concerns. Both the saving and loading functionalities now operate independently on these 
-segregated lists.
-
-#### Why is it implemented this way
-This approach offers improvements in both efficiency and performance. By separating clients and housekeepers into 
-distinct lists, interactions between these entities are minimized. This segregation enhances organization and simplifies
-maintenance of the system, as each list can be managed independently without impacting the other.
-
-#### Alternatives considered
-
-##### Alternative 1
-Store clients and housekeepers together in a single list on the hard disk, they are separated upon application startup. 
-Although this method is functional, it introduces overhead by requiring filtering of the single list to achieve 
-eparation, potentially impacting performance negatively. Furthermore, the code complexity increases as it must handle 
-the filtering process, making maintenance more challenging.
-
-### \[Completed\] Delete feature with Type
-
-In the previous iteration, both clients and housekeepers were contained within a singular list, limiting the delete 
-functionality to operate solely within this unified list. In the current iteration, we've segregated these entities into 
-distinct lists—one for clients and another for housekeepers. Consequently, we've introduced an updated Delete feature 
-capable of removing entries from either of these individual lists.
-
-#### How the feature is implemented
-
-Two subclasses, namely `DeleteClientCommand` and `DeleteHousekeeperCommand`, have been developed as subclasses of the 
-abstract class `DeleteCommand`. Each subclass is designed to operate on its respective list. During parsing, the system 
-now evaluates the type specified within the Delete command entered by the user. If the type is identified as "client", 
-the parser returns a `DeleteClientCommand`, enabling deletion of the client identified by the index within the client 
-list. Conversely, if the type is recognized as "housekeeper", a `DeleteHousekeeperCommand` is utilized to remove the 
-housekeeper at the specified index within the housekeeper list.
-
-Here is how the activity diagram looks like: <br>
-![DeleteActivityDiagram](images/DeleteActivityDiagram.png)
-
-#### Why is it implemented this way
-The existing implementation now employs two distinct subclasses: `DeleteClientCommand` and `DeleteHousekeeperCommand`, 
-each tailored for deleting entries from their respective lists. By segregating these functionalities into separate 
-classes, the code adheres more closely to object-oriented programming (OOP) principles, enhancing clarity and 
-maintainability. This approach ensures that each command operates distinctly on its designated list, promoting a more 
-organized and modular codebase.
-
-#### Alternatives considered
-
-##### Alternative 1
-Introducing a new attribute, "Type", within the `DeleteCommand` class may effectively accomplish the task at hand; 
-however, it also brings the drawback of potentially increasing the number of conditional statements, which could degrade 
-readability and maintainability. Moreover, the internal nature of the "Type" attribute might obscure its purpose to 
-developers, leading to confusion.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -566,7 +617,6 @@ Preconditions: Operator is logged in.
 7.  Will not use a DataBase Management System e.g., MySQL, and PostgreSQL to store data. And hence, will use flat file as a storage.
 8.  Should be portable (able to work without requiring an installer).
 9.  Should not use or depend on a remote server.
-*{More to be added}*
 
 ### Glossary
 
@@ -600,29 +650,28 @@ testers are expected to do more *exploratory* testing.
    1. Re-launch the app by double-clicking the jar file.<br>
        Expected: The most recent window size and location is retained.
 
-1. _{ more test cases …​ }_
 
 ### Deleting a person
 
-1. Deleting a person while all persons are being shown
+1. Deleting a person while all clients/housekeepers are being shown
 
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+   1. Prerequisites: List all persons using the `list client` or `list housekeeper` command. Multiple persons in the list.
 
-   1. Test case: `delete 1`<br>
+   1. Test case: `delete client 1` or `delete housekeeper 1`<br>
       Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 
-   1. Test case: `delete 0`<br>
+   1. Test case: `delete client 0` or `delete housekeeper 0`<br>
       Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
+   1. Other incorrect delete commands to try: `delete`, `delete x`, `delete housekeeper y`, `...` (where x is not a valid type and y is larger than the list size)<br>
       Expected: Similar to previous.
 
-1. _{ more test cases …​ }_
 
 ### Saving data
 
 1. Dealing with missing/corrupted data files
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+   1. To simulate this, delete the data file `addressbook.json` or make it unreadable.
+   2. If you want to refresh the data file, you can delete `addressbook.json` and restart the app.
+   3. If you want to recover the data, study the `addressbook.json` file format and manually edit it.
 
-1. _{ more test cases …​ }_
