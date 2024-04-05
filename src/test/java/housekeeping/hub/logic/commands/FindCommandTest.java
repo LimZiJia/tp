@@ -1,13 +1,14 @@
 package housekeeping.hub.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static housekeeping.hub.logic.Messages.*;
+import static housekeeping.hub.logic.Messages.MESSAGE_CLIENTS_LISTED_OVERVIEW;
+import static housekeeping.hub.logic.Messages.MESSAGE_HOUSEKEEPERS_LISTED_OVERVIEW;
 import static housekeeping.hub.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static housekeeping.hub.testutil.TypicalPersons.ELLE;
 import static housekeeping.hub.testutil.TypicalPersons.FIONA;
 import static housekeeping.hub.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -107,13 +108,6 @@ public class FindCommandTest {
         String expected = FindClientCommand.class.getCanonicalName() + "{predicate=" + predicate + "}";
         assertEquals(expected, findCommand.toString());
     }
-
-    /**
-     * Parses {@code userInput} into a {@code NameContainsKeywordsPredicate}.
-     */
-    /*private NameContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
-    }*/
 
     /**
      * Parses {@code name}, {@code hub} and {@code area} into a {@code ContainsKeywordsPredicate}.

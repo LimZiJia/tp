@@ -1,10 +1,10 @@
 package housekeeping.hub.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static housekeeping.hub.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collections;

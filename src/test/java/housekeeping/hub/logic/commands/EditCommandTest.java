@@ -1,8 +1,5 @@
 package housekeeping.hub.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static housekeeping.hub.logic.commands.CommandTestUtil.DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.DESC_BOB;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_NAME_BOB;
@@ -14,6 +11,9 @@ import static housekeeping.hub.logic.commands.CommandTestUtil.showClientAtIndex;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static housekeeping.hub.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -90,7 +90,8 @@ public class EditCommandTest {
         String expectedMessageC =
                 String.format(EditClientCommand.MESSAGE_EDIT_CLIENT_SUCCESS, Messages.formatClient(editedClient));
         String expectedMessageH =
-                String.format(EditHousekeeperCommand.MESSAGE_EDIT_HOUSEKEEPER_SUCCESS, Messages.formatHousekeeper(editedHousekeeper));
+                String.format(EditHousekeeperCommand.MESSAGE_EDIT_HOUSEKEEPER_SUCCESS,
+                        Messages.formatHousekeeper(editedHousekeeper));
 
         Model expectedModelClient = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModelClient.setClient(lastClient, editedClient);

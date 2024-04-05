@@ -1,12 +1,12 @@
 package housekeeping.hub.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static housekeeping.hub.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static housekeeping.hub.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 

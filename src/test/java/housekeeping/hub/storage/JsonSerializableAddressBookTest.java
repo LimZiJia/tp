@@ -1,17 +1,7 @@
 package housekeeping.hub.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static housekeeping.hub.testutil.Assert.assertThrows;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import org.junit.jupiter.api.Test;
-
-import housekeeping.hub.commons.exceptions.IllegalValueException;
-import housekeeping.hub.commons.util.JsonUtil;
-import housekeeping.hub.model.AddressBook;
-import housekeeping.hub.testutil.TypicalPersons;
 
 public class JsonSerializableAddressBookTest {
 
@@ -20,7 +10,7 @@ public class JsonSerializableAddressBookTest {
     private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidPersonAddressBook.json");
     private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicatePersonAddressBook.json");
 
-   /* @Test
+    /*@Test
     public void toModelType_typicalPersonsFile_success() throws Exception {
         JsonSerializableAddressBook dataFromFile = JsonUtil.readJsonFile(TYPICAL_PERSONS_FILE,
                 JsonSerializableAddressBook.class).get();

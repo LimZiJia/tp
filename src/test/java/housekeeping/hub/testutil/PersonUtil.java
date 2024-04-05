@@ -15,7 +15,6 @@ import housekeeping.hub.logic.commands.AddHousekeeperCommand;
 import housekeeping.hub.logic.commands.EditCommand.EditPersonDescriptor;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
-import housekeeping.hub.model.person.HousekeepingDetails;
 import housekeeping.hub.model.tag.Tag;
 
 /**

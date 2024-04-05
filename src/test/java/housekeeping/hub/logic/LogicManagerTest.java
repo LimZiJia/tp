@@ -1,16 +1,15 @@
 package housekeeping.hub.logic;
 
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX;
-import static housekeeping.hub.logic.commands.CommandTestUtil.AREA_DESC_AMY;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import static housekeeping.hub.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static housekeeping.hub.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static housekeeping.hub.logic.commands.CommandTestUtil.AREA_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalPersons.AMY;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;

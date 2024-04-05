@@ -11,7 +11,6 @@ import static housekeeping.hub.logic.commands.CommandTestUtil.INVALID_ADDRESS_DE
 import static housekeeping.hub.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
 import static housekeeping.hub.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static housekeeping.hub.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static housekeeping.hub.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static housekeeping.hub.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.NAME_DESC_BOB;
 import static housekeeping.hub.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
@@ -26,10 +25,6 @@ import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
-import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
-import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PHONE;
 import static housekeeping.hub.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static housekeeping.hub.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static housekeeping.hub.testutil.TypicalPersons.AMY;
@@ -37,7 +32,6 @@ import static housekeeping.hub.testutil.TypicalPersons.BOB;
 
 import org.junit.jupiter.api.Test;
 
-import housekeeping.hub.logic.Messages;
 import housekeeping.hub.logic.commands.AddClientCommand;
 import housekeeping.hub.logic.commands.AddCommand;
 import housekeeping.hub.logic.commands.AddHousekeeperCommand;
@@ -47,7 +41,6 @@ import housekeeping.hub.model.person.Email;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Phone;
-import housekeeping.hub.model.tag.Tag;
 import housekeeping.hub.testutil.ClientBuilder;
 import housekeeping.hub.testutil.HousekeeperBuilder;
 
@@ -94,8 +87,8 @@ public class AddCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         // multiple fields repeated
-        assertParseFailure(parser, validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY + ADDRESS_DESC_AMY
-                        + validExpectedPersonString,
+        assertParseFailure(parser, validExpectedPersonString + PHONE_DESC_AMY + EMAIL_DESC_AMY + NAME_DESC_AMY
+                        + ADDRESS_DESC_AMY + validExpectedPersonString,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
 
         // invalid value followed by valid value
@@ -139,9 +132,8 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Client expectedClient = new ClientBuilder(AMY).withTags().build();
-        assertParseSuccess(parser, "client " + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                        +  AREA_DESC_AMY,
-                new AddClientCommand(expectedClient));
+        assertParseSuccess(parser, "client " + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + AREA_DESC_AMY, new AddClientCommand(expectedClient));
     }
 
     @Test
@@ -185,7 +177,8 @@ public class AddCommandParserTest {
 
         // invalid address
         assertParseFailure(parser, "housekeeper " + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
-                + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + AREA_DESC_BOB, Address.MESSAGE_CONSTRAINTS);
+                + INVALID_ADDRESS_DESC + TAG_DESC_HUSBAND + TAG_DESC_FRIEND + AREA_DESC_BOB,
+                Address.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
         assertParseFailure(parser, "housekeeper " + INVALID_NAME_DESC + PHONE_DESC_BOB + EMAIL_DESC_BOB
