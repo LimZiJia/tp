@@ -8,6 +8,7 @@ package "Details" {
 Class HousekeepingDetails
 Class Period
 Class LocalDate
+Class Booking
 }
 
 Client *--> HousekeepingDetails
@@ -15,7 +16,7 @@ Client *--> HousekeepingDetails
 HousekeepingDetails *---> "preferredInterval" Period
 HousekeepingDetails *---> "deferment" Period
 HousekeepingDetails *---> "lastHousekeepingDate" LocalDate
-HousekeepingDetails *---> "bookingDate" LocalDate
+HousekeepingDetails *---> "booking" Booking
 
 Period .[hidden].. HousekeepingDetails
 LocalDate .[hidden]. HousekeepingDetails
