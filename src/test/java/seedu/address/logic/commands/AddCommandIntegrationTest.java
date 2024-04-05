@@ -48,7 +48,7 @@ public class AddCommandIntegrationTest {
         expectedModel.addHousekeeper(validHousekeeper);
 
         assertCommandSuccess(new AddHousekeeperCommand(validHousekeeper), model,
-                String.format(AddHousekeeperCommand.MESSAGE_SUCCESS, validHousekeeper),
+                String.format(AddHousekeeperCommand.MESSAGE_SUCCESS, Messages.formatHousekeeper(validHousekeeper)),
                 expectedModel);
     }
 

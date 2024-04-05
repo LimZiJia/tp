@@ -16,6 +16,7 @@ import seedu.address.logic.commands.AddHousekeeperCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Housekeeper;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -24,11 +25,11 @@ import seedu.address.model.tag.Tag;
  */
 public class PersonUtil {
     public static String getAddClientCommand(Client client) {
-        return AddClientCommand.COMMAND_WORD + " " + getClientDetails(client);
+        return AddClientCommand.COMMAND_WORD + " client " + getClientDetails(client);
     }
 
     public static String getAddHousekeeperCommand(Housekeeper housekeeper) {
-        return AddHousekeeperCommand.COMMAND_WORD + " " + getHousekeeperDetails(housekeeper);
+        return AddHousekeeperCommand.COMMAND_WORD + " housekeeper " + getHousekeeperDetails(housekeeper);
     }
 
     /**
@@ -44,7 +45,8 @@ public class PersonUtil {
         client.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
         );
-        sb.append(PREFIX_DETAILS + client.getDetails().toString());
+        //sb.append(PREFIX_DETAILS + client.getDetails().toString());
+        sb.append(PREFIX_DETAILS + "2021-10-10 1 days");
 
         return sb.toString();
     }
@@ -85,7 +87,8 @@ public class PersonUtil {
                 tags.forEach(s -> sb.append(PREFIX_TAG).append(s.tagName).append(" "));
             }
         }
-        descriptor.getDetails().ifPresent(details -> sb.append(PREFIX_DETAILS).append(details.toString()));
+
+        //descriptor.getDetails().ifPresent(details -> sb.append(PREFIX_DETAILS).append(details.toString()));
         return sb.toString();
     }
 }

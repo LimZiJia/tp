@@ -34,9 +34,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Client person = new ClientBuilder().build();
-        AddClientCommand command = (AddClientCommand) parser.parseCommand(PersonUtil.getAddClientCommand(person));
-        assertEquals(new AddClientCommand(person), command);
+        Client client = new ClientBuilder().build();
+        AddClientCommand command = (AddClientCommand) parser.parseCommand(PersonUtil.getAddClientCommand(client));
+        assertEquals(new AddClientCommand(client), command);
     }
 
     @Test
@@ -74,6 +74,7 @@ public class AddressBookParserTest {
         EditHousekeeperCommand editHousekeeperCommand = (EditHousekeeperCommand) parser.parseCommand(
                 EditHousekeeperCommand.COMMAND_WORD + " housekeeper " + INDEX_FIRST_PERSON.getOneBased() + " "
                 + PersonUtil.getEditPersonDescriptorDetails(housekeeperDescriptor));
+
         assertEquals(new EditHousekeeperCommand(INDEX_FIRST_PERSON, housekeeperDescriptor), editHousekeeperCommand);
     }
 
