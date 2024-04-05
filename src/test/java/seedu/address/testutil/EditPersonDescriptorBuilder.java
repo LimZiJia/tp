@@ -48,7 +48,6 @@ public class EditPersonDescriptorBuilder {
             descriptor.setDetails(client.getDetails());
         } else {
             Housekeeper housekeeper = (Housekeeper) person;
-            descriptor.setBookingList(housekeeper.getBookingList());
         }
     }
 

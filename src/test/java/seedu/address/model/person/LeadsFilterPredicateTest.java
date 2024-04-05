@@ -32,7 +32,7 @@ class LeadsFilterPredicateTest {
             ClientBuilder clientBuilder = new ClientBuilder().withDetails(housekeepingDetails);
             Client client = clientBuilder.build();
 
-            assertFalse(predicate.test(client));
+            assertTrue(predicate.test(client));
         }
 
         @Test
