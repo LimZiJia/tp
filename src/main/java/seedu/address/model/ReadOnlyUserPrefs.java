@@ -12,9 +12,4 @@ public interface ReadOnlyUserPrefs {
     GuiSettings getGuiSettings();
 
     Path getAddressBookFilePath();
-
-    Path getClientFilePath();
-
-    Path getHousekeeperFilePath();
-
 }

@@ -2,8 +2,10 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
 import java.util.List;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.person.Client;
@@ -45,14 +47,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// list overwrite operations
 
     /**
-     * Replaces the contents of the person list with {@code persons}.
-     * {@code persons} must not contain duplicate persons.
-     */
-    /*public void setPersons(List<Person> persons) {
-        this.persons.setPersons(persons);
-    }*/
-
-    /**
      * Replaces the contents of the client list with {@code clients}.
      * {@code clients} must not contain duplicate clients.
      */
@@ -68,6 +62,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.housekeepers.setPersons(housekeepers);
     }
 
+    public void sortClients(Comparator<? super Client> comparator) {
+        clients.sort(comparator);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -76,61 +74,78 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         setClients(newData.getClientList());
         setHousekeepers(newData.getHousekeeperList());
-        //setPersons(newData.getPersonList());
     }
 
     //// person-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a client with the same identity as {@code client} exists in the address book.
      */
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        if (person.isClient()) {
-            return clients.contains((Client) person);
-        }
-        return housekeepers.contains((Housekeeper) person);
+    public boolean hasClient(Client client) {
+        requireNonNull(client);
+        return clients.contains(client);
     }
 
     /**
-     * Adds a person to the address book.
-     * The person must not already exist in the address book.
+     * Returns true if a housekeeper with the same identity as {@code housekeeper} exists in the address book.
      */
-    public void addPerson(Person p) {
-        if (p.isClient()) {
-            clients.add((Client) p);
-        } else {
-            housekeepers.add((Housekeeper) p);
-        }
+    public boolean hasHousekeeper(Housekeeper housekeeper) {
+        requireNonNull(housekeeper);
+        return housekeepers.contains(housekeeper);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Adds a client to the address book.
+     * The client must not already exist in the address book.
+     */
+    public void addClient(Client client) {
+        clients.add(client);
+    }
+
+    /**
+     * Adds a housekeeper to the address book.
+     * The housekeeper must not already exist in the address book.
+     */
+    public void addHousekeeper(Housekeeper housekeeper) {
+        housekeepers.add(housekeeper);
+    }
+
+    /**
+     * Replaces the given client {@code target} in the list with {@code editedClient}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The client identity of {@code editedClient} must not be the same as another existing client in the address book.
      */
-    public void setPerson(Person target, Person editedPerson) {
-        requireNonNull(editedPerson);
+    public void setClient(Client target, Client editedClient) {
+        requireNonNull(editedClient);
 
-        if (editedPerson.isClient() && target.isClient()) {
-            clients.setPerson((Client) target, (Client) editedPerson);
-        } else if (!(editedPerson.isClient()) && !(target.isClient())) {
-            housekeepers.setPerson((Housekeeper) target, (Housekeeper) editedPerson);
-        } else {
-            throw new IllegalArgumentException("Cannot replace a client with a housekeeper or vice versa.");
-        }
+        clients.setPerson(target, editedClient);
     }
 
     /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * {@code key} must exist in the address book.
+     * Replaces the given housekeeper {@code target} in the list with {@code editedHousekeeper}.
+     * {@code target} must exist in the address book.
+     * The housekeeper identity of {@code editedHousekeeper} must not be the same as another existing housekeeper in the address book.
      */
-    public void removePerson(Person key) {
-        if (key.isClient()) {
-            clients.remove((Client) key);
-        } else {
-            housekeepers.remove((Housekeeper) key);
-        }
+    public void setHousekeeper(Housekeeper target, Housekeeper editedHousekeeper) {
+        requireNonNull(editedHousekeeper);
+
+        housekeepers.setPerson(target, editedHousekeeper);
+    }
+
+    /**
+     * Removes {@code client} from this {@code AddressBook}.
+     * {@code client} must exist in the address book.
+     */
+    public void removeClient(Client client) {
+        clients.remove(client);
+    }
+
+    /**
+     * Removes {@code housekeeper} from this {@code AddressBook}.
+     * {@code housekeeper} must exist in the address book.
+     */
+    public void removeHousekeeper(Housekeeper housekeeper) {
+        housekeepers.remove(housekeeper);
     }
 
     //// util methods
@@ -143,11 +158,6 @@ public class AddressBook implements ReadOnlyAddressBook {
                 //.add("persons", persons)
                 .toString();
     }
-
-    /*@Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asUnmodifiableObservableList();
-    }*/
 
     @Override
     public ObservableList<Client> getClientList() {

@@ -6,11 +6,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -18,13 +16,11 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.logic.Messages;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Client;
+import seedu.address.model.person.BookingList;
+import seedu.address.model.person.Area;
 import seedu.address.model.person.Email;
-import seedu.address.model.person.Housekeeper;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -38,22 +34,21 @@ abstract public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the client or housekeeper "
+            + "identified by the index number used in the displayed person list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + "TYPE(client or housekeeper) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_TAG + "TAG]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
+            + "Example: " + COMMAND_WORD + " client 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
     protected final Index index;
     protected final EditPersonDescriptor editPersonDescriptor;
@@ -110,7 +105,9 @@ abstract public class EditCommand extends Command {
         private Email email;
         private Address address;
         private Set<Tag> tags;
-        private Type type;
+        private BookingList bookingList;
+        private HousekeepingDetails details;
+        private Area area;
 
         public EditPersonDescriptor() {}
 
@@ -124,14 +121,16 @@ abstract public class EditCommand extends Command {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
-            setType(toCopy.type);
+            setBookingList(toCopy.bookingList);
+            setDetails(toCopy.details);
+            setArea(toCopy.area);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, type);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags, area, bookingList);
         }
 
         public void setName(Name name) {
@@ -183,14 +182,29 @@ abstract public class EditCommand extends Command {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
-        public void setType(Type type) {
-            this.type = type;
+        public void setBookingList(BookingList bookingList) {
+            this.bookingList = bookingList;
         }
 
-        public Optional<Type> getType() {
-            return Optional.ofNullable(type);
+        public Optional<BookingList> getBookingList() {
+            return Optional.ofNullable(bookingList);
         }
 
+        public void setDetails(HousekeepingDetails details) {
+            this.details = details;
+        }
+
+        public Optional<HousekeepingDetails> getDetails() {
+            return Optional.ofNullable(details);
+        }
+
+        public void setArea(Area area) {
+            this.area = area;
+        }
+
+        public Optional<Area> getArea() {
+            return Optional.ofNullable(area);
+        }
 
         @Override
         public boolean equals(Object other) {
@@ -208,8 +222,9 @@ abstract public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
+                    && Objects.equals(area, otherEditPersonDescriptor.area)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(type, otherEditPersonDescriptor.type);
+                    && Objects.equals(bookingList, otherEditPersonDescriptor.bookingList);
         }
 
         @Override
@@ -220,7 +235,8 @@ abstract public class EditCommand extends Command {
                     .add("email", email)
                     .add("address", address)
                     .add("tags", tags)
-                    .add("type", type)
+                    .add("area", area)
+                    .add("booking list", bookingList)
                     .toString();
         }
     }

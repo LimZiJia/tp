@@ -40,6 +40,10 @@ task coverage(type: JacocoReport) {
     }
 }
 
+run {
+    enableAssertions = true
+}
+
 dependencies {
     String jUnitVersion = '5.4.0'
     String javaFxVersion = '17.0.7'
@@ -70,8 +74,8 @@ run {
 }
 
 shadowJar {
-    archiveBaseName = "HouseKeepingHub"
-    archiveVersion = "v1.3.0"
+    archiveBaseName = "HousekeepingHub"
+    archiveVersion = "v1.3.1"
     archiveClassifier = null
 }
 

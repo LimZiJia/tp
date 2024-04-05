@@ -12,8 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Housekeeping Hub" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="Housekeeping Hub" minWidth="500" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/housekeepinghub.png" />
   </icons>
@@ -43,7 +44,7 @@
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="stack-pane"
                    style="-fx-background-color: #ECE9E9; -fx-border-width: 0 0 3 0; -fx-border-color: #BFBFBF"
-                   minHeight="100" prefHeight="200" maxHeight="200">
+                   minHeight="100" prefHeight="220" maxHeight="220">
           <padding>
             <Insets top="10" right="10" bottom="10" left="10" />
           </padding>
@@ -51,19 +52,29 @@
 
           <HBox VBox.vgrow="ALWAYS">
             <VBox fx:id="clientList" styleClass="stack-pane" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: #ECE9E9">
+                  style="-fx-background-color: #ECE9E9" alignment="TOP_LEFT" spacing="10">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+              <Label styleClass="column-header" text="Client :"
+                     style="-fx-text-fill: black; -fx-background-radius: 10; -fx-border-color: #BFBFBF; -fx-border-radius: 10;
+                     -fx-padding: 0 2 0 8; -fx-alignment: CENTER_LEFT; -fx-font-weight: bold; -fx-font-size: 14px;
+                     -fx-background-color: #0095FF" prefWidth="70"
+              />
+              <StackPane fx:id="clientListPanelPlaceholder" VBox.vgrow="ALWAYS" prefWidth="320"/>
             </VBox>
 
             <VBox fx:id="housekeeperList" styleClass="stack-pane" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS"
-                  style="-fx-background-color: #ECE9E9">
+                  style="-fx-background-color: #ECE9E9" alignment="TOP_LEFT" spacing="10">
               <padding>
                 <Insets top="10" right="10" bottom="10" left="10" />
               </padding>
-              <StackPane fx:id="housekeeperListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+              <Label styleClass="column-header" text="Housekeeper :"
+                     style="-fx-text-fill: black; -fx-background-radius: 10; -fx-border-color: #BFBFBF;
+                     -fx-border-radius: 10; -fx-padding: 0 2 0 8; -fx-alignment: CENTER_LEFT; -fx-font-weight: bold;
+                     -fx-font-size: 14px; -fx-background-color: #FF6A00" prefWidth="127"
+              />
+              <StackPane fx:id="housekeeperListPanelPlaceholder" VBox.vgrow="ALWAYS" prefWidth="180"/>
             </VBox>
           </HBox>
 

@@ -1,7 +1,10 @@
 package seedu.address.model.person;
 
+import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.Set;
 
+import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.tag.Tag;
 
 
@@ -9,7 +12,9 @@ import seedu.address.model.tag.Tag;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Client extends Person {
+public class Client extends Person implements Comparable<Client> {
+    /** The housekeeping details of the client. Used to generate call list by predicting next session date */
+    private HousekeepingDetails housekeepingDetails;
 
     /**
      * Every field must be present and not null.
@@ -20,8 +25,37 @@ public class Client extends Person {
      * @param address
      * @param tags
      */
-    public Client(Name name, Phone phone, Email email, Address address, Set<Tag> tags, Type type) {
-        super(name, phone, email, address, tags, type);
+    public Client(Name name, Phone phone, Email email, Address address,
+                  Set<Tag> tags, HousekeepingDetails housekeepingDetails, Area area) {
+        super(name, phone, email, address, tags, area);
+        this.housekeepingDetails = housekeepingDetails;
+    }
+
+    /**
+     * Returns true if a client has housekeeping details.
+     */
+    public boolean hasHousekeepingDetails() {
+        return !housekeepingDetails.isEmpty();
+    }
+
+    public void setHousekeepingDetails(HousekeepingDetails housekeepingDetails) {
+        this.housekeepingDetails = housekeepingDetails;
+    }
+
+    public LocalDate getNextHousekeepingDate() {
+        return this.housekeepingDetails.getNextHousekeepingDate();
+    }
+
+    public boolean hasBooking() {
+        return this.housekeepingDetails.hasBooking();
+    }
+
+    /**
+     * Returns the housekeeping details of the client.
+     */
+    @Override
+    public HousekeepingDetails getDetails() {
+        return this.housekeepingDetails;
     }
 
     /**
@@ -45,11 +79,36 @@ public class Client extends Person {
                 && this.getEmail().equals(otherPerson.getEmail())
                 && this.getAddress().equals(otherPerson.getAddress())
                 && this.getTags().equals(otherPerson.getTags())
-                && this.getType().equals(otherPerson.getType());
+                && this.getArea().equals(otherPerson.getArea());
     }
 
     @Override
     public boolean isClient() {
         return true;
+    }
+
+    @Override
+    public int compareTo(Client other) {
+        if (this.hasHousekeepingDetails() && other.hasHousekeepingDetails()) {
+            return this.housekeepingDetails.compareTo(other.housekeepingDetails);
+        } else if (this.hasHousekeepingDetails()) {
+            return -1; // this client has housekeeping details but the other does not, so this client is less.
+        } else if (other.hasHousekeepingDetails()) {
+            return 1; // the other client has housekeeping details but this client does not, so this client is greater.
+        } else {
+            return 0; // neither client has housekeeping details, so they are considered equal
+        }
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .add("name", this.getName())
+                .add("phone", this.getPhone())
+                .add("email", this.getEmail())
+                .add("address", this.getAddress())
+                .add("tags", this.getTags())
+                .add("housekeepingDetails", this.housekeepingDetails)
+                .toString();
     }
 }

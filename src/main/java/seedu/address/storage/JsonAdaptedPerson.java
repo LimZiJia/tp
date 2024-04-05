@@ -32,7 +32,7 @@ abstract class JsonAdaptedPerson {
     protected final String email;
     protected final String address;
     protected final List<JsonAdaptedTag> tags = new ArrayList<>();
-    protected final String type;
+    protected final String area;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -40,7 +40,7 @@ abstract class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("type") String type) {
+            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("area") String area) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -48,7 +48,7 @@ abstract class JsonAdaptedPerson {
         if (tags != null) {
             this.tags.addAll(tags);
         }
-        this.type = type;
+        this.area = area;
     }
 
     /**
@@ -62,7 +62,7 @@ abstract class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        type = source.isClient() ? "client" : "housekeeper";
+        area = source.getArea().value;
     }
 
     /**

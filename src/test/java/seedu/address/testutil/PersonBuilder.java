@@ -4,9 +4,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Area;
+import seedu.address.model.person.BookingList;
 import seedu.address.model.person.Client;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Housekeeper;
+import seedu.address.model.person.HousekeepingDetails;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
@@ -24,6 +27,8 @@ public class PersonBuilder {
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_TYPE = "client";
+    public static final String DEFAULT_AREA = "east";
+    public static final String DEFAULT_HOUSEKEEPINGDETAILS = "null";
 
     private Name name;
     private Phone phone;
@@ -31,6 +36,9 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
     private Type type;
+    private HousekeepingDetails housekeepingDetails;
+    private Area area;
+    private BookingList bookingList;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -42,6 +50,9 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         type = new Type(DEFAULT_TYPE);
+        housekeepingDetails = new HousekeepingDetails();
+        area = new Area(DEFAULT_AREA);
+        bookingList = new BookingList();
     }
 
     /**
@@ -53,7 +64,6 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
-        type = personToCopy.getType();
     }
 
     /**
@@ -104,6 +114,14 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code HousekeepingDetails} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withHousekeepingDetails(HousekeepingDetails housekeepingDetails) {
+        this.housekeepingDetails = housekeepingDetails;
+        return this;
+    }
+
 
     /**
      * Returns either client or housekeeper with the given data
@@ -112,12 +130,11 @@ public class PersonBuilder {
     public Person build() {
         switch (type.toString()) {
         case "client":
-            return new Client(name, phone, email, address, tags, type);
+            return new Client(name, phone, email, address, tags, housekeepingDetails, area);
         case "housekeeper":
-            return new Housekeeper(name, phone, email, address, tags, type);
+            return new Housekeeper(name, phone, email, address, tags, area, bookingList);
         default:
             return null;
         }
     }
-
 }
