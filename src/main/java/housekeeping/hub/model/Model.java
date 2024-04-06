@@ -1,17 +1,14 @@
 package housekeeping.hub.model;
 
-import static java.util.Objects.requireNonNull;
-import static housekeeping.hub.commons.util.CollectionUtil.requireAllNonNull;
-
 import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
-import javafx.collections.ObservableList;
 import housekeeping.hub.commons.core.GuiSettings;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.Person;
+import javafx.collections.ObservableList;
 
 /**
  * The API of the Model component.
@@ -103,7 +100,8 @@ public interface Model {
     /**
      * Replaces the given housekeeper {@code target} with {@code editedHousekeeper}.
      * {@code target} must exist in the hub book.
-     * The housekeeper identity of {@code editedHousekeeper} must not be the same as another existing housekeeper in the hub book.
+     * The housekeeper identity of {@code editedHousekeeper} must not be the same as another existing housekeeper in
+     * the housekeeping hub.
      */
     void setHousekeeper(Housekeeper target, Housekeeper editedHousekeeper);
 

@@ -2,17 +2,17 @@ package housekeeping.hub.ui;
 
 import java.util.Comparator;
 
+import housekeeping.hub.model.person.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import housekeeping.hub.model.person.Person;
 
 /**
  * An UI component that displays information of a {@code Person}.
  */
-abstract public class PersonCard extends UiPart<Region> {
+public abstract class PersonCard extends UiPart<Region> {
 
     //private static final String FXML = "PersonListCard.fxml";
 
@@ -46,8 +46,8 @@ abstract public class PersonCard extends UiPart<Region> {
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PersonCard(Person person, int displayedIndex, String FXML) {
-        super(FXML);
+    public PersonCard(Person person, int displayedIndex, String fxml) {
+        super(fxml);
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);

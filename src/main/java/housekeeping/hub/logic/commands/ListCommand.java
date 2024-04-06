@@ -1,13 +1,11 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import housekeeping.hub.model.person.TypePredicate;
 
 /**
  * Lists all persons in the hub book to the user.
  */
-abstract public class ListCommand extends Command {
+public abstract class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 

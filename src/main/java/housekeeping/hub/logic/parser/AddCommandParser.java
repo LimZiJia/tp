@@ -2,8 +2,8 @@ package housekeeping.hub.logic.parser;
 
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -17,14 +17,13 @@ import housekeeping.hub.logic.commands.AddClientCommand;
 import housekeeping.hub.logic.commands.AddCommand;
 import housekeeping.hub.logic.commands.AddHousekeeperCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
-
 import housekeeping.hub.model.person.Address;
-import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.person.Area;
+import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Email;
-import housekeeping.hub.model.person.HousekeepingDetails;
 import housekeeping.hub.model.person.Housekeeper;
+import housekeeping.hub.model.person.HousekeepingDetails;
 import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Phone;
 import housekeeping.hub.model.tag.Tag;
@@ -41,7 +40,8 @@ public class AddCommandParser implements Parser<AddCommand> {
     public AddCommand parse(String args) throws ParseException {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args,
-                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_DETAILS, PREFIX_AREA);               
+                        PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_DETAILS,
+                        PREFIX_AREA);
 
         if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_ADDRESS, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_AREA)
                 || !preambleIsAllowed(argMultimap.getPreamble())) {

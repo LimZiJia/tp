@@ -50,7 +50,7 @@ public class BookingSearchPredicate implements Predicate<Housekeeper> {
         }
 
         BookingSearchPredicate otherBookingSearchPredicate = (BookingSearchPredicate) other;
-        boolean isSameBooking =  bookingToSearch.equals(otherBookingSearchPredicate.bookingToSearch);
+        boolean isSameBooking = bookingToSearch.equals(otherBookingSearchPredicate.bookingToSearch);
         return isSameBooking;
     }
 

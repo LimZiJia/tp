@@ -1,20 +1,13 @@
 package housekeeping.hub.model;
 
-import javafx.collections.ObservableList;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
+import javafx.collections.ObservableList;
 
 /**
  * Unmodifiable view of an hub book
  */
 public interface ReadOnlyAddressBook {
-
-    /**
-     * Returns an unmodifiable view of the persons list.
-     * This list will not contain any duplicate persons.
-     */
-    //ObservableList<Person> getPersonList();
-
     /**
      * Returns an unmodifiable view of the clients list.
      * This list will not contain any duplicate clients.

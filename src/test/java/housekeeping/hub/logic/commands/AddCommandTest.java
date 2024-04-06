@@ -1,12 +1,12 @@
 package housekeeping.hub.logic.commands;
 
+import static housekeeping.hub.testutil.Assert.assertThrows;
+import static housekeeping.hub.testutil.TypicalPersons.ALICE;
+import static housekeeping.hub.testutil.TypicalPersons.BOB;
 import static java.util.Objects.requireNonNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static housekeeping.hub.testutil.Assert.assertThrows;
-import static housekeeping.hub.testutil.TypicalPersons.ALICE;
-import static housekeeping.hub.testutil.TypicalPersons.BOB;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.collections.ObservableList;
 import housekeeping.hub.commons.core.GuiSettings;
 import housekeeping.hub.logic.Messages;
 import housekeeping.hub.logic.commands.exceptions.CommandException;
@@ -29,6 +28,7 @@ import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.Person;
 import housekeeping.hub.testutil.ClientBuilder;
 import housekeeping.hub.testutil.HousekeeperBuilder;
+import javafx.collections.ObservableList;
 
 public class AddCommandTest {
 
@@ -70,8 +70,8 @@ public class AddCommandTest {
         AddClientCommand addClientCommand = new AddClientCommand(validClient);
         ModelStub modelStub = new ModelStubWithPerson(validClient, validHousekeeper);
 
-        assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT,
-                () -> addClientCommand.execute(modelStub));
+        assertThrows(CommandException.class, AddClientCommand.MESSAGE_DUPLICATE_CLIENT, () ->
+                addClientCommand.execute(modelStub));
     }
 
     @Test
@@ -81,8 +81,8 @@ public class AddCommandTest {
         AddHousekeeperCommand addHousekeeperCommand = new AddHousekeeperCommand(validHousekeeper);
         ModelStub modelStub = new ModelStubWithPerson(validClient, validHousekeeper);
 
-        assertThrows(CommandException.class, AddHousekeeperCommand.MESSAGE_DUPLICATE_HOUSEKEEPER,
-                () -> addHousekeeperCommand.execute(modelStub));
+        assertThrows(CommandException.class, AddHousekeeperCommand.MESSAGE_DUPLICATE_HOUSEKEEPER, () ->
+                addHousekeeperCommand.execute(modelStub));
     }
 
     @Test

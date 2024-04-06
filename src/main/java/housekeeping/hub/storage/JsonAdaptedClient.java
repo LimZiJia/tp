@@ -18,6 +18,9 @@ import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Phone;
 import housekeeping.hub.model.tag.Tag;
 
+/**
+ * Jackson-friendly version of {@link Client}.
+ */
 public class JsonAdaptedClient extends JsonAdaptedPerson {
     protected final JsonAdaptedDetails details;
 
@@ -88,7 +91,7 @@ public class JsonAdaptedClient extends JsonAdaptedPerson {
         }
         final HousekeepingDetails modelDetail = details.toModelType();
         final Area modelArea = new Area(area);
-      
+
         return new Client(modelName, modelPhone, modelEmail, modelAddress, modelTags, modelDetail, modelArea);
     }
 }

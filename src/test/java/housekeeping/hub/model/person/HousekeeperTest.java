@@ -1,8 +1,5 @@
 package housekeeping.hub.model.person;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_AREA_BOB;
@@ -18,6 +15,9 @@ import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalPersons.AMY;
 import static housekeeping.hub.testutil.TypicalPersons.BOB;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 

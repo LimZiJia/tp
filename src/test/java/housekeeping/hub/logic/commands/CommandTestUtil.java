@@ -1,7 +1,5 @@
 package housekeeping.hub.logic.commands;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -9,6 +7,8 @@ import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PHONE;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_TAG;
 import static housekeeping.hub.testutil.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Arrays;

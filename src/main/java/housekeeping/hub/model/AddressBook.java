@@ -5,11 +5,11 @@ import static java.util.Objects.requireNonNull;
 import java.util.Comparator;
 import java.util.List;
 
-import javafx.collections.ObservableList;
 import housekeeping.hub.commons.util.ToStringBuilder;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.UniquePersonList;
+import javafx.collections.ObservableList;
 
 /**
  * Wraps all data at the hub-book level
@@ -122,7 +122,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Replaces the given housekeeper {@code target} in the list with {@code editedHousekeeper}.
      * {@code target} must exist in the hub book.
-     * The housekeeper identity of {@code editedHousekeeper} must not be the same as another existing housekeeper in the hub book.
+     * The housekeeper identity of {@code editedHousekeeper} must not be the same as another existing housekeeper in
+     * the hub book.
      */
     public void setHousekeeper(Housekeeper target, Housekeeper editedHousekeeper) {
         requireNonNull(editedHousekeeper);

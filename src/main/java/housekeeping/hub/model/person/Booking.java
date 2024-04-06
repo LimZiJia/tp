@@ -1,7 +1,7 @@
 package housekeeping.hub.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.commons.util.AppUtil.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -62,7 +62,7 @@ public class Booking implements Comparable<Booking> {
      */
     public static LocalDate retrieveDate(String bookedDateAndTime) {
         Matcher matcher = PATTERN_BOOKED_DATE_AND_TIME.matcher(bookedDateAndTime);
-        LocalDate parsedDate = LocalDate.ofEpochDay(2024-01-02);
+        LocalDate parsedDate = LocalDate.ofEpochDay(2024 - 01 - 02);
         if (matcher.matches()) {
             String dateString = matcher.group(1);
             parsedDate = LocalDate.parse(dateString, FORMATTER_BOOKED_DATE);

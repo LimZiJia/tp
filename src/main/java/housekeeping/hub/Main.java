@@ -2,8 +2,8 @@ package housekeeping.hub;
 
 import java.util.logging.Logger;
 
-import javafx.application.Application;
 import housekeeping.hub.commons.core.LogsCenter;
+import javafx.application.Application;
 
 /**
  * The main entry point to the application.

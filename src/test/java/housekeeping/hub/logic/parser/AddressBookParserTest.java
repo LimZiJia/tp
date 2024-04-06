@@ -1,12 +1,12 @@
 package housekeeping.hub.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static housekeeping.hub.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static housekeeping.hub.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -34,9 +34,9 @@ public class AddressBookParserTest {
 
     @Test
     public void parseCommand_add() throws Exception {
-        Client person = new ClientBuilder().build();
-        AddClientCommand command = (AddClientCommand) parser.parseCommand(PersonUtil.getAddClientCommand(person));
-        assertEquals(new AddClientCommand(person), command);
+        Client client = new ClientBuilder().build();
+        AddClientCommand command = (AddClientCommand) parser.parseCommand(PersonUtil.getAddClientCommand(client));
+        assertEquals(new AddClientCommand(client), command);
     }
 
     @Test
@@ -74,6 +74,7 @@ public class AddressBookParserTest {
         EditHousekeeperCommand editHousekeeperCommand = (EditHousekeeperCommand) parser.parseCommand(
                 EditHousekeeperCommand.COMMAND_WORD + " housekeeper " + INDEX_FIRST_PERSON.getOneBased() + " "
                 + PersonUtil.getEditPersonDescriptorDetails(housekeeperDescriptor));
+
         assertEquals(new EditHousekeeperCommand(INDEX_FIRST_PERSON, housekeeperDescriptor), editHousekeeperCommand);
     }
 

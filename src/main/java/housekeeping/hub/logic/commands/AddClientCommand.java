@@ -7,6 +7,9 @@ import housekeeping.hub.logic.commands.exceptions.CommandException;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.Client;
 
+/**
+ * Adds a client to the address book.
+ */
 public class AddClientCommand extends AddCommand {
 
     public static final String MESSAGE_SUCCESS = "New client added: %1$s";

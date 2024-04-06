@@ -6,10 +6,10 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Logger;
 
-import javafx.application.Application;
 import housekeeping.hub.commons.core.LogsCenter;
 import housekeeping.hub.commons.util.FileUtil;
 import housekeeping.hub.commons.util.ToStringBuilder;
+import javafx.application.Application;
 
 /**
  * Represents the parsed command-line parameters given to the application.

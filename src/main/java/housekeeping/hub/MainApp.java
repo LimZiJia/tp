@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import java.util.Optional;
 import java.util.logging.Logger;
 
-import javafx.application.Application;
-import javafx.stage.Stage;
 import housekeeping.hub.commons.core.Config;
 import housekeeping.hub.commons.core.LogsCenter;
 import housekeeping.hub.commons.core.Version;
@@ -30,6 +28,8 @@ import housekeeping.hub.storage.StorageManager;
 import housekeeping.hub.storage.UserPrefsStorage;
 import housekeeping.hub.ui.Ui;
 import housekeeping.hub.ui.UiManager;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  * Runs the application.

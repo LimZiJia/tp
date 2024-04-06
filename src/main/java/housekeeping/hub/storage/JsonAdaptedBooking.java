@@ -38,10 +38,10 @@ public class JsonAdaptedBooking {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted booking.
      */
-   public Booking toModelType() throws IllegalValueException {
-       if (!Booking.isValidBookedDateAndTime(booking)) {
-           throw new IllegalValueException(Booking.MESSAGE_CONSTRAINTS);
-       }
-       return new Booking(booking);
-   }
+    public Booking toModelType() throws IllegalValueException {
+        if (!Booking.isValidBookedDateAndTime(booking)) {
+            throw new IllegalValueException(Booking.MESSAGE_CONSTRAINTS);
+        }
+        return new Booking(booking);
+    }
 }

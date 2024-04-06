@@ -8,7 +8,17 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import housekeeping.hub.commons.core.LogsCenter;
-import housekeeping.hub.logic.commands.*;
+import housekeeping.hub.logic.commands.AddCommand;
+import housekeeping.hub.logic.commands.BookingCommand;
+import housekeeping.hub.logic.commands.ClearCommand;
+import housekeeping.hub.logic.commands.Command;
+import housekeeping.hub.logic.commands.DeleteCommand;
+import housekeeping.hub.logic.commands.EditCommand;
+import housekeeping.hub.logic.commands.ExitCommand;
+import housekeeping.hub.logic.commands.FindCommand;
+import housekeeping.hub.logic.commands.HelpCommand;
+import housekeeping.hub.logic.commands.LeadsCommand;
+import housekeeping.hub.logic.commands.ListCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
 
 /**
