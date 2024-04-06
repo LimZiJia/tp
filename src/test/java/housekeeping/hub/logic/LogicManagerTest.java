@@ -1,14 +1,15 @@
 package housekeeping.hub.logic;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX;
 import static housekeeping.hub.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static housekeeping.hub.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static housekeeping.hub.logic.commands.CommandTestUtil.AREA_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static housekeeping.hub.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalPersons.AMY;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
@@ -60,8 +61,8 @@ public class LogicManagerTest {
 
     @Test
     public void execute_commandExecutionError_throwsCommandException() {
-        String deleteCommand = "delete 9";
-        assertCommandException(deleteCommand, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        String deleteCommand = "delete client 9";
+        assertCommandException(deleteCommand, MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
     }
 
     @Test
@@ -165,8 +166,9 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Triggers the saveAddressBook method by executing an add command
-        String addCommand = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY
-                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        String addCommand = AddCommand.COMMAND_WORD + " client" + NAME_DESC_AMY + PHONE_DESC_AMY
+                + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + AREA_DESC_AMY;
+        System.out.println(addCommand);
         Client expectedClient = new ClientBuilder(AMY).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addClient(expectedClient);

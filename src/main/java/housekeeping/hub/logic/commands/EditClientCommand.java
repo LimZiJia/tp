@@ -19,6 +19,9 @@ import housekeeping.hub.model.person.Person;
 import housekeeping.hub.model.person.Phone;
 import housekeeping.hub.model.tag.Tag;
 
+/**
+ * Edits the details of an existing client in the address book.
+ */
 public class EditClientCommand extends EditCommand {
     public static final String MESSAGE_EDIT_CLIENT_SUCCESS = "Edited Client: %1$s";
     public static final String MESSAGE_DUPLICATE_CLIENT = "This client already exists in the hub book.";

@@ -1,7 +1,7 @@
 package housekeeping.hub.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static java.util.Objects.requireNonNull;
 
 import java.time.Period;
 import java.util.Optional;
@@ -14,6 +14,9 @@ import housekeeping.hub.logic.parser.exceptions.ParseException;
 import housekeeping.hub.model.person.BookingSearchPredicate;
 import housekeeping.hub.model.person.HousekeepingDetails;
 
+/**
+ * Parses input arguments and creates a new BookingCommand object
+ */
 public class BookingCommandParser implements Parser<BookingCommand> {
     private static final Pattern PATTERN_TYPE = Pattern.compile("^(client|housekeeper).*");
     private static final Pattern PATTERN_ADD = Pattern.compile(
@@ -66,10 +69,10 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         }
     }
 
-    private static BookingCommand clientBookingCommandParser
-            (Matcher addMatcher, Matcher deleteMatcher, Matcher listMatcher,
-             Matcher setMatcher, Matcher removeMatcher, Matcher editMatcher,
-             Matcher deferMatcher, String args) throws ParseException {
+    private static BookingCommand clientBookingCommandParser(
+            Matcher addMatcher, Matcher deleteMatcher, Matcher listMatcher,
+            Matcher setMatcher, Matcher removeMatcher, Matcher editMatcher,
+            Matcher deferMatcher, String args) throws ParseException {
         if (setMatcher.matches()) {
             Index clientIndex = ParserUtil.parseIndex(setMatcher.group(1));
             // Date and period is not really optional since it is guaranteed by the regex.
@@ -97,9 +100,9 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         }
     }
 
-    private static BookingCommand housekeeperBookingCommandParser
-            (Matcher addMatcher, Matcher deleteMatcher, Matcher listMatcher,
-             Matcher searchMatcher) throws ParseException {
+    private static BookingCommand housekeeperBookingCommandParser(
+            Matcher addMatcher, Matcher deleteMatcher, Matcher listMatcher,
+            Matcher searchMatcher) throws ParseException {
         if (addMatcher.matches()) {
             Index housekeeperIndex = ParserUtil.parseIndex(addMatcher.group(1));
             String bookedDateAndTime = addMatcher.group(2);
@@ -111,7 +114,7 @@ public class BookingCommandParser implements Parser<BookingCommand> {
         } else if (listMatcher.matches()) {
             Index housekeeperIndex = ParserUtil.parseIndex(listMatcher.group(1));
             return new BookingCommand(HOUSEKEEPER, LIST_COMMAND, housekeeperIndex);
-        } else if (searchMatcher.matches()){
+        } else if (searchMatcher.matches()) {
             String area = searchMatcher.group(1);
             String bookedDateAndTime = searchMatcher.group(2) + " " + searchMatcher.group(3);
             BookingSearchPredicate bookingSearchPredicate = new BookingSearchPredicate(area, bookedDateAndTime);

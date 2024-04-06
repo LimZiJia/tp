@@ -33,9 +33,9 @@ public class BookingList {
     }
 
     /**
-     * Constructs a BookingList object with an ArrayList<Booking>.
+     * Constructs a BookingList object with an ArrayList<{@code Booking}>.
      *
-     * @param bookingList ArrayList<Booking> containing list of bookings
+     * @param bookingList ArrayList<{@code Booking}> containing list of bookings
      */
     public BookingList(ArrayList<Booking> bookingList) {
         this.bookings = bookingList;

@@ -1,8 +1,9 @@
 package housekeeping.hub.logic.parser;
 
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static housekeeping.hub.logic.parser.CliSyntax.*;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
 
 import java.util.Arrays;
 
@@ -58,7 +59,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         String[] addressKeywords = trimmedAddress.split("\\s+");
         String[] areaKeywords = trimmedArea.split("\\s+");
 
-        for (int i = 0; i < areaKeywords.length ; i++) {
+        for (int i = 0; i < areaKeywords.length; i++) {
             if (!Area.isValidArea(areaKeywords[i])) {
                 throw new ParseException(
                         String.format(MESSAGE_INVALID_COMMAND_FORMAT, Area.MESSAGE_CONSTRAINTS));

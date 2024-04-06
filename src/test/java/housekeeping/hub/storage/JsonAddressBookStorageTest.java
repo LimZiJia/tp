@@ -1,12 +1,12 @@
 package housekeeping.hub.storage;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalPersons.ALICE;
 import static housekeeping.hub.testutil.TypicalPersons.HOON;
 import static housekeeping.hub.testutil.TypicalPersons.IDA;
 import static housekeeping.hub.testutil.TypicalPersons.getTypicalAddressBook;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import java.io.IOException;
 import java.nio.file.Path;

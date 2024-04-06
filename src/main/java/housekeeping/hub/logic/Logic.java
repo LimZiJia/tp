@@ -2,7 +2,6 @@ package housekeeping.hub.logic;
 
 import java.nio.file.Path;
 
-import javafx.collections.ObservableList;
 import housekeeping.hub.commons.core.GuiSettings;
 import housekeeping.hub.logic.commands.CommandResult;
 import housekeeping.hub.logic.commands.exceptions.CommandException;
@@ -10,6 +9,7 @@ import housekeeping.hub.logic.parser.exceptions.ParseException;
 import housekeeping.hub.model.ReadOnlyAddressBook;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Housekeeper;
+import javafx.collections.ObservableList;
 
 /**
  * API of the Logic component
@@ -30,9 +30,6 @@ public interface Logic {
      * @see housekeeping.hub.model.Model#getAddressBook()
      */
     ReadOnlyAddressBook getAddressBook();
-
-    /** Returns an unmodifiable view of the filtered list of persons */
-    //ObservableList<Person> getFilteredPersonList();
 
     /** Returns an unmodifiable view of the filtered list of clients */
     ObservableList<Client> getFilteredClientList();

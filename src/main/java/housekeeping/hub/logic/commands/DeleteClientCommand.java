@@ -10,6 +10,9 @@ import housekeeping.hub.logic.commands.exceptions.CommandException;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.Client;
 
+/**
+ * Deletes a client identified using it's displayed index from the address book.
+ */
 public class DeleteClientCommand extends DeleteCommand {
     public static final String MESSAGE_DELETE_CLIENT_SUCCESS = "Deleted Client: %1$s";
 

@@ -1,7 +1,7 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
+import static java.util.Objects.requireNonNull;
 
 import java.util.List;
 import java.util.Set;
@@ -12,14 +12,17 @@ import housekeeping.hub.logic.commands.exceptions.CommandException;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.Address;
 import housekeeping.hub.model.person.Area;
+import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.person.Email;
 import housekeeping.hub.model.person.Housekeeper;
 import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Person;
 import housekeeping.hub.model.person.Phone;
-import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.tag.Tag;
 
+/**
+ * Edits the details of an existing housekeeper in housekeeping hub.
+ */
 public class EditHousekeeperCommand extends EditCommand {
     public static final String MESSAGE_EDIT_HOUSEKEEPER_SUCCESS = "Edited Housekeeper: %1$s";
     public static final String MESSAGE_DUPLICATE_HOUSEKEEPER = "This housekeeper already exists in the hub book.";

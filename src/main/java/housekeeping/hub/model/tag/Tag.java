@@ -1,7 +1,7 @@
 package housekeeping.hub.model.tag;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.commons.util.AppUtil.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Tag in the hub book.

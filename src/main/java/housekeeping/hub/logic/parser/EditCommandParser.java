@@ -1,9 +1,14 @@
 package housekeeping.hub.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
-import static housekeeping.hub.logic.parser.CliSyntax.*;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PHONE;
+import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_TAG;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 import java.util.Collections;

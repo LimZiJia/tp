@@ -1,8 +1,8 @@
 package housekeeping.hub.model.person;
 
+import static housekeeping.hub.testutil.TypicalPersons.AMY;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static housekeeping.hub.testutil.TypicalPersons.AMY;
 
 import org.junit.jupiter.api.Test;
 

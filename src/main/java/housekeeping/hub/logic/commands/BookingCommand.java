@@ -1,11 +1,11 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static housekeeping.hub.model.Model.PREDICATE_SHOW_ALL_HOUSEKEEPERS;
+import static java.util.Objects.requireNonNull;
 
-import java.time.Period;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class BookingCommand extends Command {
     public static final String MESSAGE_INVALID_ACTION = "Invalid action. Action words include {add, delete, list}.";
 
     public static final String MESSAGE_USAGE = "\nCLIENT COMMANDS:\n\n"
-            +"[edit last housekeeping date] : edits last housekeeping date for the client at the specified index.\n"
+            + "[edit last housekeeping date] : edits last housekeeping date for the client at the specified index.\n"
             + "Parameters: INDEX lhd/DATE(yyyy-mm-dd)\n"
             + "Example: booking client edit 2 lhd/2024-05-12\n\n["
             + "edit preferred interval"
@@ -75,7 +75,7 @@ public class BookingCommand extends Command {
             + "Example: " + COMMAND_WORD + " housekeeper " + ACTION_WORD_HOUSEKEEPER_ADD + " 1 2024-05-12 am\n\n["
             + "delete booking] : deletes the specified booking for the housekeeper at the specified index.\n"
             + "Parameters: HOUSEKEEPER_INDEX BOOKING_INDEX\n"
-            + "Example: " + COMMAND_WORD + " housekeeper "+ ACTION_WORD_HOUSEKEEPER_DELETE + " 1 1\n\n["
+            + "Example: " + COMMAND_WORD + " housekeeper " + ACTION_WORD_HOUSEKEEPER_DELETE + " 1 1\n\n["
             + "list bookings] : lists all bookings for the housekeeper at the specified index.\n"
             + "Parameters: INDEX\n"
             + "Example: " + COMMAND_WORD + " housekeeper " + ACTION_WORD_HOUSEKEEPER_LIST + " 1\n\n["
@@ -154,6 +154,14 @@ public class BookingCommand extends Command {
         this.bookingSearchPredicate = bookingSearchPredicate;
     }
 
+    /**
+     * Constructs a BookingCommand for the "edit" action.
+     *
+     * @param type "housekeeper"
+     * @param actionWord "edit"
+     * @param index of housekeeper to edit
+     * @param housekeepingDetails to set
+     */
     public BookingCommand(String type, String actionWord, Index index, HousekeepingDetails housekeepingDetails) {
         requireNonNull(index);
         this.type = type;
@@ -162,6 +170,14 @@ public class BookingCommand extends Command {
         this.housekeepingDetails = housekeepingDetails;
     }
 
+    /**
+     * Constructs a BookingCommand for the "edit" action.
+     *
+     * @param type "housekeeper"
+     * @param actionWord "edit"
+     * @param index of housekeeper to edit
+     * @param defer period to add to deferment
+     */
     public BookingCommand(String type, String actionWord, Index index, Period defer) {
         requireNonNull(index);
         requireNonNull(defer);
@@ -306,7 +322,7 @@ public class BookingCommand extends Command {
         }
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
-        editPersonDescriptor.setDetails(HousekeepingDetails.empty);
+        editPersonDescriptor.setDetails(HousekeepingDetails.EMPTY);
 
         Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
         return editClientCommand.execute(model);
@@ -362,8 +378,8 @@ public class BookingCommand extends Command {
             EditCommand.EditPersonDescriptor editHousekeeperDescriptor = new EditCommand.EditPersonDescriptor();
             editHousekeeperDescriptor.setBookingList(housekeeperToAddBooking.getBookingList());
             EditHousekeeperCommand command = new EditHousekeeperCommand(index, editHousekeeperDescriptor);
-            Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking, editHousekeeperDescriptor);
-
+            Housekeeper editedHousekeeper = command.createEditedPerson(housekeeperToAddBooking,
+                    editHousekeeperDescriptor);
 
             model.setHousekeeper(housekeeperToAddBooking, editedHousekeeper);
             model.updateFilteredHousekeeperList(PREDICATE_SHOW_ALL_HOUSEKEEPERS);

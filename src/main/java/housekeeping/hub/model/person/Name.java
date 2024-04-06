@@ -1,7 +1,7 @@
 package housekeeping.hub.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.commons.util.AppUtil.checkArgument;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a Person's name in the hub book.

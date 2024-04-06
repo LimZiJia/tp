@@ -1,7 +1,7 @@
 package housekeeping.hub.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.parser.CliSyntax.ALLOWED_PREAMBLES_TYPE;
+import static java.util.Objects.requireNonNull;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -15,20 +15,25 @@ import java.util.regex.Pattern;
 import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.commons.util.StringUtil;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
-import housekeeping.hub.model.person.*;
+import housekeeping.hub.model.person.Address;
+import housekeeping.hub.model.person.Area;
+import housekeeping.hub.model.person.Booking;
+import housekeeping.hub.model.person.Email;
+import housekeeping.hub.model.person.HousekeepingDetails;
+import housekeeping.hub.model.person.Name;
+import housekeeping.hub.model.person.Phone;
+import housekeeping.hub.model.person.Type;
 import housekeeping.hub.model.tag.Tag;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
  */
 public class ParserUtil {
-
-    private static final Pattern PATTERN_BOOKING = Pattern.compile(
-            "(\\d{4}-\\d{2}-\\d{2}\\s+(am|pm))");
-
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String TYPE_VALIDATION_REGEX = "[^\\s].*";
 
+    private static final Pattern PATTERN_BOOKING = Pattern.compile(
+            "(\\d{4}-\\d{2}-\\d{2}\\s+(am|pm))");
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -174,15 +179,22 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parses a {@code String lHD} into a {@code LocalDate}.
+     */
     public static LocalDate parseLastHousekeepingDate(String lHD) throws ParseException {
         requireNonNull(lHD);
         try {
-            LocalDate parsedLHD = LocalDate.parse(lHD);
-            return parsedLHD;
+            LocalDate parsedLhd = LocalDate.parse(lHD);
+            return parsedLhd;
         } catch (Exception e) {
             throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
         }
     }
+
+    /**
+     * Parses a {@code String booking} into a {@code Booking}.
+     */
     public static Booking parseBooking(String booking) throws ParseException {
         requireNonNull(booking);
         if (PATTERN_BOOKING.matcher(booking.trim()).matches()) {
@@ -193,6 +205,9 @@ public class ParserUtil {
         }
     }
 
+    /**
+     * Parses a {@code String pI} into a {@code Period}.
+     */
     public static Period parsePreferredInterval(String pI) throws ParseException {
         requireNonNull(pI);
         String trimmedPI = pI.trim();
@@ -200,27 +215,30 @@ public class ParserUtil {
         Period period;
         int quantity = Integer.parseInt(splitPI[0]);
         switch (splitPI[1]) {
-            case "days":
-                period = Period.ofDays(quantity);
-                break;
-            case "weeks":
-                period = Period.ofWeeks(quantity);
-                break;
-            case "months":
-                period = Period.ofMonths(quantity);
-                break;
-            case "years":
-                period = Period.ofYears(quantity);
-                break;
-            default:
-                throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        case "days":
+            period = Period.ofDays(quantity);
+            break;
+        case "weeks":
+            period = Period.ofWeeks(quantity);
+            break;
+        case "months":
+            period = Period.ofMonths(quantity);
+            break;
+        case "years":
+            period = Period.ofYears(quantity);
+            break;
+        default:
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
         }
         return period;
     }
 
+    /**
+     * Parses a {@code String details} into a {@code HousekeepingDetails}.
+     */
     public static HousekeepingDetails parseHousekeepingDetails(Optional<String> details) throws ParseException {
         if (details.isEmpty()) {
-            return HousekeepingDetails.empty;
+            return HousekeepingDetails.EMPTY;
         }
         String trimmedDetails = details.get().trim();
         if (!HousekeepingDetails.isValidHousekeepingDetailsUser(trimmedDetails)) {

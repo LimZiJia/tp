@@ -1,11 +1,11 @@
 package housekeeping.hub.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_BD;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_DEFERMENT;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_LHD;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PI;
+import static java.util.Objects.requireNonNull;
 
 import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.logic.commands.EditHousekeepingDetailsCommand;

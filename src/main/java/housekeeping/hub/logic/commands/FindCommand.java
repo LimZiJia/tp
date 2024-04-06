@@ -1,7 +1,5 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-
 import housekeeping.hub.commons.util.ToStringBuilder;
 import housekeeping.hub.model.person.ContainsKeywordsPredicate;
 
@@ -9,7 +7,7 @@ import housekeeping.hub.model.person.ContainsKeywordsPredicate;
  * Finds and lists all persons in hub book whose name contains any of the argument keywords.
  * Keyword matching is case-insensitive.
  */
-abstract public class FindCommand extends Command {
+public abstract class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
 

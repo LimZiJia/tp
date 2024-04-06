@@ -1,11 +1,11 @@
 package housekeeping.hub.logic.commands;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_PHONE;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_TAG;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -17,8 +17,8 @@ import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.commons.util.CollectionUtil;
 import housekeeping.hub.commons.util.ToStringBuilder;
 import housekeeping.hub.model.person.Address;
-import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.person.Area;
+import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.person.Email;
 import housekeeping.hub.model.person.HousekeepingDetails;
 import housekeeping.hub.model.person.Name;
@@ -29,7 +29,7 @@ import housekeeping.hub.model.tag.Tag;
 /**
  * Edits the details of an existing person in the hub book.
  */
-abstract public class EditCommand extends Command {
+public abstract class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
@@ -68,7 +68,7 @@ abstract public class EditCommand extends Command {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    abstract protected Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor);
+    protected abstract Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor);
 
     @Override
     public boolean equals(Object other) {

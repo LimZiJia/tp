@@ -20,6 +20,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_DEFERMENT = new Prefix("d/");
     public static final String[] ALLOWED_PREAMBLES = new String[] {"client", "housekeeper"};
     public static final String[] ALLOWED_PREAMBLES_TYPE = new String[] {"client", "housekeeper"};
-    public static final String[] ALLOWED_PREAMBLES_AREA = new String[] {"north", "northeast", "east", "southeast"
-            , "south", "southwest", "west", "northwest"};
+    public static final String[] ALLOWED_PREAMBLES_AREA = new String[] {"north", "northeast", "east", "southeast",
+        "south", "southwest", "west", "northwest"};
 }

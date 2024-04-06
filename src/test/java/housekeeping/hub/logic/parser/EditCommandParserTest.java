@@ -85,22 +85,31 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidValue_failure() {
         String typeclient = "client ";
-        assertParseFailure(parser, typeclient + "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, typeclient + "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, typeclient + "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS); // invalid email
-        assertParseFailure(parser, typeclient + "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS); // invalid hub
+        // invalid name
+        assertParseFailure(parser, typeclient + "1" + INVALID_NAME_DESC, Name.MESSAGE_CONSTRAINTS);
+        // invalid phone
+        assertParseFailure(parser, typeclient + "1" + INVALID_PHONE_DESC, Phone.MESSAGE_CONSTRAINTS);
+        // invalid email
+        assertParseFailure(parser, typeclient + "1" + INVALID_EMAIL_DESC, Email.MESSAGE_CONSTRAINTS);
+        // invalid hub
+        assertParseFailure(parser, typeclient + "1" + INVALID_ADDRESS_DESC, Address.MESSAGE_CONSTRAINTS);
 
         // invalid phone followed by valid email
-        assertParseFailure(parser, typeclient + "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY, Phone.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, typeclient + "1" + INVALID_PHONE_DESC + EMAIL_DESC_AMY,
+                Phone.MESSAGE_CONSTRAINTS);
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Person} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, typeclient + "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, typeclient + "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
-        assertParseFailure(parser, typeclient + "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, typeclient + "1" + TAG_DESC_FRIEND + TAG_DESC_HUSBAND + TAG_EMPTY,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, typeclient + "1" + TAG_DESC_FRIEND + TAG_EMPTY + TAG_DESC_HUSBAND,
+                Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser, typeclient + "1" + TAG_EMPTY + TAG_DESC_FRIEND + TAG_DESC_HUSBAND,
+                Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, typeclient + "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
+        assertParseFailure(parser, typeclient + "1" + INVALID_NAME_DESC + INVALID_EMAIL_DESC
+                        + VALID_ADDRESS_AMY + VALID_PHONE_AMY,
                 Name.MESSAGE_CONSTRAINTS);
     }
 
@@ -146,7 +155,7 @@ public class EditCommandParserTest {
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // email
-        userInput = "client " +targetIndex.getOneBased() + EMAIL_DESC_AMY;
+        userInput = "client " + targetIndex.getOneBased() + EMAIL_DESC_AMY;
         descriptor = new EditPersonDescriptorBuilder().withEmail(VALID_EMAIL_AMY).build();
         expectedCommand = new EditClientCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -189,7 +198,8 @@ public class EditCommandParserTest {
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS));
 
         // multiple invalid values
-        userInput = "client " + targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC
+        userInput = "client " + targetIndex.getOneBased() + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC
+                + INVALID_EMAIL_DESC
                 + INVALID_PHONE_DESC + INVALID_ADDRESS_DESC + INVALID_EMAIL_DESC;
 
         assertParseFailure(parser, userInput,

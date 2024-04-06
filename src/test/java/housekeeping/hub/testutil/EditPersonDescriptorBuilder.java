@@ -93,16 +93,25 @@ public class EditPersonDescriptorBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Area} of the {@code EditPersonDescriptor} that we are building.
+     */
     public EditPersonDescriptorBuilder withArea(String area) {
         descriptor.setArea(new Area(area));
         return this;
     }
 
+    /**
+     * Sets the {@code BookingList} of the {@code EditPersonDescriptor} that we are building.
+     */
     public EditPersonDescriptorBuilder withBookingList(BookingList bookingList) {
         descriptor.setBookingList(bookingList);
         return this;
     }
 
+    /**
+     * Sets the {@code HousekeepingDetails} of the {@code EditPersonDescriptor} that we are building.
+     */
     public EditPersonDescriptorBuilder withDetails(HousekeepingDetails details) {
         descriptor.setDetails(details);
         return this;

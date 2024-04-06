@@ -14,6 +14,12 @@ public class ContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywordsAd;
     private final List<String> keywordsAr;
 
+    /**
+     * Constructs a ContainsKeywordsPredicate with the given keywords.
+     * @param keywordsN name keywords.
+     * @param keywordsAd address keywords.
+     * @param keywordsAr area keywords.
+     */
     public ContainsKeywordsPredicate(List<String> keywordsN, List<String> keywordsAd, List<String> keywordsAr) {
         this.keywordsN = keywordsN;
         this.keywordsAd = keywordsAd;
@@ -52,9 +58,9 @@ public class ContainsKeywordsPredicate implements Predicate<Person> {
         }
 
         ContainsKeywordsPredicate otherContainsKeywordsPredicate = (ContainsKeywordsPredicate) other;
-        boolean isSameName =  keywordsN.equals(otherContainsKeywordsPredicate.keywordsN);
-        boolean isSameAddress =  keywordsAd.equals(otherContainsKeywordsPredicate.keywordsAd);
-        boolean isSameArea =  keywordsAr.equals(otherContainsKeywordsPredicate.keywordsAr);
+        boolean isSameName = keywordsN.equals(otherContainsKeywordsPredicate.keywordsN);
+        boolean isSameAddress = keywordsAd.equals(otherContainsKeywordsPredicate.keywordsAd);
+        boolean isSameArea = keywordsAr.equals(otherContainsKeywordsPredicate.keywordsAr);
         return isSameName && isSameAddress && isSameArea;
 
     }

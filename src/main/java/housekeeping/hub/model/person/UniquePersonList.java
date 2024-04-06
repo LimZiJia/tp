@@ -1,16 +1,16 @@
 package housekeeping.hub.model.person;
 
-import static java.util.Objects.requireNonNull;
 import static housekeeping.hub.commons.util.CollectionUtil.requireAllNonNull;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import housekeeping.hub.model.person.exceptions.DuplicatePersonException;
 import housekeeping.hub.model.person.exceptions.PersonNotFoundException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * A list of persons that enforces uniqueness between its elements and does not allow nulls.
