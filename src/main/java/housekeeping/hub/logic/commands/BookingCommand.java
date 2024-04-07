@@ -423,6 +423,24 @@ public class BookingCommand extends Command {
         }
     }
 
+    /**
+     * Checks that BookingCommand has no bookedDateAndTime initialised.
+     *
+     * @return True if there is no booked date and time, false otherwise
+     */
+    public boolean hasNoBookedDateAndTime() {
+        return bookedDateAndTime == null;
+    }
+
+    /**
+     * Checks that BookingCommand has no Index initialised.
+     *
+     * @return True if there is no Index, false otherwise
+     */
+    public boolean hasNoIndex() {
+        return index == null;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -435,10 +453,24 @@ public class BookingCommand extends Command {
         }
 
         BookingCommand otherBookingCommand = (BookingCommand) other;
-        return actionWord.equals(otherBookingCommand.actionWord)
-                && index.equals(otherBookingCommand.index)
-                && (bookingToDeleteIndex == otherBookingCommand.bookingToDeleteIndex)
-                && bookedDateAndTime.equals(otherBookingCommand.bookedDateAndTime);
+
+        // for housekeeper search
+        if (this.hasNoIndex() && otherBookingCommand.hasNoIndex()
+                && this.hasNoBookedDateAndTime() && otherBookingCommand.hasNoBookedDateAndTime()) {
+            return actionWord.equals(otherBookingCommand.actionWord)
+                    && (bookingToDeleteIndex == otherBookingCommand.bookingToDeleteIndex)
+                    && bookingSearchPredicate.equals(otherBookingCommand.bookingSearchPredicate);
+        // for housekeeper delete
+        } else if (this.hasNoBookedDateAndTime() && otherBookingCommand.hasNoBookedDateAndTime()) {
+            return actionWord.equals(otherBookingCommand.actionWord)
+                    && index.equals(otherBookingCommand.index)
+                    && (bookingToDeleteIndex == otherBookingCommand.bookingToDeleteIndex);
+        } else {
+            return actionWord.equals(otherBookingCommand.actionWord)
+                    && index.equals(otherBookingCommand.index)
+                    && (bookingToDeleteIndex == otherBookingCommand.bookingToDeleteIndex)
+                    && bookedDateAndTime.equals(otherBookingCommand.bookedDateAndTime);
+        }
     }
 
     @Override
