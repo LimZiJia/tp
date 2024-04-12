@@ -112,6 +112,9 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
+* `NAME` is case-sensitive and character-sensitive.<br>
+  e.g. `John Doe` and `john doe` is different person (not considered as duplicate).
+
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
