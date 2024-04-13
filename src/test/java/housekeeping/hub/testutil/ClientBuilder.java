@@ -7,6 +7,7 @@ import java.util.Set;
 
 import housekeeping.hub.model.person.Address;
 import housekeeping.hub.model.person.Area;
+import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.Client;
 import housekeeping.hub.model.person.Email;
 import housekeeping.hub.model.person.HousekeepingDetails;
@@ -116,6 +117,56 @@ public class ClientBuilder {
      */
     public ClientBuilder withDetails(HousekeepingDetails housekeepingDetails) {
         this.housekeepingDetails = housekeepingDetails;
+        return this;
+    }
+
+    /**
+     * Sets the {@code Last Housekeeping Date} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withLastHousekeepingDate(LocalDate lHD) {
+        HousekeepingDetails newHD =
+                new HousekeepingDetails(lHD, housekeepingDetails.getPreferredInterval());
+        newHD.setBooking(housekeepingDetails.getBooking());
+        newHD.addDeferment((housekeepingDetails.getDeferment()));
+        this.housekeepingDetails = newHD;
+        return this;
+    }
+
+    /**
+     * Sets the {@code Preferred Interval} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withPI(Period pI) {
+        HousekeepingDetails newHD =
+                new HousekeepingDetails(housekeepingDetails.getLastHousekeepingDate(), pI);
+        newHD.setBooking(housekeepingDetails.getBooking());
+        newHD.addDeferment((housekeepingDetails.getDeferment()));
+        this.housekeepingDetails = newHD;
+        return this;
+    }
+
+    /**
+     * Sets the {@code Deferment} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withDeferment(Period def) {
+        HousekeepingDetails newHD =
+                new HousekeepingDetails(housekeepingDetails.getLastHousekeepingDate(),
+                        housekeepingDetails.getPreferredInterval());
+        newHD.setBooking(housekeepingDetails.getBooking());
+        newHD.addDeferment(def);
+        this.housekeepingDetails = newHD;
+        return this;
+    }
+
+    /**
+     * Sets the {@code Booking} of the {@code Client} that we are building.
+     */
+    public ClientBuilder withBooking(Booking booking) {
+        HousekeepingDetails newHD =
+                new HousekeepingDetails(housekeepingDetails.getLastHousekeepingDate(),
+                        housekeepingDetails.getPreferredInterval());
+        newHD.setBooking(booking);
+        newHD.addDeferment(housekeepingDetails.getDeferment());
+        this.housekeepingDetails = newHD;
         return this;
     }
 
