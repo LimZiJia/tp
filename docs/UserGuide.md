@@ -3,11 +3,11 @@ layout: page
 title: Housekeeping Hub User Guide
 ---
 
-Welcome to HouseKeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. 
+Welcome to Housekeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. 
 Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the convenience of a Graphical User Interface ([GUI](#gui))**,
-HouseKeeping Hub offers unparalleled speed and ease of use for housekeeping service company admin. Whether you're a typist or a clicker, 
-HouseKeeping Hub ensures swift completion of all your contact management tasks. 
-Bid farewell to the sluggishness of traditional GUI apps - with HouseKeeping Hub, managing your contacts has never been faster or simpler.
+Housekeeping Hub offers unparalleled speed and ease of use. Whether you're a typist or a clicker, 
+Housekeeping Hub ensures swift completion of all your contact management tasks. 
+Bid farewell to the sluggishness of traditional GUI apps - with Housekeeping Hub, managing your contacts has never been faster or simpler.
 
 ## Table of Contents
 * Table of Contents
@@ -67,7 +67,7 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 
 1. Download the latest `HousekeepingHub-v1.3.1.jar` from [here](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your HouseKeeping Hub.
+1. Copy the file to the folder you want to use as the _home folder_ for your Housekeeping Hub.
 
 1. Open a [command terminal](#terminal), and type in `cd` to navigate into the folder you placed the [jar](#jar) file in.
 
@@ -391,19 +391,19 @@ Format: `exit`
 
 ### Saving the data
 
-HouseKeeping Hub data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+Housekeeping Hub data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-HouseKeeping Hub data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+Housekeeping Hub data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 If you wish to load our sample data, you must delete the existing `addressbook.json` from the stated location and restart the app.
 </div>
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, HouseKeeping Hub will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, Housekeeping Hub will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the Housekeeping Hub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 [:arrow_up_small:](#table-of-contents)
@@ -414,7 +414,7 @@ Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpecte
 <a id="faq"></a>
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HouseKeeping Hub home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Housekeeping Hub home folder.
 
 [:arrow_up_small:](#table-of-contents)
 
@@ -446,6 +446,7 @@ Action | Format, Examples
 <a id="jar"></a>
 : JAR stands for Java Archive. It is based on the ZIP file format that is commonly used to store java programs.<br>
 
+<br>
 
 **CLI**
 <a id="cli"></a>
@@ -453,18 +454,21 @@ Action | Format, Examples
 As such, users will use their keyboards more, in contrast to a Graphical User Interface (GUI) where users will use their mouse to interact with the graphical elements.<br>
 
 <br>
+
 **GUI**
 <a id="gui"></a>
 : GUI stands for Graphical User Interface. It refers to programs that are primarily **graphical** where users interact with the program by clicking on **buttons** and **menus**.<br>
 
+<br>
 
 **Terminal**
 <a id="terminal"></a>
 : A terminal is a Command Line Interface (CLI) that allows users to interact with computers by executing commands and viewing the results. 
 Popular terminals in mainstream operating systems include command prompt (CMD) for windows and Terminal in macOS and Linux.<br>
 
+<br>
 
-**CMD**<br>
+**CMD**<br><br>
 <img src="https://www.auslogics.com/en/articles/wp-content/uploads/2023/07/Command-Prompt-PING.png" alt="drawing" width="500"/>
 <br><br>**Terminal (macOS)**<br><br>
 <img src="https://forums.macrumors.com/attachments/screen-shot-2020-12-09-at-4-50-12-pm-png.1690397/" alt="drawing" width="500"/>

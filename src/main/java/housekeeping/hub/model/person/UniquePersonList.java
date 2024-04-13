@@ -146,7 +146,7 @@ public class UniquePersonList<T extends Person> implements Iterable<T> {
     /**
      * Returns true if {@code persons} contains only unique persons.
      */
-    private boolean personsAreUnique(List<T> persons) {
+    public boolean personsAreUnique(List<T> persons) {
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
                 if (persons.get(i).isSamePerson(persons.get(j))) {
