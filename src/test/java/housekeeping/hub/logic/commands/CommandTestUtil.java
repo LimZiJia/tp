@@ -10,6 +10,8 @@ import static housekeeping.hub.testutil.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,10 +20,8 @@ import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.logic.commands.exceptions.CommandException;
 import housekeeping.hub.model.AddressBook;
 import housekeeping.hub.model.Model;
-import housekeeping.hub.model.person.BookingList;
-import housekeeping.hub.model.person.Client;
-import housekeeping.hub.model.person.Housekeeper;
-import housekeeping.hub.model.person.NameContainsKeywordsPredicate;
+import housekeeping.hub.model.person.*;
+import housekeeping.hub.testutil.EditHousekeepingDetailsDescriptorBuilder;
 import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -41,6 +41,10 @@ public class CommandTestUtil {
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_AREA_AMY = "north";
     public static final String VALID_AREA_BOB = "south";
+    public static final String VALID_LHD_BOB = "2024-01-01";
+    public static final String VALID_PI_BOB = "P2M";
+    public static final String VALID_DEFERMENT_BOB = "P1M";
+    public static final String VALID_BOOKING_BOB = "2024-01-01 am";
     public static final BookingList VALID_BOOKING_LIST_BOB = new BookingList();
 
 
@@ -69,6 +73,7 @@ public class CommandTestUtil {
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditHousekeepingDetailsCommand.EditHousekeepingDetailsDescriptor DESCC_BOB;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -77,6 +82,12 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+    }
+
+    static {
+        DESCC_BOB = new EditHousekeepingDetailsDescriptorBuilder().withBookingDate(new Booking(VALID_BOOKING_BOB))
+                .withDeferment(Period.parse(VALID_DEFERMENT_BOB)).withPreferredInterval(Period.parse(VALID_PI_BOB))
+                .withLastHousekeepingDate(LocalDate.parse(VALID_LHD_BOB)).build();
     }
 
     /**
