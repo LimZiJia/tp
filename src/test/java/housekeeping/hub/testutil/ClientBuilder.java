@@ -5,7 +5,14 @@ import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
-import housekeeping.hub.model.person.*;
+import housekeeping.hub.model.person.Address;
+import housekeeping.hub.model.person.Area;
+import housekeeping.hub.model.person.Booking;
+import housekeeping.hub.model.person.Client;
+import housekeeping.hub.model.person.Email;
+import housekeeping.hub.model.person.HousekeepingDetails;
+import housekeeping.hub.model.person.Name;
+import housekeeping.hub.model.person.Phone;
 import housekeeping.hub.model.tag.Tag;
 import housekeeping.hub.model.util.SampleDataUtil;
 
@@ -128,9 +135,9 @@ public class ClientBuilder {
     /**
      * Sets the {@code Preferred Interval} of the {@code Client} that we are building.
      */
-    public ClientBuilder withPI(Period PI) {
+    public ClientBuilder withPI(Period pI) {
         HousekeepingDetails newHD =
-                new HousekeepingDetails(housekeepingDetails.getLastHousekeepingDate(), PI);
+                new HousekeepingDetails(housekeepingDetails.getLastHousekeepingDate(), pI);
         newHD.setBooking(housekeepingDetails.getBooking());
         newHD.addDeferment((housekeepingDetails.getDeferment()));
         this.housekeepingDetails = newHD;

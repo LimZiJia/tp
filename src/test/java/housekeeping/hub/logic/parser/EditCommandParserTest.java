@@ -31,7 +31,6 @@ import static housekeeping.hub.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
 
-import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 import org.junit.jupiter.api.Test;
 
 import housekeeping.hub.commons.core.index.Index;
@@ -44,6 +43,7 @@ import housekeeping.hub.model.person.Email;
 import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Phone;
 import housekeeping.hub.model.tag.Tag;
+import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 
 public class EditCommandParserTest {
 

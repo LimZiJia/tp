@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 import org.junit.jupiter.api.Test;
 
 import housekeeping.hub.logic.commands.EditCommand.EditPersonDescriptor;
+import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 
 public class EditPersonDescriptorTest {
 

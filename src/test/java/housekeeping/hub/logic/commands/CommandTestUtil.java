@@ -20,7 +20,11 @@ import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.logic.commands.exceptions.CommandException;
 import housekeeping.hub.model.AddressBook;
 import housekeeping.hub.model.Model;
-import housekeeping.hub.model.person.*;
+import housekeeping.hub.model.person.Booking;
+import housekeeping.hub.model.person.BookingList;
+import housekeeping.hub.model.person.Client;
+import housekeeping.hub.model.person.Housekeeper;
+import housekeeping.hub.model.person.NameContainsKeywordsPredicate;
 import housekeeping.hub.testutil.EditHousekeepingDetailsDescriptorBuilder;
 import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 

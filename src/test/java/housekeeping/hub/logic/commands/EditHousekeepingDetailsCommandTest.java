@@ -1,6 +1,13 @@
 package housekeeping.hub.logic.commands;
 
-import static housekeeping.hub.logic.commands.CommandTestUtil.*;
+import static housekeeping.hub.logic.commands.CommandTestUtil.DESCC_BOB;
+import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_BOOKING_BOB;
+import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_DEFERMENT_BOB;
+import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_LHD_BOB;
+import static housekeeping.hub.logic.commands.CommandTestUtil.VALID_PI_BOB;
+import static housekeeping.hub.logic.commands.CommandTestUtil.assertCommandFailure;
+import static housekeeping.hub.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static housekeeping.hub.logic.commands.CommandTestUtil.showClientAtIndex;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static housekeeping.hub.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import static housekeeping.hub.testutil.TypicalPersons.getTypicalAddressBook;
@@ -8,7 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import housekeeping.hub.model.person.Booking;
+import java.time.LocalDate;
+import java.time.Period;
+
 import org.junit.jupiter.api.Test;
 
 import housekeeping.hub.commons.core.index.Index;
@@ -18,15 +27,10 @@ import housekeeping.hub.model.AddressBook;
 import housekeeping.hub.model.Model;
 import housekeeping.hub.model.ModelManager;
 import housekeeping.hub.model.UserPrefs;
+import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.Client;
-import housekeeping.hub.model.person.Housekeeper;
-import housekeeping.hub.model.person.Person;
 import housekeeping.hub.testutil.ClientBuilder;
 import housekeeping.hub.testutil.EditHousekeepingDetailsDescriptorBuilder;
-import housekeeping.hub.testutil.HousekeeperBuilder;
-
-import java.time.LocalDate;
-import java.time.Period;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for EditCommand.
@@ -38,17 +42,20 @@ public class EditHousekeepingDetailsCommandTest {
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Client editedClient = new ClientBuilder(model.getFilteredClientList().get(0)).build();
-        EditHousekeepingDetailsDescriptor descriptorClient = new EditHousekeepingDetailsDescriptorBuilder(editedClient).build();
-        EditHousekeepingDetailsCommand editHDCommand = new EditHousekeepingDetailsCommand(INDEX_FIRST_PERSON, descriptorClient);
+        EditHousekeepingDetailsDescriptor descriptorClient =
+                new EditHousekeepingDetailsDescriptorBuilder(editedClient).build();
+        EditHousekeepingDetailsCommand editHCommand =
+                new EditHousekeepingDetailsCommand(INDEX_FIRST_PERSON, descriptorClient);
 
         String expectedMessageClient =
-                String.format(EditHousekeepingDetailsCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.formatClient(editedClient));
+                String.format(EditHousekeepingDetailsCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                        Messages.formatClient(editedClient));
 
         Model expectedModelClient = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModelClient.setClient(model.getFilteredClientList().get(0), editedClient);
 
 
-        assertCommandSuccess(editHDCommand, model, expectedMessageClient, expectedModelClient);
+        assertCommandSuccess(editHCommand, model, expectedMessageClient, expectedModelClient);
     }
 
     @Test
@@ -84,7 +91,8 @@ public class EditHousekeepingDetailsCommandTest {
         Client editedPerson = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
 
         String expectedMessage =
-                String.format(EditHousekeepingDetailsCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.formatClient(editedPerson));
+                String.format(EditHousekeepingDetailsCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                        Messages.formatClient(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
 
@@ -94,12 +102,14 @@ public class EditHousekeepingDetailsCommandTest {
     @Test
     public void execute_filteredList_success() {
         Client personInFilteredList = model.getFilteredClientList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Client editedPerson = new ClientBuilder(personInFilteredList).withBooking(new Booking(VALID_BOOKING_BOB)).build();
+        Client editedPerson =
+                new ClientBuilder(personInFilteredList).withBooking(new Booking(VALID_BOOKING_BOB)).build();
         EditHousekeepingDetailsCommand editCommand = new EditHousekeepingDetailsCommand(INDEX_FIRST_PERSON,
                 new EditHousekeepingDetailsDescriptorBuilder().withBookingDate(new Booking(VALID_BOOKING_BOB)).build());
 
         String expectedMessage =
-                String.format(EditHousekeepingDetailsCommand.MESSAGE_EDIT_PERSON_SUCCESS, Messages.formatClient(editedPerson));
+                String.format(EditHousekeepingDetailsCommand.MESSAGE_EDIT_PERSON_SUCCESS,
+                        Messages.formatClient(editedPerson));
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.setClient(model.getFilteredClientList().get(0), editedPerson);
@@ -141,7 +151,7 @@ public class EditHousekeepingDetailsCommandTest {
                 new EditHousekeepingDetailsCommand(INDEX_FIRST_PERSON, DESCC_BOB);
 
         // same values -> returns true
-        EditHousekeepingDetailsDescriptor  copyDescriptor = new EditHousekeepingDetailsDescriptor(DESCC_BOB);
+        EditHousekeepingDetailsDescriptor copyDescriptor = new EditHousekeepingDetailsDescriptor(DESCC_BOB);
         EditHousekeepingDetailsCommand commandWithSameValues = new EditHousekeepingDetailsCommand(INDEX_FIRST_PERSON,
                 copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
@@ -154,12 +164,6 @@ public class EditHousekeepingDetailsCommandTest {
 
         // different types -> returns false
         assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new EditClientCommand(INDEX_SECOND_PERSON, DESC_AMY)));
-
-        // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditClientCommand(INDEX_FIRST_PERSON, DESC_BOB)));
     }
 
     @Test
@@ -167,7 +171,8 @@ public class EditHousekeepingDetailsCommandTest {
         Index index = Index.fromOneBased(1);
         EditHousekeepingDetailsDescriptor editPersonDescriptor = new EditHousekeepingDetailsDescriptor();
         EditHousekeepingDetailsCommand editCommand = new EditHousekeepingDetailsCommand(index, editPersonDescriptor);
-        String expected = EditHousekeepingDetailsCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
+        String expected =
+                EditHousekeepingDetailsCommand.class.getCanonicalName() + "{index=" + index + ", editPersonDescriptor="
                 + editPersonDescriptor + "}";
         assertEquals(expected, editCommand.toString());
     }

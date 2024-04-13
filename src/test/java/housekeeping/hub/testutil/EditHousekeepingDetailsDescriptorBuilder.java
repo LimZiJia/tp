@@ -2,23 +2,10 @@ package housekeeping.hub.testutil;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import housekeeping.hub.logic.commands.EditHousekeepingDetailsCommand.EditHousekeepingDetailsDescriptor;
-import housekeeping.hub.model.person.Address;
-import housekeeping.hub.model.person.Area;
 import housekeeping.hub.model.person.Booking;
-import housekeeping.hub.model.person.BookingList;
-import housekeeping.hub.model.person.Client;
-import housekeeping.hub.model.person.Email;
-import housekeeping.hub.model.person.Housekeeper;
-import housekeeping.hub.model.person.HousekeepingDetails;
-import housekeeping.hub.model.person.Name;
 import housekeeping.hub.model.person.Person;
-import housekeeping.hub.model.person.Phone;
-import housekeeping.hub.model.tag.Tag;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
