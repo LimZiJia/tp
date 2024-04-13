@@ -5,7 +5,7 @@ title: Housekeeping Hub User Guide
 
 Welcome to Housekeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. 
 Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the convenience of a Graphical User Interface ([GUI](#gui))**,
-Housekeeping Hub offers unparalleled speed and ease of use. Whether you're a typist or a clicker, 
+Housekeeping Hub offers unparalleled speed and ease of use for housekeeping admin. Whether you're a typist or a clicker, 
 Housekeeping Hub ensures swift completion of all your contact management tasks. 
 Bid farewell to the sluggishness of traditional GUI apps - with Housekeeping Hub, managing your contacts has never been faster or simpler.
 
