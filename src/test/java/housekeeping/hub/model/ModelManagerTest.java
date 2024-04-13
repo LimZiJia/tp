@@ -5,6 +5,7 @@ import static housekeeping.hub.testutil.Assert.assertThrows;
 import static housekeeping.hub.testutil.TypicalPersons.ALICE;
 import static housekeeping.hub.testutil.TypicalPersons.BENSON;
 import static housekeeping.hub.testutil.TypicalPersons.BOB;
+import static housekeeping.hub.testutil.TypicalPersons.ELLE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -17,6 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import housekeeping.hub.commons.core.GuiSettings;
 import housekeeping.hub.model.person.NameContainsKeywordsPredicate;
+import housekeeping.hub.model.person.exceptions.DuplicatePersonException;
+import housekeeping.hub.model.person.exceptions.PersonNotFoundException;
 import housekeeping.hub.testutil.AddressBookBuilder;
 
 public class ModelManagerTest {
@@ -150,5 +153,133 @@ public class ModelManagerTest {
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookFilePath(Paths.get("differentFilePath"));
         assertFalse(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+    }
+
+    @Test
+    public void addClient_nullClient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.addClient(null));
+    }
+
+    @Test
+    public void addClient_duplicateClient_throwsDuplicatePersonException() {
+        modelManager.addClient(ALICE);
+        assertThrows(DuplicatePersonException.class, () -> modelManager.addClient(ALICE));
+    }
+
+    @Test
+    public void addClient_uniqueClient_clientAdded() {
+        modelManager.addClient(ALICE);
+        assertTrue(modelManager.getFilteredClientList().contains(ALICE));
+    }
+
+    @Test
+    public void addHousekeeper_nullHousekeeper_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.addHousekeeper(null));
+    }
+
+    @Test
+    public void addHousekeeper_duplicateHousekeeper_throwsDuplicatePersonException() {
+        modelManager.addHousekeeper(BOB);
+        assertThrows(DuplicatePersonException.class, () -> modelManager.addHousekeeper(BOB));
+    }
+
+    @Test
+    public void addHousekeeper_uniqueHousekeeper_housekeeperAdded() {
+        modelManager.addHousekeeper(BOB);
+        assertTrue(modelManager.getFilteredHousekeeperList().contains(BOB));
+    }
+
+    @Test
+    public void deleteClient_nullClient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.deleteClient(null));
+    }
+
+    @Test
+    public void deleteClient_clientNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.deleteClient(ALICE));
+    }
+
+    @Test
+    public void deleteClient_existingClient_clientDeleted() {
+        modelManager.addClient(ALICE);
+        modelManager.deleteClient(ALICE);
+        assertFalse(modelManager.getFilteredClientList().contains(ALICE));
+    }
+
+    @Test
+    public void deleteHousekeeper_nullHousekeeper_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.deleteHousekeeper(null));
+    }
+
+    @Test
+    public void deleteHousekeeper_housekeeperNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.deleteHousekeeper(BOB));
+    }
+
+    @Test
+    public void deleteHousekeeper_existingHousekeeper_housekeeperDeleted() {
+        modelManager.addHousekeeper(BOB);
+        modelManager.deleteHousekeeper(BOB);
+        assertFalse(modelManager.getFilteredHousekeeperList().contains(BOB));
+    }
+
+    @Test
+    public void setClient_nullTargetClient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setClient(null, ALICE));
+    }
+
+    @Test
+    public void setClient_nullEditedClient_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setClient(ALICE, null));
+    }
+
+    @Test
+    public void setClient_targetClientNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.setClient(ALICE, ALICE));
+    }
+
+    @Test
+    public void setClient_editedClientIsDuplicate_throwsDuplicatePersonException() {
+        modelManager.addClient(ALICE);
+        modelManager.addClient(BENSON);
+        assertThrows(DuplicatePersonException.class, () -> modelManager.setClient(ALICE, BENSON));
+    }
+
+    @Test
+    public void setClient_targetInAddressBookAndEditedClientHasDifferentIdentityFields_clientEdited() {
+        modelManager.addClient(ALICE);
+        modelManager.setClient(ALICE, BENSON);
+        assertFalse(modelManager.getFilteredClientList().contains(ALICE));
+        assertTrue(modelManager.getFilteredClientList().contains(BENSON));
+    }
+
+    @Test
+    public void setHousekeeper_nullTargetHousekeeper_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setHousekeeper(null, BOB));
+    }
+
+    @Test
+    public void setHousekeeper_nullEditedHousekeeper_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setHousekeeper(BOB, null));
+    }
+
+    @Test
+    public void setHousekeeper_targetHousekeeperNotInAddressBook_throwsPersonNotFoundException() {
+        assertThrows(PersonNotFoundException.class, () -> modelManager.setHousekeeper(BOB, BOB));
+    }
+
+    @Test
+    public void setHousekeeper_editedHousekeeperIsDuplicate_throwsDuplicatePersonException() {
+        modelManager.addHousekeeper(BOB);
+        modelManager.addHousekeeper(ELLE);
+        assertThrows(DuplicatePersonException.class, () -> modelManager.setHousekeeper(BOB, ELLE));
+    }
+
+    @Test
+    public void setHousekeeper_targetInAddressBookAndEditedHousekeeperHasDifferentIdentityFields_housekeeperEdited() {
+        modelManager.addHousekeeper(BOB);
+        modelManager.setHousekeeper(BOB, ELLE);
+        assertFalse(modelManager.getFilteredHousekeeperList().contains(BOB));
+        assertTrue(modelManager.getFilteredHousekeeperList().contains(ELLE));
     }
 }

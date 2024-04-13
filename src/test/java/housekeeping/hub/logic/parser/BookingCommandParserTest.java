@@ -13,17 +13,6 @@ import housekeeping.hub.model.person.BookingSearchPredicate;
 import housekeeping.hub.model.person.HousekeepingDetails;
 
 public class BookingCommandParserTest {
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE);
-    private static final String MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHousekeepingDetailsCommand.MESSAGE_USAGE);
-    private BookingCommandParser parser = new BookingCommandParser();
-
-    // Housekeeper commands (valid)
-    private static final String VALID_HOUSEKEEPER_ADD = "housekeeper add 1 2024-03-02 am";
-    private static final String VALID_HOUSEKEEPER_DELETE = "housekeeper delete 1 1";
-    private static final String VALID_HOUSEKEEPER_LIST = "housekeeper list 1";
-    private static final String VALID_HOUSEKEEPER_SEARCH = "housekeeper search west 2023-02-12 pm";
 
     // Housekeeper add commands (invalid)
     private static final String INVALID_HOUSEKEEPER_ADD_MISSING_INDEX = "housekeeper add 2024-03-02 am";
@@ -71,21 +60,11 @@ public class BookingCommandParserTest {
     private static final String INVALID_HOUSEKEEPER_SEARCH_INVALID_TIME =
             "housekeeper search west 2023-02-12 as";
 
-    // Client commands (valid)
-    private static final String VALID_CLIENT_ADD = "client add 1 2024-05-11 pm";
-    private static final String VALID_CLIENT_DELETE = "client delete 3";
-    private static final String VALID_CLIENT_SET = "client set 3 2024-05-11 15 days";
-    private static final String VALID_CLIENT_REMOVE = "client remove 3";
-    private static final String VALID_CLIENT_EDIT_LAST_HOUSEKEEPING_DATE = "client edit 2 lhd/2024-05-12";
-    private static final String VALID_CLIENT_EDIT_PREFERRED_INTERVAL = "client edit 1 pi/2 weeks";
-    private static final String VALID_CLIENT_EDIT_BOOKING_DATE = "client edit 7 bd/2024-01-17 pm";
-    private static final String VALID_CLIENT_EDIT_DEFERMENT = "client edit 10 d/1 months";
-
     // Client add commands (invalid)
     private static final String INVALID_CLIENT_ADD_MISSING_INDEX = "client add 2024-05-11 pm";
     private static final String INVALID_CLIENT_ADD_MISSING_DATE = "client add 1 pm";
     private static final String INVALID_CLIENT_ADD_MISSING_TIME = "client add 1 2024-05-11";
-    private static final String INVALID_CLIENT_ADD_MISSING_DATETIME= "client add 1";
+    private static final String INVALID_CLIENT_ADD_MISSING_DATETIME = "client add 1";
     private static final String INVALID_CLIENT_ADD_MISSING_PARAMETERS = "client add";
 
     private static final String INVALID_CLIENT_ADD_ZERO_INDEX = "client add 0 2024-05-11 pm";
@@ -176,6 +155,8 @@ public class BookingCommandParserTest {
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_MISSING_PREFIX = "client edit 10 1 months";
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_MISSING_NUMBER = "client edit 10 d/months";
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_MISSING_INTERVAL = "client edit 10 d/1";
+    private static final String INVALID_TYPE = "abc list 1";
+    private static final String INVALID_ACTION_WORD = "client adding 1 2023-02-03 pm";
 
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_ZERO_INDEX = "client edit 0 d/1 months";
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_NEGATIVE_INDEX = "client edit -10 d/1 months";
@@ -183,12 +164,34 @@ public class BookingCommandParserTest {
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_NEGATIVE_NUMBER = "client edit 10 d/-901 months";
     private static final String INVALID_CLIENT_EDIT_DEFERMENT_INVALID_INTERVAL = "client edit 10 d/1 decades";
 
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, BookingCommand.MESSAGE_USAGE);
+    private static final String MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditHousekeepingDetailsCommand.MESSAGE_USAGE);
+
+
     // Invalid format commands
     private static final String MISSING_TYPE = "list 1";
     private static final String MISSING_ACTION_WORD = "housekeeper 1";
     private static final String MISSING_PARAMETERS = "";
-    private static final String INVALID_TYPE = "abc list 1";
-    private static final String INVALID_ACTION_WORD = "client adding 1 2023-02-03 pm";
+
+    // Client commands (valid)
+    private static final String VALID_CLIENT_ADD = "client add 1 2024-05-11 pm";
+    private static final String VALID_CLIENT_DELETE = "client delete 3";
+    private static final String VALID_CLIENT_SET = "client set 3 2024-05-11 15 days";
+    private static final String VALID_CLIENT_REMOVE = "client remove 3";
+    private static final String VALID_CLIENT_EDIT_LAST_HOUSEKEEPING_DATE = "client edit 2 lhd/2024-05-12";
+    private static final String VALID_CLIENT_EDIT_PREFERRED_INTERVAL = "client edit 1 pi/2 weeks";
+    private static final String VALID_CLIENT_EDIT_BOOKING_DATE = "client edit 7 bd/2024-01-17 pm";
+    private static final String VALID_CLIENT_EDIT_DEFERMENT = "client edit 10 d/1 months";
+
+    // Housekeeper commands (valid)
+    private static final String VALID_HOUSEKEEPER_ADD = "housekeeper add 1 2024-03-02 am";
+    private static final String VALID_HOUSEKEEPER_DELETE = "housekeeper delete 1 1";
+    private static final String VALID_HOUSEKEEPER_LIST = "housekeeper list 1";
+    private static final String VALID_HOUSEKEEPER_SEARCH = "housekeeper search west 2023-02-12 pm";
+
+    private BookingCommandParser parser = new BookingCommandParser();
 
     @Test
     public void parse_housekeeperValidCommands_success() throws ParseException {
