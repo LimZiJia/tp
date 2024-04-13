@@ -36,7 +36,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     private Period deferment;
 
     /**
-     * Creates a HousekeepingDetails object with no details provided.
+     * Creates a HousekeepingDetails objectC with no details provided.
      */
     public HousekeepingDetails() {
         this.lastHousekeepingDate = null;

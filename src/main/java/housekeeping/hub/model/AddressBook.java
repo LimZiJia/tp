@@ -1,5 +1,6 @@
 package housekeeping.hub.model;
 
+import static housekeeping.hub.commons.util.CollectionUtil.requireAllNonNull;
 import static java.util.Objects.requireNonNull;
 
 import java.util.Comparator;
@@ -114,7 +115,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * The client identity of {@code editedClient} must not be the same as another existing client in the hub book.
      */
     public void setClient(Client target, Client editedClient) {
-        requireNonNull(editedClient);
+        requireAllNonNull(target, editedClient);
 
         clients.setPerson(target, editedClient);
     }
