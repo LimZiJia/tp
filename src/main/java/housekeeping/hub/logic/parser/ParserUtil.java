@@ -201,7 +201,7 @@ public class ParserUtil {
             Booking parsedBooking = new Booking(booking);
             return parsedBooking;
         } else {
-            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Booking.MESSAGE_CONSTRAINTS);
         }
     }
 
