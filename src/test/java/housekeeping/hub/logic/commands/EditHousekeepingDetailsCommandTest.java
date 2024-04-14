@@ -124,7 +124,7 @@ public class EditHousekeepingDetailsCommandTest {
                 .withDeferment(Period.parse(VALID_DEFERMENT_BOB)).build();
         EditHousekeepingDetailsCommand editCommand = new EditHousekeepingDetailsCommand(outOfBoundIndex, descriptor);
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
     }
 
     /**
@@ -142,7 +142,7 @@ public class EditHousekeepingDetailsCommandTest {
                 new EditHousekeepingDetailsDescriptorBuilder()
                         .withPreferredInterval(Period.parse(VALID_PI_BOB)).build());
 
-        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
     }
 
     @Test
