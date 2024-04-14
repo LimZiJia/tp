@@ -59,10 +59,12 @@ public class FindCommandParser implements Parser<FindCommand> {
         String[] addressKeywords = trimmedAddress.split("\\s+");
         String[] areaKeywords = trimmedArea.split("\\s+");
 
-        for (int i = 0; i < areaKeywords.length; i++) {
-            if (!Area.isValidArea(areaKeywords[i])) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, Area.MESSAGE_CONSTRAINTS));
+        if (argMultimap.getValue(PREFIX_AREA).isPresent()) {
+            for (int i = 0; i < areaKeywords.length; i++) {
+                if (!Area.isValidArea(areaKeywords[i])) {
+                    throw new ParseException(
+                            String.format(MESSAGE_INVALID_COMMAND_FORMAT, Area.MESSAGE_CONSTRAINTS));
+                }
             }
         }
 

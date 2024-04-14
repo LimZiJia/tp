@@ -5,7 +5,7 @@ title: Housekeeping Hub User Guide
 
 Welcome to Housekeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. 
 Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the convenience of a Graphical User Interface ([GUI](#gui))**,
-Housekeeping Hub offers unparalleled speed and ease of use. Whether you're a typist or a clicker, 
+Housekeeping Hub offers unparalleled speed and ease of use for housekeeping admin. Whether you're a typist or a clicker, 
 Housekeeping Hub ensures swift completion of all your contact management tasks. 
 Bid farewell to the sluggishness of traditional GUI apps - with Housekeeping Hub, managing your contacts has never been faster or simpler.
 
@@ -112,6 +112,9 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
   e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
+* `NAME` is case-sensitive and character-sensitive.<br>
+  e.g. `John Doe` and `john doe` is different person (not considered as duplicate).
+
 * Items in square brackets are optional.<br>
   e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 
@@ -193,7 +196,7 @@ Example:
 
 ### Deleting a person : `delete`
 
-Deletes the specified client or housekeeper from the address book.
+Deletes the specified client or housekeeper from Housekeeping Hub.
 
 Format: `delete TYPE INDEX`
 
@@ -301,6 +304,48 @@ We have 6 commands for updating client's housekeeping details. `edit`, `defer`, 
 Without a housekeeping detail, `edit`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
 `edit` has prefixes `lhd/`, `pi/`, `bd/` and `d/` to edit last housekeeping date, preferred interval, booking date and deferment respectively.
 More than one prefix can be used in a single `edit` command.
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Deleting booking date: `booking client delete`
+
+Deletes the specified client's booking date from Housekeeping Hub.
+
+Format: `booking client delete INDEX`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The index to delete will work for any displayed list. i.e. What you see is what you get.
+</div>
+
+Examples:
+* `booking client delete 3` deletes the client number 3 booking date
+* `booking client delete 1` deletes the client number 1 booking date<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+###### Removing housekeeping details: `booking client remove`
+
+Removes/deletes the specified client's housekeeping details (including 'last housekeeping date', 'preferred interval', 
+'booking date', and 'deferment') from Housekeeping Hub.
+
+Format: `booking client remove INDEX`
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The index to delete will work for any displayed list. i.e. What you see is what you get.
+</div>
+
+Examples:
+* `booking client remove 3` removes the client number 3 housekeeping details
+* `booking client remove 1` removes the client number 1 housekeeping details<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+
 
 Action | Format, Explainations, Examples                                                                                                                                               
 --------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

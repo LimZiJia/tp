@@ -71,7 +71,7 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
         Client personToEdit = lastShownList.get(index.getZeroBased());
@@ -128,11 +128,11 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof EditHousekeepingDetailsCommand)) {
             return false;
         }
 
-        EditCommand otherEditCommand = (EditCommand) other;
+        EditHousekeepingDetailsCommand otherEditCommand = (EditHousekeepingDetailsCommand) other;
         return index.equals(otherEditCommand.index)
                 && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
     }
