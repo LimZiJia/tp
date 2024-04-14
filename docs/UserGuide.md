@@ -3,11 +3,10 @@ layout: page
 title: Housekeeping Hub User Guide
 ---
 
-Welcome to Housekeeping Hub, the premier **desktop solution for managing client and housekeeper contacts**. 
-Combining the **efficiency of a Command Line Interface ([CLI](#cli)) with the convenience of a Graphical User Interface ([GUI](#gui))**,
-Housekeeping Hub offers unparalleled speed and ease of use for housekeeping admin. Whether you're a typist or a clicker, 
-Housekeeping Hub ensures swift completion of all your contact management tasks. 
-Bid farewell to the sluggishness of traditional GUI apps - with Housekeeping Hub, managing your contacts has never been faster or simpler.
+Welcome to HouseKeeping Hub, the premier desktop application for **organizing client and housekeeper contacts**. 
+With the efficiency of a **Command Line Interface ([CLI](#cli))** and the convenience of a **Graphical User Interface ([GUI](#gui))**, 
+our platform ensures fast and user-friendly contact management for **housekeeping companies' admins**. 
+But that's not all - we also offer a robust **booking system** to help you keep track of client bookings and housekeeper availability.
 
 ## Table of Contents
 * Table of Contents
@@ -16,9 +15,10 @@ Bid farewell to the sluggishness of traditional GUI apps - with Housekeeping Hub
 --------------------------------------------------------------------------------------------------------------------
 ## Purpose of this guide
 This guide has been created to help you understand and utilize the features and functionalities of our software
- effectively. Whether you're a new user who is not familiar with command line interface or an expert looking to enhance 
-your skills, this guide aims to provide you with the information you need to make the most of our product. In this guide 
-you will find a quick start (guide to install and start using our product), a list of features and how to use them, and 
+ effectively. Whether you're a new user who is not familiar with command line interface ([CLI](#cli)) or an expert looking to enhance 
+your skills, this guide aims to provide you with the information you need to make the most of our product. 
+
+In this guide, you will find a quick start (guide to install and start using our product), a list of features and how to use them, and 
 a glossary to help you understand some jargon. This guide is designed to provide you with clear and concise instructions 
 and a reader-friendly format to enhance your experience in using our product.
 
@@ -30,7 +30,7 @@ and a reader-friendly format to enhance your experience in using our product.
 
 Let's get started! Here's a rundown of every section in this guide:
 
-If you have yet to install Housekeeping Hub, you can refer to the [installation instructions](#installation).
+If you have yet to install HouseKeeping Hub, you can refer to the [installation instructions](#installation).
 
 After installing the application, you can start off by following our [tutorial](#tutorial) to familiarise yourself
 with the basic features of the app.
@@ -63,17 +63,18 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 ## Installation :computer:
 <a id="installation"></a>
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have `Java 11` or above installed in your Computer. You can download `Java 11` from [here](https://www.oracle.com/sg/java/technologies/javase/jdk11-archive-downloads.html).
 
 1. Download the latest `HousekeepingHub-v1.3.1.jar` from [here](https://github.com/AY2324S2-CS2103T-W09-1/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your Housekeeping Hub.
+1. Copy the file to the folder you want to use as the _home folder_ for your HouseKeeping Hub.
 
 1. Open a [command terminal](#terminal), and type in `cd` to navigate into the folder you placed the [jar](#jar) file in.
 
 1. Type in `java -jar HousekeepingHub-v1.3.1.jar` to run the application.<br>
 
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data for demonstration purpose.
+   Once you are familiar with the app, you can use the `clear` command to remove all the sample data.<br><br>
    ![Ui](./images/Ui.png)
 
 [:arrow_up_small:](#table-of-contents)
@@ -127,7 +128,8 @@ There will be [:arrow_up_small:](#table-of-contents) links, which you can click 
 * Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines 
+as space characters surrounding line-breaks may be omitted when copied over to the application, leading to failed commands.
 </div>
 
 [:arrow_up_small:](#table-of-contents)
@@ -148,7 +150,7 @@ Format: `help`
 
 ### Adding a person: `add`
 
-Adds a client or housekeeper to Housekeeping Hub.
+Adds a client or housekeeper to HouseKeeping Hub.
 
 Format: `add TYPE n/NAME e/EMAIL p/PHONE_NUMBER a/ADDRESS ar/AREA [d/DETAILS] [t/TAG]…​`
 
@@ -160,7 +162,12 @@ The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is
 housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
+Both client and housekeeper can have only one name, email, phone number, address and area, but any number of tags 
+(including 0).
+</div>
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+A client can have at most one set of housekeeping details.
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
@@ -179,7 +186,7 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons with the given type in the address book.
+Returns the originally unfiltered list of the given type.
 
 Format: `list TYPE`
 
@@ -196,7 +203,7 @@ Example:
 
 ### Deleting a person : `delete`
 
-Deletes the specified client or housekeeper from Housekeeping Hub.
+Deletes the specified client or housekeeper from HouseKeeping Hub.
 
 Format: `delete TYPE INDEX`
 
@@ -219,7 +226,7 @@ Examples:
 --------------------------------------------------------------------------------------------------------------------
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in the HouseKeeping Hub.
 
 Format: `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ar/AREA] [t/TAG]…​`
 
@@ -309,7 +316,7 @@ More than one prefix can be used in a single `edit` command.
 
 ###### Deleting booking date: `booking client delete`
 
-Deletes the specified client's booking date from Housekeeping Hub.
+Deletes the specified client's booking date from HouseKeeping Hub.
 
 Format: `booking client delete INDEX`
 
@@ -329,7 +336,7 @@ Examples:
 ###### Removing housekeeping details: `booking client remove`
 
 Removes/deletes the specified client's housekeeping details (including 'last housekeeping date', 'preferred interval', 
-'booking date', and 'deferment') from Housekeeping Hub.
+'booking date', and 'deferment') from HouseKeeping Hub.
 
 Format: `booking client remove INDEX`
 
@@ -361,7 +368,7 @@ Action | Format, Explainations, Examples
 
 ##### Updating housekeeper's housekeeping details: `booking housekeeper`
 
-Housekeepers all have a list of bookings (that can be empty). This allows for Housekeeping Hub to suggest housekeepers for clients based on their availability. There are 4 commands `add`, `delete`, `list` and `search`.
+Housekeepers all have a list of bookings (that can be empty). This allows for HouseKeeping Hub to suggest housekeepers for clients based on their availability. There are 4 commands `add`, `delete`, `list` and `search`.
 
 Action | Format, Explainations, Examples                                                                                                                                       
 --------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -375,7 +382,7 @@ Action | Format, Explainations, Examples
 --------------------------------------------------------------------------------------------------------------------
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all entries from the HouseKeeping Hub.
 
 Format: `clear`
 
@@ -391,19 +398,19 @@ Format: `exit`
 
 ### Saving the data
 
-Housekeeping Hub data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+HouseKeeping Hub data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-Housekeeping Hub data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+HouseKeeping Hub data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 If you wish to load our sample data, you must delete the existing `addressbook.json` from the stated location and restart the app.
 </div>
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, Housekeeping Hub will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the Housekeeping Hub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, HouseKeeping Hub will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause the HouseKeeping Hub to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 [:arrow_up_small:](#table-of-contents)
@@ -414,7 +421,7 @@ Furthermore, certain edits can cause the Housekeeping Hub to behave in unexpecte
 <a id="faq"></a>
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Housekeeping Hub home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous HouseKeeping Hub home folder.
 
 [:arrow_up_small:](#table-of-contents)
 
