@@ -128,11 +128,11 @@ public class EditHousekeepingDetailsCommand extends BookingCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof EditCommand)) {
+        if (!(other instanceof EditHousekeepingDetailsCommand)) {
             return false;
         }
 
-        EditCommand otherEditCommand = (EditCommand) other;
+        EditHousekeepingDetailsCommand otherEditCommand = (EditHousekeepingDetailsCommand) other;
         return index.equals(otherEditCommand.index)
                 && editPersonDescriptor.equals(otherEditCommand.editPersonDescriptor);
     }
