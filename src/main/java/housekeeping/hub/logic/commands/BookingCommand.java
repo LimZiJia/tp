@@ -263,7 +263,7 @@ public class BookingCommand extends Command {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
         Client clientToEdit = lastShownList.get(index.getZeroBased());
@@ -286,7 +286,7 @@ public class BookingCommand extends Command {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
@@ -301,7 +301,7 @@ public class BookingCommand extends Command {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
         Client clientToEdit = lastShownList.get(index.getZeroBased());
 
@@ -318,7 +318,7 @@ public class BookingCommand extends Command {
         List<Client> lastShownList = model.getFilteredClientList();
 
         if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
         }
 
         EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
@@ -332,7 +332,7 @@ public class BookingCommand extends Command {
         List<Housekeeper> lastShownListList = model.getFilteredHousekeeperList();
 
         if (index.getZeroBased() >= lastShownListList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
         }
 
         Housekeeper housekeeperToListBooking = lastShownListList.get(index.getZeroBased());
@@ -344,7 +344,7 @@ public class BookingCommand extends Command {
         List<Housekeeper> lastShownListDelete = model.getFilteredHousekeeperList();
 
         if (index.getZeroBased() >= lastShownListDelete.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
         }
 
         Housekeeper housekeeperToDeleteBooking = lastShownListDelete.get(index.getZeroBased());
@@ -364,7 +364,7 @@ public class BookingCommand extends Command {
         List<Housekeeper> lastShownListAdd = model.getFilteredHousekeeperList();
 
         if (index.getZeroBased() >= lastShownListAdd.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
         }
 
         try {

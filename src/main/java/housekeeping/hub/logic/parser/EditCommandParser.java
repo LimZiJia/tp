@@ -1,7 +1,8 @@
 package housekeeping.hub.logic.parser;
 
+import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX;
 import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -49,14 +50,6 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         try {
-            if (Integer.parseInt(splitArgs[1]) <= 0) {
-                throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-        } catch (NumberFormatException e) {
-            throw new ParseException(MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        try {
             type = ParserUtil.parseType(splitArgs[0]);
             index = ParserUtil.parseIndex(splitArgs[1]);
         } catch (ParseException pe) {
@@ -91,8 +84,24 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         if (type.equals("client")) {
+            try {
+                if (Integer.parseInt(splitArgs[1]) <= 0) {
+                    throw new ParseException(MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+                }
+            } catch (NumberFormatException e) {
+                throw new ParseException(MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
+            }
+            index = ParserUtil.parseIndex(splitArgs[1]);
             return new EditClientCommand(index, editPersonDescriptor);
         } else if (type.equals("housekeeper")) {
+            try {
+                if (Integer.parseInt(splitArgs[1]) <= 0) {
+                    throw new ParseException(MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
+                }
+            } catch (NumberFormatException e) {
+                throw new ParseException(MESSAGE_INVALID_HOUSEKEEPER_DISPLAYED_INDEX);
+            }
+            index = ParserUtil.parseIndex(splitArgs[1]);
             return new EditHousekeeperCommand(index, editPersonDescriptor);
         } else {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
