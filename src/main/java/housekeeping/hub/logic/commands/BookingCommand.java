@@ -311,7 +311,7 @@ public class BookingCommand extends Command {
 
         HousekeepingDetails detailsToEdit = clientToEdit.getDetails();
         detailsToEdit.addDeferment(defer);
-        return new CommandResult(String.format(MESSAGE_DEFER_PERSON_SUCCESS, detailsToEdit.getDefermentToString()));
+        return new CommandResult(String.format(MESSAGE_DEFER_PERSON_SUCCESS, detailsToEdit.getDefermentToReadableString()));
     }
 
     private CommandResult clientRemove(Model model) throws CommandException {
