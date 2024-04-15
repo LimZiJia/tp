@@ -4,6 +4,7 @@ import static housekeeping.hub.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_AREA;
 import static housekeeping.hub.logic.parser.CliSyntax.PREFIX_NAME;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Arrays;
 
@@ -29,6 +30,7 @@ public class FindCommandParser implements Parser<FindCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public FindCommand parse(String args) throws ParseException {
+        requireNonNull(args);
         String trimmedArgs = args.trim();
         String[] subArgs = trimmedArgs.split("\\s+");
         ArgumentMultimap argMultimap =

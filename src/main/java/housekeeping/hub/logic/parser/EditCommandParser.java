@@ -45,17 +45,15 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         // check that input is valid
         String[] splitArgs = argMultimap.getPreamble().trim().split(" ");
-        if (splitArgs.length < 2 || splitArgs.length > 2) {
+        if (splitArgs.length != 2) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
         try {
+            assert(splitArgs.length == 2);
             type = ParserUtil.parseType(splitArgs[0]);
-            index = ParserUtil.parseIndex(splitArgs[1]);
         } catch (ParseException pe) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE), pe);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_AREA);

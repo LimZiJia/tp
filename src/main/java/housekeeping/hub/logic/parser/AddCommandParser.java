@@ -65,14 +65,12 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(e.getMessage());
         }
 
-        System.out.println(details);
         switch (type) {
         case "client":
             Client client = new Client(name, phone, email, address, tagList, details, area);
             return new AddClientCommand(client);
         case "housekeeper":
             if (!details.isEmpty()) {
-                System.out.println(details);
                 throw new ParseException(AddHousekeeperCommand.MESSAGE_NO_HOUSEKEEPING_DETAILS);
             }
             Housekeeper housekeeper = new Housekeeper(name, phone, email, address, tagList, area, bookingList);
