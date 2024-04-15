@@ -2,6 +2,7 @@ package housekeeping.hub.model.person;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -108,7 +109,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         // Converting Period of preferred interval to a readable format
         String[] s = details.split(" ");
         // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
-        // s[2] = booking, s[3] = deferment
+        // s[2] = booking, s[3?] = am/pm, s[3/4] = deferment
         String num = s[1].substring(1, s[1].length() - 1);
         String unit = s[1].substring(s[1].length() - 1);
         String unitString;
@@ -130,7 +131,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         }
 
         // Makes null booking readable
-        String booking = s[2].equals("null") ? "No booking" : s[2];
+        String booking = s[2].equals("null") ? "No booking" : s[2] + " " + s[3];
 
         return String.format("Last housekeeping: %s\nPreferred interval: %s %s\nBooking date: %s",
                 s[0], num, unitString, booking);
@@ -193,7 +194,7 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         }
 
         // Makes null booking readable
-        String booking = s[2].equals("null") ? "No booking" : s[2];
+        String booking = s[2].equals("null") ? "No booking" : s[2] + " " + s[3];
 
         return String.format("Last housekeeping: %s, Preferred interval: %s %s, Booking date: %s, Deferment: %s %s",
                 s[0], numPI, unitStringPI, booking, numD, unitStringD);
@@ -241,12 +242,15 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
     public Booking getBooking() {
         return booking;
     }
-    public String getDefermentToString() {
-        String details = this.toString();
-        String[] s = details.split(" "); // If valid s[0] = lastHousekeepingDate, s[1] = preferredInterval,
-        // s[2] = bookingDate, s[4] = deferment
-        String num = s[s.length - 1].substring(1, s[3].length() - 1);
-        String unit = s[s.length - 1].substring(s[s.length - 1].length() - 1);
+
+    /**
+     * Converts the deferment period to a readable format.
+     * @return
+     */
+    public String getDefermentToReadableString() {
+        String details = this.getDeferment().toString();
+        String num = details.substring(1, details.length() - 1);
+        String unit = details.substring(details.length() - 1);
         String unitString;
         switch (unit) {
         case "Y":
@@ -288,14 +292,10 @@ public class HousekeepingDetails implements Comparable<HousekeepingDetails> {
         HousekeepingDetails otherDetails = (HousekeepingDetails) other;
 
         // First predicate of each && is for null values, second predicate is for non-null values
-        return ((lastHousekeepingDate == otherDetails.lastHousekeepingDate
-                || lastHousekeepingDate.equals(otherDetails.lastHousekeepingDate))
-                && (preferredInterval == otherDetails.preferredInterval
-                || preferredInterval.equals(otherDetails.preferredInterval))
-                && (booking == otherDetails.booking
-                || booking.equals(otherDetails.booking))
-                && (deferment == otherDetails.deferment
-                || deferment.equals(otherDetails.deferment)));
+        return Objects.equals(lastHousekeepingDate, otherDetails.lastHousekeepingDate)
+                && Objects.equals(preferredInterval, otherDetails.preferredInterval)
+                && Objects.equals(booking, otherDetails.booking)
+                && Objects.equals(deferment, otherDetails.deferment);
     }
 
     @Override
