@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Housekeeping Hub User Guide
+title: HouseKeeping Hub User Guide
 ---
 
 Welcome to HouseKeeping Hub, the premier desktop application for **organizing client and housekeeper contacts**. 
