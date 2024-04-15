@@ -3,10 +3,10 @@ layout: page
 title: HouseKeeping Hub User Guide
 ---
 
-Hello there! A very warm welcome to Housekeeping Hub, the premier desktop application tailored for the **administrative staff
+Hello there! A very warm welcome to HouseKeeping Hub, the premier desktop application tailored for the **administrative staff
 of housekeeping companies** in Singapore.
 
-Housekeeping Hub boasts specialised and robust functionality, including contact management tools for clients and housekeepers as well as a booking management system,
+HouseKeeping Hub boasts specialised and robust functionality, including contact management tools for clients and housekeepers as well as a booking management system,
 our application ensures that the admin can effectively **manage an extensive contact list** and efficiently **match suitable housekeepers
 to clients** when on-call.
 
@@ -14,7 +14,7 @@ That's not all! Our application also offers a special feature: instantly retriev
 that contains clients whose estimated next cleaning dates are nearing - a feature sure to increase customer retention rates.
 
 With the efficiency of a **Command Line Interface ([CLI](#cli))** and the convenience of a **Graphical User Interface ([GUI](#gui))**, 
-Housekeeping Hub ensures fast and user-friendly usage for every admin!
+HouseKeeping Hub ensures fast and user-friendly usage for every admin!
 
 Are you ready to revolutionize your administrative workflow? Read on to learn more!
 
@@ -28,7 +28,7 @@ Are you ready to revolutionize your administrative workflow? Read on to learn mo
 
 ## Our Target User
 
-Housekeeping Hub is specially tailored for a housekeeping company's admin whose role could involve:
+HouseKeeping Hub is specially tailored for a housekeeping company's admin whose role could involve:
 1. Managing a contact list of clients and housekeepers detailing their personal particulars
 2. Maintaining other important information regarding clients, including their booking dates or preferred interval between housekeeping services
 3. Maintaining booking information and availability of every housekeeper
@@ -38,7 +38,7 @@ Housekeeping Hub is specially tailored for a housekeeping company's admin whose 
 Our application is perfectly optimised to support the admin in accomplishing these tasks **effectively** and **with ease**!
 
 Furthermore, our application is suitable for admins of all diverse roles or backgrounds. Even admins who are **not
-tech-savvy**, or who have **limited administrative experience**, will find it a breeze to learn how to use Housekeeping Hub -
+tech-savvy**, or who have **limited administrative experience**, will find it a breeze to learn how to use HouseKeeping Hub -
 it's that intuitive and simple!
 
 Though, as our application utilizes a **Command Line Interface ([CLI](#cli))**, it is naturally better optimised for
@@ -159,10 +159,30 @@ Warnings that caution you on potentially adverse or unintended effects will be a
 
 --------------------------------------------------------------------------------------------------------------------
 
+## Interpreting the Graphical User Interface (GUI)
+
+HouseKeeping Hub provides a clean user interface that elegantly displays all its information.
+
+Component | Description                                                                                                                                       
+--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Command Box | Type and enter your commands here
+Result Box | The outcomes of your executed commands will be displayed here, including success and error messages
+Client List | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
+Housekeeper List | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
+
+In the client list, each client card will include the client's details and their housekeeping details.
+
+Component | Description                                                                                                                                       
+--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Client Details | The client's particulars are displayed here
+Housekeeping Details | The client's housekeeping details are displayed here
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Tutorial
 <a id="tutorial"></a>
 
-After you have launched Housekeeping Hub, you should see some sample data for you to try out the features.
+After you have launched HouseKeeping Hub, you should see some sample data for you to try out the features.
 
 To use a command, type the command into the command box and press Enter to execute it.
 
@@ -423,7 +443,7 @@ Also, so long as `leads` is the first word in the command, the command will work
 --------------------------------------------------------------------------------------------------------------------
 
 ### Booking commands: `booking`
-The booking functionality in Housekeeping Hub is a value added service that helps you to keep track of your clients' and housekeepers'
+The booking functionality in HouseKeeping Hub is a value added service that helps you to keep track of your clients' and housekeepers'
 housekeeping schedules, allowing you to easily identify clients who might want to schedule another housekeeping appointment,
 as well as efficiently match housekeepers to clients based on availability and area.
 
