@@ -281,13 +281,20 @@ Examples:
 
 ### Getting client call list: `leads`
 Generates a list of leads by sorting ALL clients based on the predicted next time of housekeeping.
-(There is no way to use the find feature with leads)
-Clients with predicted next housekeeping date which is in the future will not be included.
+(There is no way to use the find feature with leads)<br>
 
-Format: `leads`
+The purpose of the command is to provide a list of clients who are due for housekeeping. This could serve as a
+reminder to the client or a sales prompt for you to contact the client for another housekeeping appointment. As such,
+clients with predicted next housekeeping date which is in the future will not be included. `leads` will only include
+clients with housekeeping details and have predicted next housekeeping date which is in the past or today. 
+(past is included because you might miss the call for the client)
+
+Format: `leads`<br>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-The leads are sorted with the client with the earliest predicted next housekeeping date at the top. Housekeeping details are optional so clients without housekeeping details will not be included in the leads.
+The leads are sorted with the client with the earliest predicted next housekeeping date at the top. 
+Housekeeping details are optional so clients without housekeeping details will not be included in the leads.
+Also, so long as `leads` is the first word in the command, the command will work.
 </div>
 
 [:arrow_up_small:](#table-of-contents)
