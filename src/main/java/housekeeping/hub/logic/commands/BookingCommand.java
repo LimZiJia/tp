@@ -47,11 +47,6 @@ public class BookingCommand extends Command {
             + "] : edits booking date for the client at the specified index.\n"
             + "Parameters: INDEX bd/DATE(yyyy-mm-dd) TIME(am|pm)\n"
             + "Example: booking client edit 7 bd/2024-01-17 pm\n\n["
-            + "edit deferment"
-            + "] : adds period to delay before sending reminder about next housekeeping,"
-            + " for the client at the specified index.\n"
-            + "Parameters: INDEX INTERVAL(number days|weeks|months|years)\n"
-            + "Example: booking client edit 10 d/1 months\n\n["
             + "add booking"
             + "] : adds a booking date for the client at the specified index.\n"
             + "Parameters: INDEX DATE(yyyy-mm-dd) TIME(am|pm)\n"
@@ -170,24 +165,6 @@ public class BookingCommand extends Command {
         this.housekeepingDetails = housekeepingDetails;
     }
 
-    /**
-     * Constructs a BookingCommand for the "edit" action.
-     *
-     * @param type "housekeeper"
-     * @param actionWord "edit"
-     * @param index of housekeeper to edit
-     * @param defer period to add to deferment
-     */
-    public BookingCommand(String type, String actionWord, Index index, Period defer) {
-        requireNonNull(index);
-        requireNonNull(defer);
-        requireNonNull(actionWord);
-        requireNonNull(type);
-        this.type = type;
-        this.actionWord = actionWord;
-        this.index = index;
-        this.defer = defer;
-    }
 
     public BookingCommand() {
     }
@@ -205,8 +182,6 @@ public class BookingCommand extends Command {
                 return clientSet(model);
             case "remove":
                 return clientRemove(model);
-            case "defer":
-                return clientDefer(model);
             default:
                 throw new CommandException(MESSAGE_INVALID_ACTION);
             }
@@ -295,23 +270,6 @@ public class BookingCommand extends Command {
 
         Command editClientCommand = new EditClientCommand(index, editPersonDescriptor);
         return editClientCommand.execute(model);
-    }
-
-    private CommandResult clientDefer(Model model) throws CommandException {
-        List<Client> lastShownList = model.getFilteredClientList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_CLIENT_DISPLAYED_INDEX);
-        }
-        Client clientToEdit = lastShownList.get(index.getZeroBased());
-
-        if (!clientToEdit.hasHousekeepingDetails()) {
-            throw new CommandException(NO_DETAILS_MESSAGE_CONSTRAINT);
-        }
-
-        HousekeepingDetails detailsToEdit = clientToEdit.getDetails();
-        detailsToEdit.addDeferment(defer);
-        return new CommandResult(String.format(MESSAGE_DEFER_PERSON_SUCCESS, detailsToEdit.getDefermentToString()));
     }
 
     private CommandResult clientRemove(Model model) throws CommandException {
