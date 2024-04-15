@@ -163,6 +163,8 @@ Warnings that caution you on potentially adverse or unintended effects will be a
 
 HouseKeeping Hub provides a clean user interface that elegantly displays all its information.
 
+![Ui](./images/GUI1.png)
+
 Component | Description                                                                                                                                       
 --------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Command Box | Type and enter your commands here
@@ -171,6 +173,8 @@ Client List | List all bookings of a housekeeper with `list`<br>Format: `booking
 Housekeeper List | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
 
 In the client list, each client card will include the client's details and their housekeeping details.
+
+![Ui](./images/Clients_Card.png)
 
 Component | Description                                                                                                                                       
 --------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -849,7 +853,7 @@ Action | Format, Examples
 [**Edit**](#editing-a-person--edit) | `edit TYPE INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DETAILS] [ar/AREA] [t/TAG]…​`<br> e.g., `edit client 1 p/91234567 e/johndoe@example.com`
 [**Find**](#locating-persons-by-keywords--find) | `find TYPE n/KEYWORD [MORE_KEYWORDS] ar/KEYWORD [MORE_KEYWORDS] a/KEYWORD [MORE_KEYWORDS]`<br> e.g., `find client n/John`
 [**Leads**](#getting-client-call-list-leads) | `leads`
-[**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client last 2 2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
+[**Booking**](#booking-commands-booking) | `booking TYPE ACTION INDEX [PARAMETERS]`<br> e.g., `booking client edit 1 lhd/2024-04-01`<br> * This has many commands and it is recommended to refer to the [Booking commands](#booking-commands-booking) section for more details.
 [**Clear**](#clearing-all-entries--clear) | `clear`
 [**Exit**](#exiting-the-program--exit) | `exit`
 [**Help**](#viewing-help--help) | `help`                                                                                                                                                                                                                                 |
