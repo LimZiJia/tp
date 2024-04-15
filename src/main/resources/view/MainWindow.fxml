@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Label?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="Housekeeping Hub" minWidth="500" minHeight="600" onCloseRequest="#handleExit">
+         title="HouseKeeping Hub" minWidth="500" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/housekeepinghub.png" />
   </icons>
