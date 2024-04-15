@@ -318,6 +318,11 @@ There are 6 `booking client` commands available:
 5. `defer`: add deferment
 6. `edit`: edit any of the 4 attributes
 
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+When a client has **no housekeeping details**, the commands `add`, `delete`, `edit` and `defer` **will not work**.<br>
+In that case, first use the `set` command to add housekeeping details for the client.
+</div>
+
 **For housekeepers**, the `booking housekeeper` commands allow you to maintain every housekeeper's booking list and search
 for housekeepers who are available at a specified date, time and area.
 
@@ -398,6 +403,8 @@ Examples:
 
 Adds a booking date for the specified client.
 
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
+
 Format: `booking client add INDEX DATE TIME`
 
 Parameters:
@@ -425,6 +432,8 @@ Examples:
 
 Deletes the specified client's booking date.
 
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
+
 Format: `booking client delete INDEX`
 
 Parameters:
@@ -451,6 +460,8 @@ The default value for deferment is 0.
 This function can be used to manage clients who want to defer their next housekeeping date. For example, a client who
 will be overseas for the next 3 months might want to defer their next housekeeping service to after they are back.
 
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
+
 Format: `booking client defer INDEX NUMBER INTERVAL`
 
 Parameters:
@@ -476,7 +487,9 @@ Examples:
 ###### Editing housekeeping details: `booking client edit`
 
 Edits any attribute client's housekeeping details (including last housekeeping date, preferred interval, booking date and deferment).
-More than one attribute can be edited in a single command, by using their respective prefixes.
+More than one attribute can be edited in a single `edit` command, by using their respective prefixes.
+
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
 
 Formats and parameters:
 1. Edit last housekeeping date: `booking client edit INDEX lhd/DATE`<br>
@@ -522,7 +535,7 @@ Examples:
 
 --------------------------------------------------------------------------------------------------------------------
 
-A housekeeper's booking list may be empty.
+Every housekeeper has a booking list. This list may be empty.
 
 ###### Adding booking date: `booking housekeeper add`
 
@@ -614,7 +627,7 @@ Parameters:
 `TIME`: am or pm
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-The specified index will work for any currently displayed list. i.e. What you see is what you get.<br>
+`AREA` is case-sensitive.<br>
 `TIME` is categorised as either 'am' or 'pm' as housekeeping services often span a few hours,
 and on account of housekeepers' travelling time between houses. Please look forward to future editions of our
 application that support more flexible time frames!
