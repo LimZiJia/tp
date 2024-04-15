@@ -215,6 +215,9 @@ public class ParserUtil {
         String[] splitPI = trimmedPI.split("\\s+");
         Period period;
         int quantity = Integer.parseInt(splitPI[0]);
+        if (quantity <= 0) {
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
         switch (splitPI[1]) {
         case "days":
             period = Period.ofDays(quantity);
@@ -255,6 +258,9 @@ public class ParserUtil {
             s = trimmedDetails.split(" ");
             date = LocalDate.parse(s[0]);
             quantity = Integer.parseInt(s[1]);
+            if (quantity <= 0) {
+                throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            }
         } catch (DateTimeParseException e) {
             throw new ParseException(e.getMessage());
         }

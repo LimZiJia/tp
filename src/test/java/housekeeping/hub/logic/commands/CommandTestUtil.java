@@ -23,8 +23,8 @@ import housekeeping.hub.model.Model;
 import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.BookingList;
 import housekeeping.hub.model.person.Client;
+import housekeeping.hub.model.person.ContainsKeywordsPredicate;
 import housekeeping.hub.model.person.Housekeeper;
-import housekeeping.hub.model.person.NameContainsKeywordsPredicate;
 import housekeeping.hub.testutil.EditHousekeepingDetailsDescriptorBuilder;
 import housekeeping.hub.testutil.EditPersonDescriptorBuilder;
 
@@ -148,7 +148,12 @@ public class CommandTestUtil {
 
         Client client = model.getFilteredClientList().get(targetIndex.getZeroBased());
         final String[] splitName = client.getName().fullName.split("\\s+");
-        model.updateFilteredClientList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final List<String> splitAr = new ArrayList<>();
+        splitAr.add("");
+        final List<String> splitAd = new ArrayList<>();
+        splitAd.add("");
+        model.updateFilteredClientList(new ContainsKeywordsPredicate(Arrays.asList(splitName[0]),
+                splitAd, splitAr));
 
         assertEquals(1, model.getFilteredClientList().size());
     }
@@ -162,7 +167,12 @@ public class CommandTestUtil {
 
         Housekeeper housekeeper = model.getFilteredHousekeeperList().get(targetIndex.getZeroBased());
         final String[] splitName = housekeeper.getName().fullName.split("\\s+");
-        model.updateFilteredHousekeeperList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        final List<String> splitAr = new ArrayList<>();
+        splitAr.add("");
+        final List<String> splitAd = new ArrayList<>();
+        splitAd.add("");
+        model.updateFilteredHousekeeperList(new ContainsKeywordsPredicate(Arrays.asList(splitName[0]),
+                splitAd, splitAr));
 
         assertEquals(1, model.getFilteredHousekeeperList().size());
     }

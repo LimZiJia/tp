@@ -19,7 +19,7 @@ public class EditHousekeepingDetailsParser implements Parser<EditHousekeepingDet
 
     /**
      * Parses the given {@code String} of arguments in the context of the EditHousekeepingDetailsCommand
-     * and returns an EditCommand object for execution.
+     * and returns an EditHousekeepingDetailsCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public EditHousekeepingDetailsCommand parse(String args) throws ParseException {
@@ -55,11 +55,9 @@ public class EditHousekeepingDetailsParser implements Parser<EditHousekeepingDet
             editPersonDescriptor.setDeferment(ParserUtil
                     .parsePreferredInterval(argMultimap.getValue(PREFIX_DEFERMENT).get()));
         }
-
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditHousekeepingDetailsCommand.MESSAGE_NOT_EDITED);
         }
-
         return new EditHousekeepingDetailsCommand(index, editPersonDescriptor);
     }
 

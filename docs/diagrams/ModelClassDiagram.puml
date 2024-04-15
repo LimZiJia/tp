@@ -14,7 +14,7 @@ Class ModelManager
 Class UserPrefs
 
 Class UniquePersonList
-Class Person
+Class "{abstract}\nPerson" as Person
 Class Client
 Class Housekeeper
 Class Address
@@ -22,9 +22,10 @@ Class Email
 Class Name
 Class Phone
 Class Tag
-Class Type
 Class HousekeepingDetails
 Class Area
+Class Booking
+Class BookingList
 
 Class I #FFFFFF
 }
@@ -43,15 +44,17 @@ UserPrefs .up.|> ReadOnlyUserPrefs
 
 AddressBook *--> "1" UniquePersonList
 UniquePersonList --> "~* all" Person
-Person *-left-> Name
+Person *-right-> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
-Person *-right-> Type
 Person *--> Area
 Client *--> "0..1" HousekeepingDetails
 Client .up.|> Comparable
+Housekeeper *--> BookingList
+BookingList *--> "*" Booking
+Booking .up.|> Comparable
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I

@@ -12,12 +12,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import housekeeping.hub.commons.core.GuiSettings;
-import housekeeping.hub.model.person.NameContainsKeywordsPredicate;
+import housekeeping.hub.model.person.ContainsKeywordsPredicate;
 import housekeeping.hub.model.person.exceptions.DuplicatePersonException;
 import housekeeping.hub.model.person.exceptions.PersonNotFoundException;
 import housekeeping.hub.testutil.AddressBookBuilder;
@@ -143,7 +145,11 @@ public class ModelManagerTest {
 
         // different filteredList -> returns false
         String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredClientList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        final List<String> splitAr = new ArrayList<>();
+        splitAr.add("");
+        final List<String> splitAd = new ArrayList<>();
+        splitAd.add("");
+        modelManager.updateFilteredClientList(new ContainsKeywordsPredicate(Arrays.asList(keywords), splitAd, splitAr));
         assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
