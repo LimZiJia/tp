@@ -157,7 +157,9 @@ Notes:
 * `AREA` can be either 'east', 'southeast', 'south', 'southwest', 'west', 'northwest', 'north', or 'northeast'.
 * `DETAILS` is optional and refers to the housekeeping details for CLIENT ONLY. It is not applicable for housekeepers.
 The format for `DETAILS` is `d/yyyy-MM-dd NUMBER INTERVAL` where `yyyy-MM-dd` is the date of the last
-housekeeping, `NUMBER` is the quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.***
+housekeeping, `NUMBER` is the (non-negative) quantity of `INTERVAL`(s) which can be ***'days', 'weeks', 'months' or 'years'.*** 
+This `INTERVAL` is the period between housekeeping sessions that the client prefers. It is meant to be an estimate, so
+options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A person can have any number of tags (including 0)
@@ -265,7 +267,8 @@ Examples:
 
 
 ### Getting client call list: `leads`
-Generates a list of leads by sorting the clients based on the predicted next time of housekeeping. 
+Generates a list of leads by sorting ALL clients based on the predicted next time of housekeeping.
+(There is no way to use the find feature with leads)
 Clients with predicted next housekeeping date which is in the future will not be included.
 
 Format: `leads`
@@ -286,9 +289,11 @@ General format: `booking TYPE ACTION INDEX [PARAMETERS]`
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 For the subcommands of booking below, here are some clarifications.<br>
 `INDEX` refers to the index of the observed client/housekeeper list.<br>
-`NUMBER` refers to any integer. This could represent the quantity of `INTERVAL`(s).<br>
-`INTERVAL` refers to a period, which can be 'days', 'weeks', 'months' or 'years'.<br>
-`AREA` refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest'.
+`NUMBER` refers to a non-negative integer. This could represent the quantity of `INTERVAL`(s).<br>
+`INTERVAL` refers to a period, which can be 'days', 'weeks', 'months' or 'years'.
+This `INTERVAL` is the period between housekeeping sessions that the client prefers. It is meant to be an estimate, so
+options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.<br>
+`AREA` refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest' and are case sensitive.
 </div>
 
 ##### Updating client's housekeeping details: `booking client`
