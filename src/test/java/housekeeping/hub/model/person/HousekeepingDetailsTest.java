@@ -1,13 +1,13 @@
 package housekeeping.hub.model.person;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 import java.time.Period;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.Test;
 
 class HousekeepingDetailsTest {
     static final HousekeepingDetails HOUSEKEEPING_DETAILS_NULL = new HousekeepingDetails();
@@ -133,7 +133,8 @@ class HousekeepingDetailsTest {
                 HousekeepingDetails.makeStoredDetailsReadableWithDeferment("2025-01-30 P2W 2024-01-01 pm P0D"));
 
         // Invalid details
-        assertEquals("Invalid housekeeping details format", HousekeepingDetails.makeStoredDetailsReadableWithDeferment(""));
+        assertEquals("Invalid housekeeping details format",
+                HousekeepingDetails.makeStoredDetailsReadableWithDeferment(""));
         assertEquals("Invalid housekeeping details format",
                 HousekeepingDetails.makeStoredDetailsReadableWithDeferment("2024-01-30 P2M"));
         assertEquals("Invalid housekeeping details format",
@@ -246,7 +247,7 @@ class HousekeepingDetailsTest {
     }
 
     @Test
-    public void test_Equals() {
+    public void test_equals() {
         // Different types -> returns false
         assertFalse(HOUSEKEEPING_DETAILS_NULL.equals(5));
 

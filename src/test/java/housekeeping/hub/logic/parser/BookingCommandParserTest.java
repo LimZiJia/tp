@@ -11,7 +11,6 @@ import housekeeping.hub.logic.commands.EditHousekeepingDetailsCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
 import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.BookingSearchPredicate;
-import housekeeping.hub.model.person.HousekeepingDetails;
 
 public class BookingCommandParserTest {
 
