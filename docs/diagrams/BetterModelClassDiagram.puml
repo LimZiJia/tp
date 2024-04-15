@@ -28,7 +28,8 @@ Person *--> "1" Address
 Person *--> "1" Area
 
 HousekeepingDetails *--> "1" LocalDate
-HousekeepingDetails *--> "1" Period
+HousekeepingDetails *--> "2" Period
+HousekeepingDetails *--> "1" Booking
 
 BookingList *-right-> "*" Booking
 

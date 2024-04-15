@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.commons.util.StringUtil;
+import housekeeping.hub.logic.commands.BookingCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
 import housekeeping.hub.model.person.Address;
 import housekeeping.hub.model.person.Area;
@@ -188,7 +189,7 @@ public class ParserUtil {
             LocalDate parsedLhd = LocalDate.parse(lHD);
             return parsedLhd;
         } catch (Exception e) {
-            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            throw new ParseException(BookingCommand.MESSAGE_USAGE);
         }
     }
 
@@ -201,7 +202,7 @@ public class ParserUtil {
             Booking parsedBooking = new Booking(booking);
             return parsedBooking;
         } else {
-            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            throw new ParseException(Booking.MESSAGE_CONSTRAINTS);
         }
     }
 
@@ -214,6 +215,9 @@ public class ParserUtil {
         String[] splitPI = trimmedPI.split("\\s+");
         Period period;
         int quantity = Integer.parseInt(splitPI[0]);
+        if (quantity <= 0) {
+            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+        }
         switch (splitPI[1]) {
         case "days":
             period = Period.ofDays(quantity);
@@ -228,7 +232,7 @@ public class ParserUtil {
             period = Period.ofYears(quantity);
             break;
         default:
-            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            throw new ParseException(BookingCommand.MESSAGE_USAGE);
         }
         return period;
     }
@@ -254,6 +258,9 @@ public class ParserUtil {
             s = trimmedDetails.split(" ");
             date = LocalDate.parse(s[0]);
             quantity = Integer.parseInt(s[1]);
+            if (quantity <= 0) {
+                throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            }
         } catch (DateTimeParseException e) {
             throw new ParseException(e.getMessage());
         }
