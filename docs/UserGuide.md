@@ -169,8 +169,8 @@ Component | Description
 --------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Command Box | Type and enter your commands here
 Result Box | The outcomes of your executed commands will be displayed here, including success and error messages
-Client List | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
-Housekeeper List | List all bookings of a housekeeper with `list`<br>Format: `booking housekeeper list INDEX`<br>Example: `booking housekeeper list 2`
+Client List | The list of clients is displayed here
+Housekeeper List | The list of housekeepers is displayed here
 
 In the client list, each client card will include the client's details and their housekeeping details.
 
