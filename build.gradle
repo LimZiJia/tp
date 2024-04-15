@@ -6,7 +6,7 @@ plugins {
     id 'jacoco'
 }
 
-mainClassName = 'seedu.address.Main'
+mainClassName = 'housekeeping.hub.Main'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -74,8 +74,8 @@ run {
 }
 
 shadowJar {
-    archiveBaseName = "HouseKeepingHub"
-    archiveVersion = "v1.3.0"
+    archiveBaseName = "HousekeepingHub"
+    archiveVersion = "v1.3.1"
     archiveClassifier = null
 }
 
