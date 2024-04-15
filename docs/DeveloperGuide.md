@@ -132,7 +132,7 @@ The `Model` component,
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
-<img src="images/BetterModelClassDiagram.png" width="450" />
+<img src="images/BetterModelClassDiagram.png" width="650" />
 
 </div>
 
@@ -168,7 +168,9 @@ prefer to be called on a later date.
 #### How it is implemented
 We assume clients who do not have `HousekeepingDetails` do not want to be disturbed by the housekeeping company.
 Therefore, the client list should be first filtered by `Client.hasHousekeepingDetais()` then sorted by `HousekeepingDetails`.
-We will also not show clients who have their predicted next housekeeping date that is after the current date.
+As this is meant to be a notification for the client or sales lead for the admin, we not show clients who have their 
+predicted next housekeeping date that is after the current date. We will show clients who have their predicted next housekeeping
+that is today or before today to account for calls that the admin might have missed.
 
 To do the sorting, the `Client` class now implements `Comparable<Client>` interface, and the `compareTo()` method is 
 overridden to compare the `HousekeepingDetails` of two clients.
@@ -217,8 +219,6 @@ Pros: Simpler implementation, less commands for admin to learn.
 Cons: [1] Less flexible for the client. The client may not be ready for housekeeping services when we call to remind them.
 [2] It is possible to deal with this as an admin, but it would be "hacky" as the admin would have to edit the `lastHousekeepingDate`.
 
-
-A `ClientComparator` is made using the `compareTo()` is then used by `FXCollections.sort()` to sort the list of clients.
 
 ### \[Completed\] Find using multiple attributes
 
