@@ -473,16 +473,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `HouseKeeping Hub` and the **Actor** is the `operator`, unless specified otherwise)
+(For all use cases below, the **System** is the `HouseKeeping Hub` and the **Actor** is the `admin`, unless specified otherwise)
 
-Preconditions: Operator is logged in.
+Preconditions: Admin is logged in.
 
 **Use case: UC01 - List clients**
 
 **MSS**
 
-1. Operator requests to list clients
-2. HouseKeeping Hub shows the list of clients
+1. Admin requests to list clients
+2. HouseKeeping Hub shows the unfiltered original list of clients in the client section
 
     Use case ends.
 
@@ -498,24 +498,17 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1. Operator requests to list housekeepers
-2. HouseKeeping Hub shows the list of housekeepers
+1. Admin requests to list housekeepers
+2. HouseKeeping Hub shows the unfiltered original list of housekeepers in the housekeeper section
 
     Use case ends.
 
-**Extensions**
-
-* 2a. The list is empty.
-
-    * 2a1. HouseKeeping Hub shows a message that the list is empty.
-
-      Use case ends.
 
 **Use case: UC03 - Add client**
 
 **MSS**
 
-1. Operator requests to add a client
+1. Admin requests to add a client
 2. HouseKeeping Hub adds the client
 
     Use case ends.
@@ -538,7 +531,7 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1. Operator requests to add a housekeeper
+1. Admin requests to add a housekeeper
 2. HouseKeeping Hub adds the housekeeper
 
    Use case ends.
@@ -561,9 +554,9 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1.  Operator requests to list clients
+1.  Admin requests to list clients
 2.  HouseKeeping Hub shows the list of clients
-3.  Operator requests to delete a specific client in the list
+3.  Admin requests to delete a specific client in the list
 4.  HouseKeeping Hub deletes the client
 
     Use case ends.
@@ -584,9 +577,9 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1.  Operator requests to list housekeepers
+1.  Admin requests to list housekeepers
 2.  HouseKeeping Hub shows the list of housekeepers
-3.  Operator requests to delete a specific housekeeper in the list
+3.  Admin requests to delete a specific housekeeper in the list
 4.  HouseKeeping Hub deletes the housekeeper
 
     Use case ends.
