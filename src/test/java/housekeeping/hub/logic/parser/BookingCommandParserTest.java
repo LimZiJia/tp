@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import housekeeping.hub.logic.commands.BookingCommand;
 import housekeeping.hub.logic.commands.EditHousekeepingDetailsCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
+import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.BookingSearchPredicate;
 import housekeeping.hub.model.person.HousekeepingDetails;
 
@@ -350,11 +351,11 @@ public class BookingCommandParserTest {
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_MISSING_PREFIX,
                 MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_MISSING_DATE,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                Booking.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_MISSING_TIME,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                Booking.MESSAGE_CONSTRAINTS);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_MISSING_DATETIME,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                Booking.MESSAGE_CONSTRAINTS);
 
         // test invalid parameters
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_ZERO_INDEX,
@@ -364,7 +365,7 @@ public class BookingCommandParserTest {
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_INVALID_PREFIX,
                 MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_BOOKING_DATE_INVALID_TIME,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                Booking.MESSAGE_CONSTRAINTS);
     }
 
     @Test

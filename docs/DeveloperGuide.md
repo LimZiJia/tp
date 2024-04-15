@@ -92,9 +92,9 @@ Here's a (partial) class diagram of the `Logic` component:
 
 <img src="images/LogicClassDiagram.png" width="550"/>
 
-The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete 1")` API call as an example.
+The sequence diagram below illustrates the interactions within the `Logic` component, taking `execute("delete client 1")` API call as an example.
 
-![Interactions Inside the Logic Component for the `delete 1` Command](images/DeleteSequenceDiagram.png)
+![Interactions Inside the Logic Component for the `delete client 1` Command](images/DeleteSequenceDiagram.png)
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
@@ -106,10 +106,6 @@ How the `Logic` component works:
 1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
    Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
 1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
-
-Here are other sequence diagram to illustrate the interactions within the `Logic` component, taking `execute("list client")` API call:
-
-![Interactions Inside the Logic Component for the `list client` Command](images/ListSequenceDiagram.png)
 
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
@@ -128,8 +124,9 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the address book data i.e., all `Person` objects that could be `Client` or `Housekeeper` (which are contained in a `UniquePersonList` object).
+* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* `Client` and `Housekeeper` are stored separately on different `UniquePersonList` and filtered differently according to the type.
 * stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
 * does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
 
@@ -476,16 +473,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **System** is the `HouseKeeping Hub` and the **Actor** is the `operator`, unless specified otherwise)
+(For all use cases below, the **System** is the `HouseKeeping Hub` and the **Actor** is the `admin`, unless specified otherwise)
 
-Preconditions: Operator is logged in.
+Preconditions: Admin is logged in.
 
 **Use case: UC01 - List clients**
 
 **MSS**
 
-1. Operator requests to list clients
-2. HouseKeeping Hub shows the list of clients
+1. Admin requests to list clients
+2. HouseKeeping Hub shows the unfiltered original list of clients in the client section
 
     Use case ends.
 
@@ -501,24 +498,17 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1. Operator requests to list housekeepers
-2. HouseKeeping Hub shows the list of housekeepers
+1. Admin requests to list housekeepers
+2. HouseKeeping Hub shows the unfiltered original list of housekeepers in the housekeeper section
 
     Use case ends.
 
-**Extensions**
-
-* 2a. The list is empty.
-
-    * 2a1. HouseKeeping Hub shows a message that the list is empty.
-
-      Use case ends.
 
 **Use case: UC03 - Add client**
 
 **MSS**
 
-1. Operator requests to add a client
+1. Admin requests to add a client
 2. HouseKeeping Hub adds the client
 
     Use case ends.
@@ -541,7 +531,7 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1. Operator requests to add a housekeeper
+1. Admin requests to add a housekeeper
 2. HouseKeeping Hub adds the housekeeper
 
    Use case ends.
@@ -564,9 +554,9 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1.  Operator requests to list clients
+1.  Admin requests to list clients
 2.  HouseKeeping Hub shows the list of clients
-3.  Operator requests to delete a specific client in the list
+3.  Admin requests to delete a specific client in the list
 4.  HouseKeeping Hub deletes the client
 
     Use case ends.
@@ -587,9 +577,9 @@ Preconditions: Operator is logged in.
 
 **MSS**
 
-1.  Operator requests to list housekeepers
+1.  Admin requests to list housekeepers
 2.  HouseKeeping Hub shows the list of housekeepers
-3.  Operator requests to delete a specific housekeeper in the list
+3.  Admin requests to delete a specific housekeeper in the list
 4.  HouseKeeping Hub deletes the housekeeper
 
     Use case ends.

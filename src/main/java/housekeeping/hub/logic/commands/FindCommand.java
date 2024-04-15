@@ -12,9 +12,9 @@ public abstract class FindCommand extends Command {
     public static final String COMMAND_WORD = "find";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all clients or housekeepers filtered by "
-            + "the specified attribute(s). Valid attributes: {name, phone, hub, area}\n"
-            + "Parameters: TYPE(client or housekeeper) PREFIX/KEYWORD [PREFIX/KEYWORDS...] (optional)\n"
-            + "Example: " + COMMAND_WORD + " client n/alice p/90274629";
+            + "the specified attribute(s). Valid attributes and their prefixes: name (n), address (a), area (ar)\n"
+            + "Parameters: TYPE(client or housekeeper) PREFIX/KEYWORDS [PREFIX/KEYWORDS...] (optional)\n"
+            + "Example: " + COMMAND_WORD + " client n/alice ar/west";
 
     public static final String MESSAGE_NOT_FOUND = "At least one field to find must be provided.";
 

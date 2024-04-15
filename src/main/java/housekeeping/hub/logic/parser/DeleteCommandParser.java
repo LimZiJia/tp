@@ -24,7 +24,6 @@ public class DeleteCommandParser implements Parser<DeleteCommand> {
     public DeleteCommand parse(String args) throws ParseException {
         try {
             String[] splitArgs = args.trim().split(" ");
-
             // check that input is valid
             if (splitArgs.length < 2 || splitArgs.length > 2) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE));
