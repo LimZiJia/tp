@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 
 import housekeeping.hub.commons.core.index.Index;
 import housekeeping.hub.commons.util.StringUtil;
+import housekeeping.hub.logic.commands.BookingCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
 import housekeeping.hub.model.person.Address;
 import housekeeping.hub.model.person.Area;
@@ -188,7 +189,7 @@ public class ParserUtil {
             LocalDate parsedLhd = LocalDate.parse(lHD);
             return parsedLhd;
         } catch (Exception e) {
-            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            throw new ParseException(BookingCommand.MESSAGE_USAGE);
         }
     }
 
@@ -231,7 +232,7 @@ public class ParserUtil {
             period = Period.ofYears(quantity);
             break;
         default:
-            throw new ParseException(HousekeepingDetails.MESSAGE_CONSTRAINTS);
+            throw new ParseException(BookingCommand.MESSAGE_USAGE);
         }
         return period;
     }

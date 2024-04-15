@@ -11,7 +11,6 @@ import housekeeping.hub.logic.commands.EditHousekeepingDetailsCommand;
 import housekeeping.hub.logic.parser.exceptions.ParseException;
 import housekeeping.hub.model.person.Booking;
 import housekeeping.hub.model.person.BookingSearchPredicate;
-import housekeeping.hub.model.person.HousekeepingDetails;
 
 public class BookingCommandParserTest {
 
@@ -310,7 +309,7 @@ public class BookingCommandParserTest {
         assertParseFailure(parser, INVALID_CLIENT_EDIT_LAST_HOUSEKEEPING_DATE_MISSING_PREFIX,
                 MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_LAST_HOUSEKEEPING_DATE_MISSING_DATE,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                BookingCommand.MESSAGE_USAGE);
         assertParseFailure(
                 parser, INVALID_CLIENT_EDIT_LAST_HOUSEKEEPING_DATE_MISSING_ALL_PARAMETERS,
                 MESSAGE_INVALID_FORMAT);
@@ -340,7 +339,7 @@ public class BookingCommandParserTest {
         assertParseFailure(parser, INVALID_CLIENT_EDIT_PREFERRED_INTERVAL_INVALID_PREFIX,
                 MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_PREFERRED_INTERVAL_INVALID_INTERVAL,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                BookingCommand.MESSAGE_USAGE);
     }
 
     @Test
@@ -384,7 +383,7 @@ public class BookingCommandParserTest {
         assertParseFailure(parser, INVALID_CLIENT_EDIT_DEFERMENT_INVALID_PREFIX,
                 MESSAGE_INVALID_FORMAT_EDIT_HOUSEKEEPING_DETAILS_COMMAND);
         assertParseFailure(parser, INVALID_CLIENT_EDIT_DEFERMENT_INVALID_INTERVAL,
-                HousekeepingDetails.MESSAGE_CONSTRAINTS);
+                BookingCommand.MESSAGE_USAGE);
     }
 
     @Test
