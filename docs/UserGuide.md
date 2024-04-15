@@ -164,6 +164,12 @@ This `INTERVAL` is the period between housekeeping sessions that the client pref
 options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+Names of clients/housekeepers should be **UNIQUE**. You may not add more than one client/housekeeper with the exact
+same name. For example, you may have both a client and a housekeeper named `Elon Tan`, but not 2 clients named
+`Elon Tan`.
+</div>
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 Both client and housekeeper can have only one name, email, phone number, address and area, but any number of tags 
 (including 0).
 </div>
@@ -289,75 +295,357 @@ The leads are sorted with the client with the earliest predicted next housekeepi
 --------------------------------------------------------------------------------------------------------------------
 
 ### Booking commands: `booking`
-We have booking functionality for both client and housekeepers. The booking command allows you to update the housekeeping details of a client and update bookings for a housekeeper.
+The booking functionality in Housekeeping Hub is a value added service that helps you to keep track of your clients' and housekeepers'
+housekeeping schedules, allowing you to easily identify clients who might want to schedule another housekeeping appointment,
+as well as efficiently match housekeepers to clients based on availability and area.
 
-General format: `booking TYPE ACTION INDEX [PARAMETERS]`
+Here is a brief explanation of the commands before we delve into each one individually.
+
+**For clients**, the `booking client` commands allow you to maintain every client's housekeeping details, which encompasses 4 attributes:
+1. Last booking date (mandatory)
+2. Preferred interval between each housekeeping (mandatory)
+3. Next booking date (optional)
+4. Deferment before next housekeeping date (optional)
+
+It is optional to add housekeeping details for a client, in the event that they prefer not to be prompted to schedule
+their housekeeping appointments. Naturally, these clients will not be included in the list after using the `leads` command.
+
+There are 6 `booking client` commands available:
+1. `set`: set last housekeeping date and preferred interval
+2. `remove`: remove housekeeping details
+3. `add`: add booking date
+4. `delete`: delete booking date
+5. `defer`: add deferment
+6. `edit`: edit any of the 4 attributes
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-For the subcommands of booking below, here are some clarifications.<br>
-`INDEX` refers to the index of the observed client/housekeeper list.<br>
-`NUMBER` refers to a non-negative integer. This could represent the quantity of `INTERVAL`(s).<br>
-`INTERVAL` refers to a period, which can be 'days', 'weeks', 'months' or 'years'.
-This `INTERVAL` is the period between housekeeping sessions that the client prefers. It is meant to be an estimate, so
-options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.<br>
-`AREA` refers to the 'north', 'south', 'east', 'west', 'northeast', 'northwest', 'southeast', 'southwest' and are case sensitive.
+When a client has **no housekeeping details**, the commands `add`, `delete`, `edit` and `defer` **will not work**.<br>
+In that case, first use the `set` command to add housekeeping details for the client.
 </div>
 
-##### Updating client's housekeeping details: `booking client`
+**For housekeepers**, the `booking housekeeper` commands allow you to maintain every housekeeper's booking list and search
+for housekeepers who are available at a specified date, time and area.
 
-Client's housekeeping details are optional, and it has 4 attributes: 
-<u>[1] last booking date, [2] preferred interval, [3] booking time slot, and [4] deferment.</u>
-This is a value added service for you to keep track of your client's housekeeping schedule and call clients for housekeeping at the right time.
-If clients do not have housekeeping details, they are assumed to not want notifications for housekeeping. Therefore, `leads` will not include clients without housekeeping details.
+There are 4 `booking housekeeper` commands available:
+1. `add`: add a booking to a housekeeper's booking list
+2. `delete`: delete a booking from a housekeeper's booking list
+3. `list`: list all bookings of a housekeeper
+4. `search`: search for housekeepers available for a specified date, time and area
 
-*** [1] and [2] are mandatory while [3] and [4] are optional. ([4] deferment will be set to 0 by default)
+The **general format** for both `booking client` and `booking housekeeper` commands is as follows:
 
-We have 6 commands for updating client's housekeeping details. `edit`, `defer`, `add`, `delete`, `set`, and `remove`.
-Without a housekeeping detail, `edit`, `defer`, `add`, `delete` will not work. To set housekeeping detail after initiation, use `set`.
-`edit` has prefixes `lhd/`, `pi/`, `bd/` and `d/` to edit last housekeeping date, preferred interval, booking date and deferment respectively.
-More than one prefix can be used in a single `edit` command.
+`booking TYPE ACTION INDEX [PARAMETERS]`, where:
+1. TYPE: client or housekeeper
+2. ACTION: specific command, such as `search` or `add`
+3. INDEX: index of the target client/housekeeper, relative to the observed client/housekeeper list
+
+Below are the detailed explanations for each command.
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+#### Booking commands for clients
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Setting last housekeeping date and preferred interval: `booking client set`
+
+Sets the specified client's last housekeeping date and preferred interval.
+
+Format: `booking client set INDEX DATE NUMBER INTERVAL`
+
+Parameters:
+
+`INDEX`: index of target client, relative to the observed client list
+`DATE`: yyyy-MM-dd format
+`NUMBER`: quantity of `INTERVAL`(s) - non-negative integer
+`INTERVAL`: period between housekeeping sessions - 'days', 'weeks', 'months' or 'years'
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The specified index will work for any currently displayed list. i.e. What you see is what you get.<br>
+The `INTERVAL` is the period between housekeeping sessions that the client prefers. It is meant to be an estimate, so
+options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.
+</div>
+
+Examples:
+* `booking client set 2 2024-04-01 15 days` sets 2nd client's last housekeeping date and preferred interval as 2024-04-01 and 15 days respectively
+* `booking client set 7 2024-05-16 2 months` sets 7th client's last housekeeping date and preferred interval as 2024-05-16 and 2 months respectively<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Removing housekeeping details: `booking client remove`
+
+Removes/deletes the specified client's housekeeping details (including 'last housekeeping date', 'preferred interval',
+'booking date', and 'deferment').
+
+Format: `booking client remove INDEX`
+
+Parameters:
+
+`INDEX`: index of target client, relative to the observed client list
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The specified index will work for any currently displayed list. i.e. What you see is what you get.
+</div>
+
+Examples:
+* `booking client remove 3` removes the 3rd client's housekeeping details
+* `booking client remove 1` removes the 1st client's housekeeping details<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Adding booking date: `booking client add`
+
+Adds a booking date for the specified client.
+
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
+
+Format: `booking client add INDEX DATE TIME`
+
+Parameters:
+
+`INDEX`: index of target client, relative to the observed client list
+`DATE`: yyyy-MM-dd format
+`TIME`: am or pm
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The index to delete will work for any displayed list. i.e. What you see is what you get.<br>
+`TIME` is categorised as either 'am' or 'pm' as housekeeping services often span a few hours,
+and on account of housekeepers' travelling time between houses. Please look forward to future editions of our
+application that support more flexible time frames!
+</div>
+
+Examples:
+* `booking client add 3 2024-08-11 am` adds a booking for the 3rd client at 2024-08-11 am
+* `booking client add 8 2024-02-18 pm` adds a booking for the 8th client at 2024-02-18 pm<br>
+
+[:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
 ###### Deleting booking date: `booking client delete`
 
-Deletes the specified client's booking date from HouseKeeping Hub.
+Deletes the specified client's booking date.
+
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
 
 Format: `booking client delete INDEX`
 
+Parameters:
+
+`INDEX`: index of target client, relative to the observed client list
+
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-The index to delete will work for any displayed list. i.e. What you see is what you get.
+The specified index will work for any currently displayed list. i.e. What you see is what you get.
 </div>
 
 Examples:
-* `booking client delete 3` deletes the client number 3 booking date
-* `booking client delete 1` deletes the client number 1 booking date<br>
+* `booking client delete 3` deletes the 3rd client's booking date
+* `booking client delete 1` deletes the 1st client's booking date<br>
 
 [:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
+###### Adding deferment: `booking client defer`
 
-###### Removing housekeeping details: `booking client remove`
+Adds a deferment to the period before a client's next estimated housekeeping date.
+The default value for deferment is 0.
 
-Removes/deletes the specified client's housekeeping details (including 'last housekeeping date', 'preferred interval', 
-'booking date', and 'deferment') from HouseKeeping Hub.
+This function can be used to manage clients who want to defer their next housekeeping date. For example, a client who
+will be overseas for the next 3 months might want to defer their next housekeeping service to after they are back.
 
-Format: `booking client remove INDEX`
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
+
+Format: `booking client defer INDEX NUMBER INTERVAL`
+
+Parameters:
+
+`INDEX`: index of target client, relative to the observed client list
+`NUMBER`: quantity of `INTERVAL`(s) - non-negative integer
+`INTERVAL`: period to defer - 'days', 'weeks', 'months' or 'years'
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-The index to delete will work for any displayed list. i.e. What you see is what you get.
+The specified index will work for any currently displayed list. i.e. What you see is what you get.<br>
+The `INTERVAL` is the period to defer. It is meant to be an estimate, so
+options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.
 </div>
 
 Examples:
-* `booking client remove 3` removes the client number 3 housekeeping details
-* `booking client remove 1` removes the client number 1 housekeeping details<br>
+* `booking client defer 2 3 months` adds a deferment of 3 months for the 2nd client 
+* `booking client defer 6 1 years` adds a deferment of 1 year for the 6th client<br>
 
 [:arrow_up_small:](#table-of-contents)
 
 --------------------------------------------------------------------------------------------------------------------
 
+###### Editing housekeeping details: `booking client edit`
 
+Edits any attribute client's housekeeping details (including last housekeeping date, preferred interval, booking date and deferment).
+More than one attribute can be edited in a single `edit` command, by using their respective prefixes.
+
+If the client has **no housekeeping details**, first use the `set` command to add housekeeping details for the client.
+
+Formats and parameters:
+1. Edit last housekeeping date: `booking client edit INDEX lhd/DATE`<br>
+   Parameters:
+   `INDEX`: index of target client, relative to the observed client list
+   `DATE`: yyyy-MM-dd format
+2. Edit preferred interval: `booking client edit INDEX pi/NUMBER INTERVAL`<br>
+   Parameters:
+   `INDEX`: index of target client, relative to the observed client list
+   `NUMBER`: quantity of `INTERVAL`(s) - non-negative integer
+   `INTERVAL`: period between housekeeping sessions - 'days', 'weeks', 'months' or 'years'
+3. Edit booking date: `booking client edit INDEX bd/DATE TIME`<br>
+   Parameters:
+   `INDEX`: index of target client, relative to the observed client list
+   `DATE`: yyyy-MM-dd format
+   `TIME`: am or pm
+4. Edit deferment: `booking client edit INDEX d/NUMBER INTERVAL`<br>
+   Parameters:
+   `INDEX`: index of target client, relative to the observed client list
+   `NUMBER`: quantity of `INTERVAL`(s) - non-negative integer
+   `INTERVAL`: period to defer - 'days', 'weeks', 'months' or 'years'
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The index to delete will work for any displayed list. i.e. What you see is what you get.<br>
+The `INTERVAL` is the period between housekeeping sessions that the client prefers. It is meant to be an estimate, so
+options such as `2 weeks and 3 days` are not supported. If precision is needed, you should convert it to `NUMBER days`.<br>
+`TIME` is categorised as either 'am' or 'pm' as housekeeping services often span a few hours,
+and on account of housekeepers' travelling time between houses. Please look forward to future editions of our
+application that support more flexible time frames!
+</div>
+
+Examples:
+* `booking client edit 2 lhd/2024-04-01` edits the 2nd client's last housekeeping date to 2024-04-01
+* `booking client edit 2 pi/2 weeks` edits the 2nd client's preferred interval to 2 weeks
+* `booking client edit 2 bd/2024-04-02 am` edits the 2nd client's booking date to 2024-04-02 am
+* `booking client edit 2 d/2 months` edits the 2nd client's deferment to 2 months<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+#### Booking commands for housekeepers
+
+--------------------------------------------------------------------------------------------------------------------
+
+Every housekeeper has a booking list. This list may be empty.
+
+###### Adding booking date: `booking housekeeper add`
+
+Adds a booking date for the specified housekeeper.
+
+Format: `booking housekeeper add INDEX DATE TIME`
+
+Parameters:
+
+`INDEX`: index of target housekeeper, relative to the observed housekeeper list
+`DATE`: yyyy-MM-dd format
+`TIME`: am or pm
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The specified index will work for any currently displayed list. i.e. What you see is what you get.
+`TIME` is categorised as either 'am' or 'pm' as housekeeping services often span a few hours,
+and on account of housekeepers' travelling time between houses. Please look forward to future editions of our
+application that support more flexible time frames!
+</div>
+
+Examples:
+* `booking housekeeper add 3 2024-02-03 am` adds a booking for the 3rd housekeeper at 2024-02-03 am
+* `booking housekeeper add 5 2024-08-11 pm` adds a booking for the 5th housekeeper at 2024-08-11 pm
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Listing booking list: `booking housekeeper list`
+
+List the specified housekeeper's booking list.
+If the housekeeper has no bookings yet, the booking list showed will be empty.
+
+Format: `booking housekeeper list INDEX`
+
+Parameters:
+
+`INDEX`: index of target housekeeper, relative to the observed housekeeper list
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The specified index will work for any currently displayed list. i.e. What you see is what you get.
+</div>
+
+Examples:
+* `booking housekeeper list 3` lists the 3rd housekeeper's booking list
+* `booking housekeeper list 1` lists the 1st housekeeper's booking list<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Deleting booking date: `booking housekeeper delete`
+
+Deletes the specified booking from the specified housekeeper's booking list.
+
+**Use this command after listing your target housekeeper's booking list with the `booking housekeeper list` command
+to access their booking list and delete your target booking.**
+
+Format: `booking housekeeper delete HOUSEKEEPER_INDEX BOOKING_INDEX`
+
+Parameters:
+
+`HOUSEKEEPER_INDEX`: index of target housekeeper, relative to the **observed housekeeper list**
+`BOOKING_INDEX`: index of target booking, relative to the listed **booking list** of target housekeeper
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+The specified housekeeper index will work for any currently displayed housekeeper list. i.e. What you see is what you get.
+</div>
+
+Examples:
+* `booking housekeeper delete 3 2` deletes the 2nd booking from the 3rd housekeeper's booking list
+* `booking housekeeper delete 4 5` deletes the 5th booking from the 4th housekeeper's booking list<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+###### Searching for available housekeepers: `booking housekeeper search`
+
+Searches the housekeeper list for housekeepers who are available at the specified area, date and time.
+All parameters (area, date, time) are **mandatory**.
+
+Format: `booking housekeeper search AREA DATE TIME`
+
+Parameters:
+
+`AREA`: north, northeast, east, southeast, south, southwest, west or northwest
+`DATE`: yyyy-MM-dd format
+`TIME`: am or pm
+
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+`AREA` is case-sensitive.<br>
+`TIME` is categorised as either 'am' or 'pm' as housekeeping services often span a few hours,
+and on account of housekeepers' travelling time between houses. Please look forward to future editions of our
+application that support more flexible time frames!
+</div>
+
+Examples:
+* `booking housekeeper search east 2024-04-05 pm` searches for housekeepers who are available in the east, on 2024-04-05 pm
+* `booking housekeeper search northwest 2024-08-08 am` searches for housekeepers who are available in the northwest, on 2024-08-08 am<br>
+
+[:arrow_up_small:](#table-of-contents)
+
+--------------------------------------------------------------------------------------------------------------------
+
+#### Booking command summary
+
+--------------------------------------------------------------------------------------------------------------------
+
+##### Client booking commands
 
 Action | Format, Explainations, Examples                                                                                                                                               
 --------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -371,9 +659,7 @@ Action | Format, Explainations, Examples
 `set` | Set client's housekeeping details with `set`. Same format as initiation, you can set last housekeeping date and preferred interval. <br>Format: `booking client set INDEX yyyy-MM-dd NUMBER INTERVAL`<br>Example: `booking client set 2 2024-04-01 15 days`
 `remove` | Remove client's housekeeping details with `remove`<br>Format: `booking client remove INDEX`<br>Example: `booking client remove 2`
 
-##### Updating housekeeper's housekeeping details: `booking housekeeper`
-
-Housekeepers all have a list of bookings (that can be empty). This allows for HouseKeeping Hub to suggest housekeepers for clients based on their availability. There are 4 commands `add`, `delete`, `list` and `search`.
+##### Housekeeper booking commands
 
 Action | Format, Explainations, Examples                                                                                                                                       
 --------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
